@@ -1,28 +1,35 @@
 ---
 layout: page
-title: Programma di creazione applicazione Express
+title: Generatore di applicazioni espresso
+description: Scopri come utilizzare lo strumento del generatore di applicazioni Express per creare rapidamente uno scheletro per le applicazioni Express.js, semplificando la configurazione e la configurazione.
 menu: starter
 lang: it
-description: Learn how to use the Express application generator tool to quickly create
-  a skeleton for your Express.js applications, streamlining setup and configuration.
+redirect_from: ""
 ---
 
-# Programma di creazione applicazione Express
+# Generatore di applicazioni espresso
 
-Utilizzare lo strumento di creazione dell'applicazione, `express`, per creare velocemente una struttura dell'applicazione.
+Utilizzare lo strumento generatore di applicazioni, `express-generator`, per creare rapidamente uno scheletro di applicazione.
 
-Installare `express` con il seguente comando:
+È possibile eseguire il generatore di applicazioni con il comando `npx` (disponibile in Node.js 8.2.0).
 
 ```bash
-$ npm install express-generator -g
+$ npx express-generator
 ```
 
-Visualizzare le opzioni del comando con l'opzione `-h`:
+Per le versioni precedenti di Node, installare il generatore di applicazioni come pacchetto globale npm e quindi lanciarlo:
+
+```bash
+$ npm install -g express-generator
+$ express
+```
+
+Visualizza le opzioni del comando con l'opzione `-h`:
 
 ```bash
 $ express -h
 
-  Usage: express [options][dir]
+  Usage: express [options] [dir]
 
   Options:
 
@@ -33,13 +40,13 @@ $ express -h
         --pug           add pug engine support
     -H, --hogan         add hogan.js engine support
         --no-view       generate without view engine
-    -v, --view &lt;engine&gt; add view &lt;engine&gt; support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
-    -c, --css &lt;engine&gt;  add stylesheet &lt;engine&gt; support (less|stylus|compass|sass) (defaults to plain css)
+    -v, --view <engine> add view <engine> support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
+    -c, --css <engine>  add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
         --git           add .gitignore
     -f, --force         force on non-empty directory
 ```
 
-Ad esempio, quanto segue crea un'applicazione Express denominata _myapp_ nella directory di lavoro corrente:
+Ad esempio, il seguente crea un'app Express chiamata _myapp_. L'app verrà creata in una cartella chiamata _myapp_ nella directory di lavoro corrente e il motore di visualizzazione sarà impostato su <a href="https://pugjs.org/" target="_blank" title="Pug documentation">Pug</a>:
 
 ```bash
 $ express --view=pug myapp
@@ -63,28 +70,34 @@ $ express --view=pug myapp
    create : myapp/bin/www
 ```
 
-Successivamente, installare le dipendenze:
+Quindi installare dipendenze:
 
 ```bash
 $ cd myapp
 $ npm install
 ```
 
-Su MacOS o Linux, eseguire l'applicazione con il seguente comando:
+Su MacOS o Linux, esegui l'app con questo comando:
 
 ```bash
 $ DEBUG=myapp:* npm start
 ```
 
-Su Windows, utilizzare questo comando:
+Su Windows Command Prompt, utilizzare questo comando:
 
 ```bash
 > set DEBUG=myapp:* & npm start
 ```
 
-Quindi caricare `http://localhost:3000/` sul browser per accedere all'applicazione.
+Su Windows PowerShell, utilizzare questo comando:
 
-L'applicazione creata dispone della seguente struttura per la directory:
+```bash
+PS> $env:DEBUG='myapp:*'; npm start
+```
+
+Quindi, caricare `http://localhost:3000/` nel tuo browser per accedere all'app.
+
+L'app generata ha la seguente struttura di directory:
 
 ```bash
 .
@@ -109,5 +122,7 @@ L'applicazione creata dispone della seguente struttura per la directory:
 ```
 
 <div class="doc-box doc-info" markdown="1">
-La struttura dell'applicazione creata dal programma di creazione è solo uno dei tanti modi disponibili per creare la struttura delle applicazioni Express. È possibile utilizzare questa struttura o modificarla a seconda delle proprie necessità.
+La struttura delle app creata dal generatore è solo uno dei tanti modi per strutturare le app Express. Sentitevi liberi di utilizzare questa struttura o modificarla per soddisfare al meglio le vostre esigenze.
 </div>
+
+### [Previous: Hello World ](/{{ page.lang }}/starter/hello-world.html)&nbsp;&nbsp;&nbsp;&nbsp;[Next: Basic routing](/{{ page.lang }}/starter/basic-routing.html)

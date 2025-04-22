@@ -1,58 +1,60 @@
 ---
 layout: page
-title: Express の用語集
+title: エクスプレス用語集
+description: Express.js、Node.js、ミドルウェア、ルーティング、その他の重要な概念に関連する包括的な用語集で、Expressを効果的に理解し使用するのに役立ちます。
 menu: resources
-lang: ja
-description: A comprehensive glossary of terms related to Express.js, Node.js, middleware,
-  routing, and other key concepts to help you understand and use Express effectively.
+lang: en
+redirect_from: ""
 ---
 
-# 用語集
+# Glossary
 
 ### アプリケーション
 
-一般に、特定の目的で操作を実行するよう設計された 1 つ以上のプログラム。Express のコンテキストでは、Node.js プラットフォームで稼働する Express API を使用するプログラム。[アプリケーション・オブジェクト](/{{ page.lang }}/api.html#express)と呼ばれることもある。
+一般に、特定の目的のために操作を実行するように設計された1つまたは複数のプログラム。  Express のコンテキストでは、Node.js プラットフォームで実行される Express API を使用するプログラムがあります。  [app object](/{{ page.lang }}/api.html#express) も参照するかもしれません。
 
 ### API
 
-アプリケーション・プログラミング・インターフェース。最初に使用するときは、略語のスペルを略さない。
+アプリケーションプログラミングインターフェイス。 略語が最初に使用されたときにスペルアウトします。
 
-### Express
+### エクスプレス
 
-特定の意見に固執しない、Node.js アプリケーション向けの高速で最小限の Web フレームワーク。一般に、「Express」の望ましい呼び方は「Express.js」であるが、後者でも問題はない。
+Node.jsアプリケーション用の高速で、意見が異なる、ミニマリストなWebフレームワーク。 一般的には「Express」は「Express.js」よりも好まれますが、後者は許容されます。
 
 ### libuv
 
-主に Node.js で使用するために開発された、非同期入出力に重点を置いたマルチプラットフォーム・サポート・ライブラリー。
+非同期I/Oに焦点を当てたマルチプラットフォームサポートライブラリ。主にNode.jsで使用するために開発されました。
 
-### ミドルウェア
+### middleware
 
-最後のリクエストハンドラーの前に Express ルーティング層によって呼び出される関数。そのため、未加工要求と最後の目的のルートの間に配置される。ミドルウェアの用語に関しては、微妙な点がいくつかある。
+最後のリクエストハンドラの前に Express ルーティング層によって呼び出される関数 生の要求と最終目的のルートの間に座っています ミドルウェアに関する用語のいくつかの細かい点:
 
-  * `var foo = require('middleware')` は、Node.js モジュールを*要求* または*使用* することで呼び出される。その後、通常はステートメント `var mw = foo()` がミドルウェアを返す。
-  * `app.use(mw)` は、*グローバル処理スタックにミドルウェアを追加* することで呼び出される。
-  * `app.get('/foo', mw, function (req, res) { ... })` は、*「GET /foo」処理スタックにミドルウェアを追加* することで呼び出される。
+- `var foo = require('middleware')` は Node.js モジュールの _requiring_ または _using_ と呼ばれます。 `var mw = foo()`という文は通常、ミドルウェアを返します。
+- `app.use(mw)`は、ミドルウェアをグローバルな処理スタックに追加することを呼びます。
+- `app.get('/foo', mw, function (req, res) { ... })` は、ミドルウェアを "GET /foo" 処理の stack_ に追加すると呼ばれます。
 
 ### Node.js
 
-スケーラブルなネットワーク・アプリケーションを作成するために使用されるソフトウェア・プラットフォーム。Node.js は、スクリプト言語として JavaScript を使用し、ノンブロッキング入出力と単一スレッドのイベント・ループを通して高スループットを実現する。[nodejs.org](http://nodejs.org/) を参照。**使用上の注意**: 初回は「Node.js」を使用し、その後は「Node」を使用する。
+スケーラブルなネットワークアプリケーションの構築に使用されるソフトウェアプラットフォーム。 Node.jsはJavaScriptをスクリプト言語として使用し、ノンブロッキングI/Oとシングルスレッドイベントループにより高いスループットを実現します。 [nodejs.org](https://nodejs.org/en/) を参照してください。 **使用上の注意**: 最初は、"Node.js"以降は"Node"です。
 
-### オープン・ソース
+### オープンソースのオープンソース
 
-形容詞として使用する場合は、ハイフンを付ける (例:「This is open-source software.」)。[Wikipedia の「Open-source software」](http://en.wikipedia.org/wiki/Open-source_software)を参照。注: 一般的にはこの用語にハイフンを付けないが、ここでは複合形容詞にハイフンを付けるという標準英語の規則に従う。
+形容詞として使われる場合、ハイフネートなど。例: "これはオープンソースソフトウェアです。 [Wikipediaのオープンソースソフトウェア](http://en.wikipedia.org/wiki/Open-source_software)を参照してください。
+
+{% include admonitions/note.html content="この用語をハイフネーションしないことは一般的ですが、私たちは複合形容詞をハイフネーションするための標準英語のルールを使用しています。 %}
 
 ### リクエスト
 
-HTTP リクエスト。クライアントは HTTP リクエストメッセージをサーバーに送信して、サーバーはレスポンスを返す。リクエストでは、いずれかの[リクエストメソッド](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) (GET、POST など) を使用する必要がある。
+HTTP リクエスト。 クライアントは、レスポンスを返すサーバーに HTTP リクエストメッセージを送信します。  リクエストは、GET、POST など、いくつかの [request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) のうちの 1 つを使用する必要があります。
 
-### レスポンス
+### 応答
 
-HTTP レスポンス。サーバーは、HTTP レスポンスメッセージをクライアントに返す。レスポンスにはリクエストの完了状況情報が含まれ、リクエストされた内容がメッセージの本文に入っている場合もある。
+HTTPレスポンス。 サーバーはクライアントに HTTP 応答メッセージを返します。 レスポンスには、リクエストに関する完了ステータス情報が含まれており、メッセージ本文に要求されたコンテンツが含まれている場合もあります。
 
-### ルート
+### route
 
-リソースを識別する URL の一部。例えば、`http://foo.com/products/id` の中では「/products/id」がルートである。
+リソースを識別する URL の一部です。 例えば、`http://foo.com/products/id`では、"/products/id"がルートです。
 
-### ルーター
+### ルーター:
 
-API リファレンスで[ルーター](/{{ page.lang }}/4x/api.html#router)を参照。
+API リファレンスの [router](/{{ page.lang }}/api.html#router) を参照してください。

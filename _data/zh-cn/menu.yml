@@ -1,60 +1,52 @@
 # Home
-home: 主页
-
+home: 首页
 # Getting started
-getting_started: 入门
-installing: 安装
-hello_world: Hello world
-generator: Express 生成器
+getting_started: 入门开始
+installing: 正在安装
+hello_world: 您好世界
+generator: 快速生成器
 basic_routing: 基本路由
 static_files: 静态文件
-examples: More examples
-faq: 常见问题及解答
-
+examples: 更多示例
+faq: 常见问题
 # Guide
 guide: 指南
 routing: 路由
-writing_middleware: 编写中间件
+writing_middleware: 写入中间件
 using_middleware: 使用中间件
-overriding_express_api: Overriding the Express API
+overriding_express_api: 覆盖快递API
 using_template_engines: 使用模板引擎
 error_handling: 错误处理
 debugging: 调试
-behind_proxies: 代理背后的 Express
-migrating_4: 迁移到 Express 4
-migrating_5: 迁移到 Express 5
+behind_proxies: 代理服务器后面的快照
+migrating_4: 移动到快递4
+migrating_5: 移动到 Express 5
 database_integration: 数据库集成
-
 # API reference
-
 api: API 参考
 5x: 5.x
 4x: 4.x
-3x: 3.x (不推荐）
-2x: 2.x (不推荐）
-
+3x: 3.x (已废弃)
+2x: 2.x (已废弃)
 # Advanced topics
 advanced: 高级主题
-developing_template_engines: 模板引擎
+developing_template_engines: 构建模板引擎
 security_updates: 安全更新
-best_practice_security: 安全最佳实践
-best_practice_performance: 性能最佳实践
-healthcheck_graceful_shutdown: Health checks & shutdown
-
+best_practice_security: 安全方面的最佳做法
+best_practice_performance: 业绩最佳做法
+healthcheck_graceful_shutdown: 健康检查与关机
 # Resources
 resources: 资源
-glossary: 词汇表
+glossary: Glossary
 middleware: 中间件
 community: 社区
-utils: Utility modules
-contributing: Contributing to Express
-changelog: Release Change Log
-
+utils: 实用模块
+contributing: 为快递做贡献
+changelog: 发布更改日志
 # Support
-support: Support
-
+support: 支持
 # Blog
-blog: Blog
-latest_post: Latest post
-all_posts: All posts
-write_post: Write a Post
+blog: 博客
+latest_post: 最新帖子
+all_posts: 所有帖子
+write_post: 撰写帖子

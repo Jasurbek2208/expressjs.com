@@ -1,35 +1,35 @@
 ---
 layout: page
-title: Express 应用程序生成器
+title: 快递应用程序生成器
+description: 学习如何使用快递应用程序生成器工具来快速为您的 Express.js 应用程序创建骨架，简化设置和配置。
 menu: starter
-lang: zh-cn
-description: Learn how to use the Express application generator tool to quickly create
-  a skeleton for your Express.js applications, streamlining setup and configuration.
+lang: 中
+redirect_from: ""
 ---
 
-# Express 应用程序生成器
+# 快递应用程序生成器
 
-可使用应用程序生成器工具 (`express-generator`) 快速创建应用程序框架。
+使用应用程序生成器工具“express-generator”来快速创建应用程序骨架。
 
-您可以使用 `npx` 命令（在 Node.js 8.2.0 中可用）运行应用程序生成器。
+您可以用 `npx` 命令运行应用程序生成器(可在 Node.js 8.2.0中查找)。
 
 ```bash
 $ npx express-generator
 ```
 
-对于早期的 Node 版本，可将应用程序生成器作为全局 npm 软件包安装，然后启动它。
+对于早期的节点版本，安装应用程序生成器作为全局npm 包，然后启动：
 
 ```bash
 $ npm install -g express-generator
 $ express
 ```
 
-使用 `-h` 选项显示命令选项：
+使用"-h"选项显示命令选项：
 
 ```bash
 $ express -h
 
-  Usage: express [options][dir]
+  Usage: express [options] [dir]
 
   Options:
 
@@ -40,13 +40,13 @@ $ express -h
         --pug           add pug engine support
     -H, --hogan         add hogan.js engine support
         --no-view       generate without view engine
-    -v, --view &lt;engine&gt; add view &lt;engine&gt; support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
-    -c, --css &lt;engine&gt;  add stylesheet &lt;engine&gt; support (less|stylus|compass|sass) (defaults to plain css)
+    -v, --view <engine> add view <engine> support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
+    -c, --css <engine>  add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
         --git           add .gitignore
     -f, --force         force on non-empty directory
 ```
 
-例如，以下语句在当前工作目录中创建名为 _myapp_ 的 Express 应用程序并将视图引擎将设置为 [Pug](https://pugjs.org/) ：
+例如，以下创建了一个名为_myapp_的快递应用程序。 该应用将被创建在当前工作目录中名为_myapp_的文件夹中，视图引擎将被设置为 <a href="https://pugjs.org/" target="_blank" title="Pug documentation">Pug</a>：
 
 ```bash
 $ express --view=pug myapp
@@ -70,34 +70,34 @@ $ express --view=pug myapp
    create : myapp/bin/www
 ```
 
-然后安装依赖项：
+然后安装依赖：
 
 ```bash
 $ cd myapp
 $ npm install
 ```
 
-在 MacOS 或 Linux 上，采用以下命令运行此应用程序：
+在 MacOS 或 Linux 上，使用此命令运行应用程序：
 
 ```bash
 $ DEBUG=myapp:* npm start
 ```
 
-在 Windows 命令提示符上，使用以下命令：
+在 Windows 命令提示符上，使用此命令：
 
 ```bash
 > set DEBUG=myapp:* & npm start
 ```
 
-在 Windows PowerShell 上，使用以下命令：
+在 Windows PowerShell 上，使用此命令：
 
 ```bash
 PS> $env:DEBUG='myapp:*'; npm start
 ```
 
-然后在浏览器中输入 `http://localhost:3000/` 以访问此应用程序。
+然后，在您的浏览器中加载 `http://localhost:3000/` 以访问应用程序。
 
-生成的应用程序具有以下目录结构：
+生成的应用具有以下目录结构：
 
 ```bash
 .
@@ -122,5 +122,7 @@ PS> $env:DEBUG='myapp:*'; npm start
 ```
 
 <div class="doc-box doc-info" markdown="1">
-生成器创建的应用程序结构只是构造 Express 应用程序的众多方法之一。请随意使用此结构或者对其进行修改以最大程度满足自己的需求。
+生成器创建的应用结构只是构建快递应用的多种方式之一。 请随时使用此结构或修改它以最适合您的需要。
 </div>
+
+### [Previous: Hello World ](/{{ page.lang }}/starter/hello-world.html)&nbsp;&nbsp;&nbsp;&nbsp;[Next: Basic routing](/{{ page.lang }}/starter/basic-routing.html)

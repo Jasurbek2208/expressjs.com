@@ -1,21 +1,17 @@
 ---
 layout: page
-title: Ejemplo "Hello World" de Express
+title: Ejemplo exprés "Hola Mundo"
+description: Comienza con Express.js construyendo una sencilla aplicación 'Hola Mundo', demostrando la configuración básica y la creación de servidores para principiantes.
 menu: starter
 lang: es
-description: Get started with Express.js by building a simple 'Hello World' application,
-  demonstrating the basic setup and server creation for beginners.
+redirect_from: ""
 ---
 
-# Ejemplo Hello world
+# Hola ejemplo de mundo
 
 <div class="doc-box doc-info" markdown="1">
-Esta es básicamente la aplicación Express más sencilla que puede crear. Es una aplicación de archivo simple &mdash; *no* lo que obtendrá si utiliza el [generador de Express](/{{ page.lang }}/starter/generator.html), que crea el andamiaje para una aplicación completa con varios archivos JavaScript, plantillas Jade y subdirectorios para distintos propósitos.
+Incrustado a continuación es esencialmente la aplicación Express más simple que puede crear. Es una aplicación de archivo única &mdash; _no_ lo que obtendrías si utilizas el [generador Express](/{{ page.lang }}/starter/generator. tml), que crea el scaffolding para una aplicación completa con numerosos archivos JavaScript, plantillas de Jade y subdirectorios para varios propósitos.
 </div>
-
-En primer lugar, cree un directorio denominado `myapp`, cámbielo y ejecute `npm init`. A continuación, instale `express` como una dependencia, según se describe en la [guía de instalación](/{{ page.lang }}/starter/installing.html).
-
-En el directorio `myapp`, cree un archivo denominado `app.js` y añada el código siguiente:
 
 ```js
 const express = require('express')
@@ -31,17 +27,25 @@ app.listen(port, () => {
 })
 ```
 
-La aplicación inicia un servidor y escucha las conexiones en el puerto 3000. La aplicación responde con "Hello World!" para las solicitudes al URL raíz (`/`) o a la *ruta* raíz. Para cada vía de acceso diferente, responderá con un error **404 Not Found**.
+Esta aplicación inicia un servidor y escucha en el puerto 3000 para las conexiones. La aplicación responde con "¡Hola Mundo!" para las solicitudes
+a la URL raíz (`/`) o _route_. Por cada otro camino, responderá con un **404 No Encontrado**.
+
+### Ejecutar localmente
+
+Primero cree un directorio llamado `myapp`, cámbielo y ejecute `npm init`. Luego, instala `express` como una dependencia, según la [guía de instalación](/{{ page.lang }}/starter/installing.html).
+
+En el directorio `myapp`, crea un archivo llamado `app.js` y copia el código del ejemplo anterior.
 
 <div class="doc-box doc-notice" markdown="1">
 `req` (solicitud) y `res` (respuesta) son exactamente los mismos objetos que proporciona Node, por lo que puede invocar `req.pipe()`, `req.on('data', callback)` y cualquier otro objeto que invocaría sin estar Express implicado.
 </div>
 
-Ejecute la aplicación con el siguiente mandato:
+Ejecutar la aplicación con el siguiente comando:
 
 ```bash
 $ node app.js
 ```
 
-A continuación, cargue [http://localhost:3000/](http://localhost:3000/) en un navegador para ver la salida.
+Luego, carga `http://localhost:3000/` en un navegador para ver la salida.
 
+### [Anterior: Instalar ](/{{ page.lang }}/starter/installing.html)&nbsp;&nbsp;&nbsp;&nbsp;[Siguiente: Express Generator ](/{{ page.lang }}/starter/generator.html)

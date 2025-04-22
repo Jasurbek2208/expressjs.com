@@ -1,27 +1,22 @@
 ---
 layout: 4x-api
 title: Express 4.x - API-Referenz
-description: Access the API reference for Express.js 4.x, detailing all modules, methods, and properties for building web applications with this version.
+description: Greifen Sie auf die API-Referenz für Express.js 4.x zu, in der alle Module, Methoden und Eigenschaften für das Erstellen von Webanwendungen mit dieser Version detailliert sind.
 menu: api
 lang: de
+redirect_from: ""
 ---
+
 <div id="api-doc" markdown="1">
 
-  <h1>4.x-API</h1>
+  <h1>4.x API</h1>
 
-  <a id='express' class='h2'></a>
-  {% include api/en/4x/express.md %}
+{% include admonitions/note.html content="Express 4.0 requires Node.js 0.10 or höher." %}
 
-  <a id='app' class='h2'></a>
-  {% include api/en/4x/app.md %}
-
-  <a id='req' class='h2'></a>
-  {% include api/en/4x/req.md %}
-
-  <a id='res' class='h2'></a>
-  {% include api/en/4x/res.md %}
-
-  <a id='router' class='h2'></a>
-  {% include api/en/4x/router.md %}
+{% include api/en/4x/express.md %}
+{% include api/en/4x/app.md %}
+{% include api/en/4x/req.md %}
+{% include api/en/4x/res.md %}
+{% include api/en/4x/router.md %}
 
 </div>

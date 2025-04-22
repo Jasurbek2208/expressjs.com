@@ -1,46 +1,87 @@
 ---
 layout: page
 title: Express-Sicherheitsupdates
-description: Review the latest security updates and patches for Express.js, including detailed vulnerability lists for different versions to help maintain a secure application.
+description: Überprüfen Sie die neuesten Sicherheitsupdates und Patches für Express.js, einschließlich detaillierter Verwundbarkeitslisten für verschiedene Versionen, um eine sichere Anwendung zu pflegen.
 menu: advanced
 lang: de
+redirect_from: ""
 ---
 
 # Sicherheitsupdates
 
 <div class="doc-box doc-notice" markdown="1">
-Schwachstellen bei Node.js wirken sich direkt auf Express aus. Daher sollten Sie [ein Auge auf Schwachstellen bei Node.js haben](https://nodejs.org
-/en/blog/vulnerability/) und sicherstellen, dass Sie die aktuelle stabile Version von Node.js haben.
+Verwundbarkeiten von Node.js wirken sich direkt auf Express aus. Daher [behalte einen Blick auf Node.js Verwundbarkeit](https://nodejs.org/en/blog/vulnerability/) und stelle sicher, dass du die neueste stabile Version von Node.js benutzt.
 </div>
 
-Die folgende Liste enthält die Express-Schwachstellen, die im angegebenen Versionsupdate behoben wurden.
+Die folgende Liste listet die Express Verwundbarkeiten auf, die in der angegebenen Versionsaktualisierung behoben wurden.
 
-## 4.x
+{% capture security-policy %}
+Wenn Sie glauben, eine Sicherheitslücke in Express entdeckt zu haben, lesen Sie bitte
+[Sicherheitsrichtlinien und Prozeduren](/{{page.lang}}/resources/contributing.html#security-policies-and-procedures).
+{% endcapture %}
 
-  * 4.11.1
-    * Offenlegungsgefahr beim Rootpfad in `express.static`, `res.sendfile` und `res.sendFile` behoben.
-  * 4.10.7
-    * Offene Umadressierungsschwachstelle in `express.static` ([Empfehlung](https://npmjs.com/advisories/35), [CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)) behoben.
-  * 4.8.8
-    * Schwachstellen durch Directory-Traversal-Technik in `express.static` ([Empfehlung](http://npmjs.com/advisories/32) , [CVE-2014-6394](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6394)) behoben.
-  * 4.8.4
-    * Node.js 0.10 kann in bestimmten Situationen Lecks bei `fd` aufweisen, die sich auf `express.static` und `res.sendfile` auswirken. Böswillige Anforderungen können zu Lecks bei `fd` führen und letztendlich `EMFILE`-Fehler nach sich ziehen und bewirken, dass Server nicht antworten.
-  * 4.8.0
-    * Sparse-Arrays mit extrem hohen Indizes in der Abfragezeichenfolge können bewirken, dass für die Prozessausführung nicht genügend Arbeitsspeicher zur Verfügung steht und es zu einem Serverabsturz kommt.
-    * Extrem verschachtelte Abfragezeichenfolgenobjekte können bewirken, dass der Prozess blockiert und der Server dadurch vorübergehend nicht antwortet.
+{% include admonitions/note.html content=security-policy %}
 
-## 3.x
+## 4,x
 
-  * 3.19.1
-    * Offenlegungsgefahr beim Rootpfad in `express.static`, `res.sendfile` und `res.sendFile` behoben.
-  * 3.19.0
-    * Offene Umadressierungsschwachstelle in `express.static` ([Empfehlung](https://npmjs.com/advisories/35), [CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)) behoben.
-  * 3.16.10
-    * Schwachstellen durch Directory-Traversal-Technik in `express.static` behoben.
-  * 3.16.6
-    * Node.js 0.10 kann in bestimmten Situationen Lecks bei `fd` aufweisen, die sich auf `express.static` und `res.sendfile` auswirken. Böswillige Anforderungen können zu Lecks bei `fd` führen und letztendlich `EMFILE`-Fehler nach sich ziehen und bewirken, dass Server nicht antworten.
-  * 3.16.0
-    * Sparse-Arrays mit extrem hohen Indizes in der Abfragezeichenfolge können bewirken, dass für die Prozessausführung nicht genügend Arbeitsspeicher zur Verfügung steht und es zu einem Serverabsturz kommt.
-    * Extrem verschachtelte Abfragezeichenfolgenobjekte können bewirken, dass der Prozess blockiert und der Server dadurch vorübergehend nicht antwortet.
-  * 3.3.0
-    * Die Antwort 404 bei einem nicht unterstützten Überschreibungsversuch war anfällig gegen Cross-Site Scripting-Attacken.
+- 4.21.2
+  - Die Abhängigkeit `path-to-regexp` wurde aktualisiert, um eine [vulnerability]zu adressieren (https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-rhx6-c78j-4q9w).
+- 4.21.1
+  - Die Abhängigkeit `cookie` wurde aktualisiert, um eine [vulnerability](https://github.com/jshttp/cookie/security/advisories/GHSA-pxg6-pf52-xh8x) zu adressieren. Dies kann deine Anwendung beeinflussen, wenn du `res.cookie` verwendest.
+- 4.20.0
+  - XSS-Verwundbarkeit in `res.redirect` behoben ([advisory](https://github.com/expressjs/express/security/advisories/GHSA-qw6h-vgh9-j6wx), [CVE-2024-43796](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-43796)).
+  - Die Abhängigkeit `serve-static` wurde aktualisiert, um eine [vulnerability]zu adressieren (https://github.com/advisories/GHSA-cm22-4g7w-348p).
+  - Die Abhängigkeit `send` wurde aktualisiert, um eine [vulnerability]zu adressieren (https://github.com/advisories/GHSA-m6fv-jmcg-4jfg).
+  - Die Abhängigkeit `path-to-regexp` wurde aktualisiert, um eine [vulnerability]zu adressieren (https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-9wv6-86v2-598j).
+  - Die Abhängigkeit `body-parser` wurde aktualisiert, um einen [vulnerability](https://github.com/advisories/GHSA-qwcr-r2fm-qrc7), dies kann deine Anwendung beeinflussen, wenn du url enconding aktiviert hast.
+- 4.19.0, 4.19.1
+  - Behoben der offenen Weiterleitungsverwundbarkeit in `res.location` und `res.redirect` ([advisory](https://github.com/expressjs/express/security/advisories/GHSA-rv95-896h-c2vc), [CVE-2024-29041](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-29041)).
+- 4.17.3
+  - Die Abhängigkeit `qs` wurde aktualisiert, um eine [vulnerability]zu adressieren (https://github.com/advisories/GHSA-hrpp-h998-j3pp). Dies kann Ihre Anwendung beeinflussen, wenn die folgenden APIs verwendet werden: `req.query`, `req.body`, `req.param`.
+- 4.16.0
+  - Die Abhängigkeit `forwarded` wurde aktualisiert, um eine [vulnerability]Adresse zu senden (https://npmjs.com/advisories/527). Dies kann Ihre Anwendung beeinflussen, wenn die folgenden APIs verwendet werden: `req.host`, `req.hostname`, `req.ip`, `req.ips`, `req.protocol`.
+  - Die Abhängigkeit `mime` wurde aktualisiert, um eine [vulnerability](https://npmjs.com/advisories/535), aber dieses Problem wirkt sich nicht auf Express aus.
+  - Die Abhängigkeit `send` wurde aktualisiert, um einen Schutz gegen eine [Node.js 8.5.0 Verwundbarkeit](https://nodejs.org/en/blog/vulnerability/september-2017-path-validation/) zu bieten. Dies wirkt sich nur auf die Ausführung von Express auf der speziellen Node.js Version 8.5.0 aus.
+- 4.15.5
+  - Die Abhängigkeit `debug` wurde aktualisiert, um eine [vulnerability](https://snyk.io/vuln/npm:debug:20170905), aber dieses Problem wirkt sich nicht auf Express aus.
+  - Die Abhängigkeit `fresh` wurde aktualisiert, um eine [vulnerability]zu adressieren (https://npmjs.com/advisories/526). Dies wird deine Anwendung beeinflussen, wenn die folgenden APIs verwendet werden: `express.static`, `req.fresh`, `res.json`, `res.jsonp`, `res.send`, `res.sendfile` `res.sendFile`, `res.sendStatus`.
+- 4.15.3
+  - Die Abhängigkeit `ms` wurde aktualisiert, um eine [vulnerability]zu adressieren (https://snyk.io/vuln/npm:ms:20170412). Dies kann Ihre Anwendung beeinflussen, wenn die nicht vertrauenswürdige Eingabe an die Option `maxAge` in der folgenden APIs übergeben wird: `express.static`, `res.sendfile` und `res.sendFile`.
+- 4.15.2
+  - Die Abhängigkeit `qs` wurde aktualisiert, um eine [vulnerability](https://snyk.io/vuln/npm:qs:20170213), aber dieses Problem wirkt sich nicht auf Express aus. Die Aktualisierung auf 4.15.2 ist eine gute Praxis, aber nicht erforderlich, um die Verwundbarkeit zu beheben.
+- 4.11.1
+  - Verwundbarkeit der Root-Pfad-Offenlegung in `express.static`, `res.sendfile` und `res.sendFile` behoben
+- 4.10.7
+  - Behoben der offenen Weiterleitungsverwundbarkeit in `express.static` ([advisory](https://npmjs.com/advisories/35), [CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)).
+- 4.8.8
+  - Fehlerbehebung von Verzeichnisüberschreitungen in `express.static` ([advisory](http://npmjs.com/advisories/32) , [CVE-2014-6394](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6394)).
+- 4.8.4
+  - Node.js 0.10 kann `fd`s in bestimmten Situationen lecken, die `express.static` und `res.sendfile` betreffen. Schädliche Anfragen könnten `fd`s zu Leck führen und letztendlich zu `EMFILE` Fehlern und Serverunreaktion.
+- 4.8.0
+  - Sparse Arrays mit extrem hohen Indizes im Query-String könnten dazu führen, dass der Prozess aus dem Speicher geht und der Server abstürzt.
+  - Extrem verschachtelte Query-String-Objekte könnten dazu führen, dass der Prozess blockiert und der Server vorübergehend nicht reagiert.
+
+## 3,x
+
+  <div class="doc-box doc-warn" markdown="1">
+  **Express 3.x IST END-OF-OF-LEBEN UND KEINE LIEFERANTEN MAINTAINT**
+
+Bekannte und unbekannte Sicherheits- und Leistungsprobleme in 3.x wurden seit dem letzten Update (1. August 2015) nicht behoben. Es wird dringend empfohlen, die neueste Version von Express zu verwenden.
+
+Wenn du nicht in der Lage bist nach 3.x zu aktualisieren, erwäge bitte [kommerzielle Support-Optionen](/{{ page.lang }}/support#commercial-support-options).
+
+  </div>
+
+- 3.19.1
+  - Verwundbarkeit der Root-Pfad-Offenlegung in `express.static`, `res.sendfile` und `res.sendFile` behoben
+- 3.19.0
+  - Behoben der offenen Weiterleitungsverwundbarkeit in `express.static` ([advisory](https://npmjs.com/advisories/35), [CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)).
+- 3.16.10
+  - Fehlerbehebung von Verzeichnisüberschreitungen in `express.static`.
+- 3.16.6
+  - Node.js 0.10 kann `fd`s in bestimmten Situationen lecken, die `express.static` und `res.sendfile` betreffen. Schädliche Anfragen könnten `fd`s zu Leck führen und letztendlich zu `EMFILE` Fehlern und Serverunreaktion.
+- 3.16.0
+  - Sparse Arrays, die extrem hohe Indizes im Query-String haben, könnten dazu führen, dass der Prozess aus dem Speicher geht und den Server abstürzt.
+  - Extrem verschachtelte Query-String-Objekte könnten dazu führen, dass der Prozess blockiert und der Server vorübergehend nicht reagiert.
+- 3.3.0
+  - Die 404-Reaktion eines nicht unterstützten Methodenversuchs war anfällig für Site-übergreifende Skripting-Attacken.

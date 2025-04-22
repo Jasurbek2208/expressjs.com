@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Exemplos do Express
-description: Explore uma coleção de exemplos de aplicações em Express.js cobrindo diversos casos de uso, integrações e configurações avançadas para te ajudar a aprender e construir seus projetos.
+title: Exemplos expressos
+description: Explore uma coleção de exemplos de aplicativos do Express.js cobrindo vários casos de uso, integrações e configurações avançadas para ajudá-lo a aprender e construir seus projetos.
 menu: starter
 lang: pt-br
-redirect_from: "/starter/examples.html"
+redirect_from: ""
 ---
 
 {% capture examples %}{% include readmes/express-master/examples.md %}{% endcapture %}
@@ -16,7 +16,7 @@ Estes são alguns exemplos adicionais com integrações mais extensas.
 
 {% include community-caveat.html %}
 
-- [prisma-fullstack](https://github.com/prisma/prisma-examples/tree/latest/pulse/fullstack-simple-chat) - Aplicativo Fullstack com Express e Next.js utilizando [Prisma](https://www.npmjs.com/package/prisma) como ORM
-- [prisma-rest-api-ts](https://github.com/prisma/prisma-examples/tree/latest/orm/express) - API REST com Express em TypeScript utilizando [Prisma](https://www.npmjs.com/package/prisma) como ORM
+- [prisma-fullstack](https://github.com/prisma/prisma-examples/tree/latest/pulse/fullstack-simple-chat) - Aplicativo Fullstack com Express and Next.js usando [Prisma](https://www.npmjs.com/package/prisma) como ORM
+- [prisma-rest-api-ts](https://github.com/prisma/prisma-examples/tree/latest/orm/express) - API REST com Express in TypeScript usando [Prisma](https://www.npmjs.com/package/prisma) como ORM
 
-### [Anterior: Arquivos Estáticos ](/{{ page.lang }}/starter/static-files.html)&nbsp;&nbsp;&nbsp;&nbsp;[Próximo: Perguntas mais frequentes ](/{{ page.lang }}/starter/faq.html)
+### [Anterior: Arquivos estáticos ](/{{ page.lang }}/starter/static-files.html)&nbsp;&nbsp;&nbsp;&nbsp;[Próximo: FAQ ](/{{ page.lang }}/starter/faq.html)

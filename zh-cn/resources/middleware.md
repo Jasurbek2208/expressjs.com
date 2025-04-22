@@ -1,64 +1,45 @@
 ---
-layout: page
-title: Express 中间件
+layout: middleware
+title: 快递中间件
+description: 探索一个 Express 团队和社区维护的 Express.js 中间件模块列表，包括内置的中间件和受欢迎的第三方模块。
 menu: resources
-lang: zh-cn
-description: Explore a list of Express.js middleware modules maintained by the Express
-  team and the community, including built-in middleware and popular third-party modules.
+lang: 中
+redirect_from: ""
+module: mw-home
 ---
 
-# 第三方中间件
+## 快递中间件
 
-以下是一些 Express 中间件模块：
+The Express middleware modules listed here are maintained by the
+[Expressjs team](https://github.com/orgs/expressjs/people).
 
-  - [body-parser](https://github.com/expressjs/body-parser)：先前为 `express.bodyParser`、`json` 和 `urlencoded`。另请参阅：
-    - [body](https://github.com/raynos/body)
-    - [co-body](https://github.com/visionmedia/co-body)
-    - [raw-body](https://github.com/stream-utils/raw-body)
-  - [compression](https://github.com/expressjs/compression)：先前为 `express.compress`。
-  - [connect-image-optimus](https://github.com/msemenistyi/connect-image-optimus)：用于提供最优映像的 Connect/Express 中间件模块。如有可能，可将映像切换为 `.webp` 或 `.jxr`。
-  - [connect-timeout](https://github.com/expressjs/timeout)：先前为 `express.timeout`。
-  - [cookie-parser](https://github.com/expressjs/cookie-parser)：先前为 `express.cookieParser`。
-  - [cookie-session](https://github.com/expressjs/cookie-session)：先前为 `express.cookieSession`。
-  - [errorhandler](https://github.com/expressjs/errorhandler)：先前为 `express.errorHandler`。
-  - [express-debug](https://github.com/devoidfury/express-debug)：不引人注目的开发工具，用于向应用程序添加一个选项卡，其中包含有关模板变量（本地）、当前会话、有用请求数据等方面的信息。
-  - [express-partial-response](https://github.com/nemtsov/express-partial-response)：Express 中间件模块，使用 Google API 的 Partial Response，根据 `fields` 查询字符串过滤掉 JSON 响应的各个部分。
-  - [express-session](https://github.com/expressjs/session)：先前为 `express.session`。
-  - [express-simple-cdn](https://github.com/jamiesteven/express-simple-cdn)：Express 中间件模块，将 CDN 用于静态资产，具有多主机支持（例如：cdn1.host.com、cdn2.host.com）。
-  - [express-slash](https://github.com/ericf/express-slash)：Express 中间件模块，适用于对末尾斜杠有很严格要求的人员。
-  - [express-stormpath](https://github.com/stormpath/stormpath-express)：实现用户存储、认证、授权、SSO 和数据安全性的 Express 中间件模块。
-  - [express-uncapitalize](https://github.com/jamiesteven/express-uncapitalize)：中间件模块，用于将包含大写字母的 HTTP 请求转换为标准的小写形式。
-  - [helmet](https://github.com/helmetjs/helmet)：一个模块，用于通过设置各种 HTTP 头来帮助保护应用程序。
-  - [join-io](https://github.com/coderaiser/join-io "join-io")：一个模块，用于实时联接文件以减少请求数目。
-  - [method-override](https://github.com/expressjs/method-override)：先前为 `express.methodOverride`。
-  - [morgan](https://github.com/expressjs/morgan)：先前为 `logger`。
-  - [passport](https://github.com/jaredhanson/passport)：用于认证的 Express 中间件模块。
-  - [response-time](https://github.com/expressjs/response-time)：先前为 `express.responseTime`。
-  - [serve-favicon](https://github.com/expressjs/serve-favicon)：先前为 `express.favicon`。
-  - [serve-index](https://github.com/expressjs/serve-index)：先前为 `express.directory`。
-  - [serve-static](https://github.com/expressjs/serve-static)：用于提供静态内容的模块。
-  - [static-expiry](https://github.com/paulwalker/connect-static-expiry)：静态资产的指纹式 URL 或高速缓存头，包含对一个或多个外部域的支持。
-  - [vhost](https://github.com/expressjs/vhost)：先前为 `express.vhost`。
-  - [view-helpers](https://github.com/madhums/node-view-helpers)：Express 中间件模块，用于向视图提供常见助手方法。
-  - [sriracha-admin](https://github.com/hdngr/siracha)：Express 中间件模块，为 Mongoose 动态生成管理站点。
+| 中间件模块                                                                       | 描述                                                                                         |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [body-parser](/{{page.lang}}/resources/middleware/body-parser.html)         | 解析 HTTP 请求正文。                                                                              |
+| [compression](/{{page.lang}}/resources/middleware/compression.html)         | 压缩HTTP响应。                                                                                  |
+| [connect-rid](/{{page.lang}}/resources/middleware/connect-rid.html)         | 生成唯一的请求 ID。                                                                                |
+| [cookie-parser](/{{page.lang}}/resources/middleware/cookie-parser.html)     | 解析 cookie 头并使用 "req.cookies" 另见 [cookies](https://github.com/jed/cookies)。 |
+| [cookie-session](/{{page.lang}}/resources/middleware/cookie-session.html)   | 建立基于 cookie 的会话。                                                                           |
+| [cors](/{{page.lang}}/resources/middleware/cors.html)                       | 启用具有各种选项的跨源资源共享 (CORS)。                                                 |
+| [errorhandler](/{{page.lang}}/resources/middleware/errorhandler.html)       | 开发错误处理/调试错误。                                                                               |
+| [method-override](/{{page.lang}}/resources/middleware/method-override.html) | 使用标题覆盖 HTTP 方法。                                                                            |
+| [morgan](/{{page.lang}}/resources/middleware/morgan.html)                   | HTTP 请求日志记录器。                                                                              |
+| [multer](/{{page.lang}}/resources/middleware/multer.html)                   | 处理多部分格式数据。                                                                                 |
+| [response-time](/{{page.lang}}/resources/middleware/response-time.html)     | 记录 HTTP 响应时间。                                                                              |
+| [serve-favicon](/{{page.lang}}/resources/middleware/serve-favicon.html)     | 提供一个收藏夹。                                                                                   |
+| [serve-index](/{{page.lang}}/resources/middleware/serve-index.html)         | 提供给定路径的目录列表。                                                                               |
+| [serve-static](/{{page.lang}}/resources/middleware/serve-static.html)       | 服务静态文件。                                                                                    |
+| [session](/{{page.lang}}/resources/middleware/session.html)                 | 建立基于服务器的会议(仅开发)。                                                        |
+| [timeout](/{{page.lang}}/resources/middleware/timeout.html)                 | 设置超时的 perioHTTP 请求处理。                                                                      |
+| [vhost](/{{page.lang}}/resources/middleware/vhost.html)                     | 创建虚拟域名。                                                                                    |
 
-Connect 先前随附的一些中间件模块不再受到 Connect/Express 团队的支持。这些模块由替代模块所取代，或者应该被更好的模块取代。请使用以下替代模块之一：
+## 额外的中间件模块
 
-  - express.cookieParser
-    - [cookies](https://github.com/jed/cookies) 和 [keygrip](https://github.com/jed/keygrip)
-  - express.limit
-    - [raw-body](https://github.com/stream-utils/raw-body)
-  - express.multipart
-    - [connect-busboy](https://github.com/mscdex/connect-busboy)
-    - [multer](https://github.com/expressjs/multer)
-    - [connect-multiparty](https://github.com/superjoe30/connect-multiparty)
-  - express.query
-    - [qs](https://github.com/visionmedia/node-querystring)
-  - express.staticCache
-    - [st](https://github.com/isaacs/st)
-    - [connect-static](https://github.com/andrewrk/connect-static)
+这些是一些其他受欢迎的中间件模块。
 
-有关更多中间件模块，请参阅：
+{% include community-caveat.html %}
 
- - [http-framework](https://github.com/Raynos/http-framework/wiki/Modules)
- - [expressjs](https://github.com/expressjs)
+| 中间件模块                                               | 描述                                                                                                |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [helmet](https://github.com/helmetjs/helmet)        | 通过设置各种HTTP头来帮助安全您的应用。                                                                             |
+| [passport](https://github.com/jaredhanson/passport) | 使用 OAuth 、 OpenID 等“策略”进行身份验证。  更多信息请见 [passportjs.org](https://passportjs.org/)。 |

@@ -1,20 +1,20 @@
 ---
 layout: page
-title: Routing di base Express
+title: Instradamento di base espresso
+description: Impara i fondamenti del routing nelle applicazioni Express.js, tra cui come definire i percorsi, gestire i metodi HTTP e creare gestori del percorso per il tuo server web.
 menu: starter
 lang: it
-description: Learn the fundamentals of routing in Express.js applications, including
-  how to define routes, handle HTTP methods, and create route handlers for your web
-  server.
+redirect_from: ""
 ---
 
-# Routing di base
+# Instradamento base
 
-Per *Routing* si intende determinare come un'applicazione risponde a una richiesta client a un endpoint particolare, il quale è un URI (o percorso) e un metodo di richiesta HTTP specifico (GET, POST e così via).
+_Routing_ si riferisce alla determinazione di come un'applicazione risponde a una richiesta di client a un determinato endpoint, che è un URI (o percorso) e un metodo di richiesta HTTP specifico (GET, POST, e così via).
 
-Ciascuna route può disporre di una o più funzioni dell'handler, le quali vengono eseguite quando si trova una corrispondenza per la route.
+Ogni percorso può avere una o più funzioni di gestore, che vengono eseguite quando il percorso è abbinato.
 
-La definizione della route ha la seguente struttura:
+La definizione del percorso assume la seguente struttura:
+
 ```js
 app.METHOD(PATH, HANDLER)
 ```
@@ -22,17 +22,17 @@ app.METHOD(PATH, HANDLER)
 Dove:
 
 - `app` è un'istanza di `express`.
-- `METHOD` è un [metodo di richiesta HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol).
+- `METHOD` è un [metodo di richiesta HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods), in minuscolo.
 - `PATH` è un percorso sul server.
-- `HANDLER` è la funzione eseguita quando si trova una corrispondenza per la route.
+- `HANDLER` è la funzione eseguita quando il percorso è corrispondente.
 
 <div class="doc-box doc-notice" markdown="1">
-Questo tutorial presume che un'istanza di `express` denominata `app` sia stata creata e che il server sia in esecuzione. Se non si è in grado di creare un'applicazione e avviarla, consultare la sezione [Esempio di Hello world](/{{ page.lang }}/starter/hello-world.html).
+Questo tutorial presuppone che venga creata un'istanza di `express` chiamata `app` e che il server sia in esecuzione. Se non hai familiarità con la creazione di un'app e l'avvio, vedi l'esempio [Ciao mondo](/{{ page.lang }}/starter/hello-world.html).
 </div>
 
-I seguenti esempi mostrano come definire route semplici.
+Gli esempi che seguono illustrano la definizione di itinerari semplici.
 
-Rispondere con `Hello World!` sulla homepage:
+Rispondi con `Ciao Mondo!` nella homepage:
 
 ```js
 app.get('/', (req, res) => {
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-Rispondere alla richiesta POST sulla route principale (`/`), la home page dell'applicazione:
+Rispondi alla richiesta POST sul percorso radice (`/`), la home page dell'applicazione:
 
 ```js
 app.post('/', (req, res) => {
@@ -48,7 +48,7 @@ app.post('/', (req, res) => {
 })
 ```
 
-Rispondere a una richiesta PUT alla route `/user`:
+Rispondi a una richiesta PUT al percorso `/user`:
 
 ```js
 app.put('/user', (req, res) => {
@@ -56,7 +56,7 @@ app.put('/user', (req, res) => {
 })
 ```
 
-Rispondere a una richiesta DELETE alla route `/user`:
+Rispondi a una richiesta DELETE al percorso `/user`:
 
 ```js
 app.delete('/user', (req, res) => {
@@ -64,4 +64,6 @@ app.delete('/user', (req, res) => {
 })
 ```
 
-Per ulteriori dettagli sul routing, consultare il [Manuale routing](/{{ page.lang }}/guide/routing.html).
+Per maggiori dettagli sul routing, vedere la [guida di routing](/{{ page.lang }}/guide/routing.html).
+
+### [Previous: Express application generator ](/{{ page.lang }}/starter/generator.html)&nbsp;&nbsp;&nbsp;&nbsp;[Next: Servire file statici in Express ](/{{ page.lang }}/starter/static-files.html)

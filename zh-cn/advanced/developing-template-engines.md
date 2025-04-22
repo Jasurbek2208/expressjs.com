@@ -1,25 +1,26 @@
 ---
 layout: page
-title: 为 Express 开发模板引擎
+title: 开发快递模板引擎
+description: 学习如何使用 app.engine()，为Express.js 开发自定义的模板引擎，并用实例创建和整合您自己的模板渲染逻辑。
 menu: advanced
-lang: zh-cn
-description: Learn how to develop custom template engines for Express.js using app.engine(),
-  with examples on creating and integrating your own template rendering logic.
+lang: 中
+redirect_from: ""
 ---
 
-# 为 Express 开发模板引擎
+# 开发快递模板引擎
 
-可以使用 `app.engine(ext, callback)` 方法创建自己的模板引擎。`ext` 表示文件扩展名，而 `callback` 表示模板引擎函数，它接受以下项作为参数：文件位置、选项对象和回调函数。
+使用 `app.engine(ext, callback)` 方法来创建您自己的模板引擎。 `ext` 是指文件扩展名，而`callback` 是模板引擎函数。 接受以下项目作为参数：文件的位置、选项对象和回调函数。
 
-以下代码示例实现非常简单的模板引擎以呈现 `.ntl` 文件。
+下面的代码是实现渲染`.ntl`文件的非常简单的模板引擎的例子。
 
 ```js
 const fs = require('fs') // this engine requires the fs module
 app.engine('ntl', (filePath, options, callback) => { // define the template engine
   fs.readFile(filePath, (err, content) => {
-    if (err) return callback(new Error(err))
+    if (err) return callback(err)
     // this is an extremely simple template engine
-    const rendered = content.toString().replace('#title#', `<title>${options.title}</title>`)
+    const rendered = content.toString()
+      .replace('#title#', `<title>${options.title}</title>`)
       .replace('#message#', `<h1>${options.message}</h1>`)
     return callback(null, rendered)
   })
@@ -28,16 +29,19 @@ app.set('views', './views') // specify the views directory
 app.set('view engine', 'ntl') // register the template engine
 ```
 
-应用程序现在能够呈现 `.ntl` 文件。在 `views` 目录中创建名为 `index.ntl` 且包含以下内容的文件：
+您的应用现在可以渲染`.ntl`文件。 在`views`目录中创建一个具有以下内容的名为 `index.ntl`的文件。
 
 ```pug
 #title#
 #message#
 ```
-然后，在应用程序中创建以下路径：
+
+然后在您的应用中创建以下路线。
+
 ```js
 app.get('/', (req, res) => {
   res.render('index', { title: 'Hey', message: 'Hello there!' })
 })
 ```
-您向主页发出请求时，`index.ntl` 将呈现为 HTML。
+
+当您向主页提出请求时，`index.ntl`将以 HTML格式呈现。

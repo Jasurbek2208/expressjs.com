@@ -1,29 +1,35 @@
 ---
 layout: page
-title: Gerador de aplicativos do Express
+title: Gerador de aplicação expressa
+description: Aprenda a usar a ferramenta gerador de aplicativo Express para criar rapidamente um esqueleto para seus aplicativos Express.js, otimização de configuração e configuração.
 menu: starter
 lang: pt-br
-description: Learn how to use the Express application generator tool to quickly create
-  a skeleton for your Express.js applications, streamlining setup and configuration.
+redirect_from: ""
 ---
 
-# Gerador de aplicativos do Express
+# Gerador de aplicação expressa
 
-Use a ferramenta geradora de aplicativos, `express`,
-para rapidamente criar uma estrutura básica de aplicativo.
+Use a ferramenta de gerador de aplicação, `express-generator`, para criar rapidamente um esqueleto de aplicação.
 
-Instale o `express` com o comando a seguir:
+Você pode executar o gerador de aplicação com o comando `npx` (disponível em Node.js 8.2.0).
 
 ```bash
-$ npm install express-generator -g
+$ npx express-generator
 ```
 
-Exiba as opções de comando com a opção `-h`:
+Para versões anteriores do Nó, instale o gerador de aplicativo como um pacote npm global e, em seguida, inicie-o:
+
+```bash
+$ npm install -g express-generator
+$ express
+```
+
+Exibe as opções de comando com a opção '-h':
 
 ```bash
 $ express -h
 
-  Usage: express [options][dir]
+  Usage: express [options] [dir]
 
   Options:
 
@@ -34,14 +40,13 @@ $ express -h
         --pug           add pug engine support
     -H, --hogan         add hogan.js engine support
         --no-view       generate without view engine
-    -v, --view &lt;engine&gt; add view &lt;engine&gt; support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
-    -c, --css &lt;engine&gt;  add stylesheet &lt;engine&gt; support (less|stylus|compass|sass) (defaults to plain css)
+    -v, --view <engine> add view <engine> support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
+    -c, --css <engine>  add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
         --git           add .gitignore
     -f, --force         force on non-empty directory
 ```
 
-Por exemplo, o seguinte cria um aplicativo do Express chamado _myapp_
-no diretório atualmente em funcionamento:
+Por exemplo, o seguinte cria um aplicativo Expresso chamado _myapp_. O aplicativo será criado em uma pasta chamada _myapp_ no diretório de trabalho atual e o mecanismo de visualização será definido para <a href="https://pugjs.org/" target="_blank" title="Pug documentation">Pug</a>:
 
 ```bash
 $ express --view=pug myapp
@@ -65,7 +70,7 @@ $ express --view=pug myapp
    create : myapp/bin/www
 ```
 
-Em seguida instale as dependências:
+Em seguida, instale dependências:
 
 ```bash
 $ cd myapp
@@ -78,14 +83,19 @@ No MacOS ou Linux, execute o aplicativo com este comando:
 $ DEBUG=myapp:* npm start
 ```
 
-No Windows, use este comando:
+No prompt de comando Windows, use este comando:
 
 ```bash
 > set DEBUG=myapp:* & npm start
 ```
 
-Em seguida carregue `http://localhost:3000/` no seu navegador para acessar o aplicativo.
+No Windows PowerShell, use este comando:
 
+```bash
+PS> $env:DEBUG='myapp:*'; npm start
+```
+
+Em seguida, carregue `http://localhost:3000/` no seu navegador para acessar o aplicativo.
 
 O aplicativo gerado possui a seguinte estrutura de diretórios:
 
@@ -112,6 +122,7 @@ O aplicativo gerado possui a seguinte estrutura de diretórios:
 ```
 
 <div class="doc-box doc-info" markdown="1">
-A estrutura de aplicativo criada pelo gerador é apenas uma das várias maneiras de estruturar aplicativos do Express.
-É possível utilizar esta estrutura ou modificá-la para melhor se adequar às suas necessidades.
+A estrutura do aplicativo criada pelo gerador é apenas uma das muitas maneiras de estruturar aplicativos Express. Sinta-se livre para usar esta estrutura ou modificá-la para atender às suas necessidades.
 </div>
+
+### [Anterior: Olá Mundo ](/{{ page.lang }}/starter/hello-world.html)&nbsp;&nbsp;&nbsp;&nbsp;[Próximo: Roteamento básico](/{{ page.lang }}/starter/basic-routing.html)

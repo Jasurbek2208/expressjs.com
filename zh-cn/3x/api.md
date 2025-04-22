@@ -1,35 +1,29 @@
 ---
 layout: 3x-api
 title: Express 3.x - API 参考
+description: 访问 Express.js 版本 3.x 的 API 参考，注意到这个版本已经结束并且不再维护，包含模块和方法的详细信息。
 menu: api
-lang: zh-cn
-description: Access the API reference for Express.js version 3.x, noting that this
-  version is end-of-life and no longer maintained - includes details on modules and
-  methods.
+lang: 中
+redirect_from: ""
 ---
+
 <div id="api-doc" markdown="1">
 
   <div class="doc-box doc-warn" markdown="1">
-  **Express 3.x 不再受到维护**
+  **Express 3.x enD-OF-LIFE and NO LONGER MAINTAINED**
 
-  自上次更新（2015 年 8 月 1 日）以来 3.x 中已知和未知的安全问题和性能问题都尚未处理。因此强烈建议您使用最新版本的 Express。
+自上次更新以来（2015年8月1日）尚未处理3.x中已知和未知的安全和业绩问题。 强烈建议使用最新版本的Express。
+
+If you are unable to upgrade past 3.x, please consider [Commercial Support Options](/{{ page.lang }}/support#commercial-support-options).
+
   </div>
 
   <h1>3.x API</h1>
 
-  <a id='express' class='h2'></a>
-  {% include api/en/3x/express.md %}
-
-  <a id='application' class='h2'></a>
-  {% include api/en/3x/app.md %}
-
-  <a id='request' class='h2'></a>
-  {% include api/en/3x/req.md %}
-
-  <a id='response' class='h2'></a>
-  {% include api/en/3x/res.md %}
-
-  <a id='middleware' class='h2'></a>
-  {% include api/en/3x/middleware.md %}
+{% include api/en/3x/express.md %}
+{% include api/en/3x/app.md %}
+{% include api/en/3x/req.md %}
+{% include api/en/3x/res.md %}
+{% include api/en/3x/middleware.md %}
 
 </div>

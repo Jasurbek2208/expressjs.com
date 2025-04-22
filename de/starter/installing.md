@@ -1,46 +1,54 @@
 ---
 layout: page
 title: Express installieren
-description: Learn how to install Express.js in your Node.js environment, including setting up your project directory and managing dependencies with npm.
+description: Erfahren Sie, wie Sie Express.js in Ihrer Node.js-Umgebung installieren, einschließlich der Einrichtung Ihres Projektverzeichnisses und der Verwaltung von Abhängigkeiten mit npm.
 menu: starter
 lang: de
+redirect_from: ""
 ---
 
-# Installation
+# Installiere
 
-Angenommen, Sie haben [Node.js](https://nodejs.org/) bereits installiert. Erstellen Sie ein Verzeichnis für Ihre Anwendung und definieren Sie dieses Verzeichnis als Ihr Arbeitsverzeichnis.
+Angenommen, Sie haben bereits [Node.js]installiert (https://nodejs.org/), erstellen Sie ein Verzeichnis um Ihre Anwendung zu halten und machen Sie das Ihr Arbeitsverzeichnis.
+
+- [Express 4.x](/{{ page.lang }}/4x/api.html) erfordert Node.js 0.10 oder höher.
+- [Express 5.x](/{{ page.lang }}/5x/api.html) erfordert Node.js 18 oder höher.
 
 ```bash
 $ mkdir myapp
 $ cd myapp
 ```
 
-Erstellen Sie mit dem Befehl `npm init` eine Datei namens `package.json` für Ihre Anwendung. Weitere Informationen zur Funktionsweise von `package.json` finden Sie in den [Angaben zur Handhabung der npm-Datei package.json](https://docs.npmjs.com/files/package.json).
+Benutze den Befehl `npm init` um eine `package.json` Datei für deine Anwendung zu erstellen.
+Für weitere Informationen darüber, wie `package.json` funktioniert, siehe [Spezifikationen für npm's package.json handling](https://docs.npmjs.com/files/package.json).
 
 ```bash
 $ npm init
 ```
 
-Dieser Befehl fordert Sie zur Eingabe verschiedener Angaben wie Name und Version Ihrer Anwendung auf. Für den Moment reicht es, die Eingabetaste zu drücken und die Standardwerte für die meisten Angaben zu akzeptieren. Es gilt jedoch folgende Ausnahme:
+Dieser Befehl fragt Sie nach einer Reihe von Dingen wie dem Namen und der Version Ihrer Anwendung.
+Im Moment können Sie einfach RETURN drücken, um die Standardwerte für die meisten von ihnen zu akzeptieren, mit der folgenden Ausnahme:
 
-```bash
+```
 entry point: (index.js)
 ```
 
-Geben Sie `app.js` oder einen Namen Ihrer Vorstellung als Namen für die Hauptdatei ein. Wenn dieser Name `index.js` lauten soll, drücken Sie die Eingabetaste, um den vorgeschlagenen Standarddateinamen zu akzeptieren.
+Geben Sie `app.js` ein, oder was auch immer der Name der Hauptdatei sein soll. Wenn Sie `index.js` wollen, drücken Sie RETURN um den empfohlenen Dateinamen zu akzeptieren.
 
-Installieren Sie jetzt Express im Verzeichnis `myapp` und speichern Sie es in der Abhängigkeitsliste. Beispiel:
-
-```bash
-$ npm install express --save
-```
-
-Wenn Sie Express vorübergehend installieren und nicht zur Abhängigkeitsliste hinzufügen wollen, geben Sie die Option `--save` nicht an:
+Installieren Sie jetzt Express im `myapp` Verzeichnis und speichern Sie es in der Abhängigkeitsliste. Zum Beispiel:
 
 ```bash
 $ npm install express
 ```
 
+Um Express vorübergehend zu installieren und nicht zur Abhängigkeitsliste hinzufügen:
+
+```bash
+$ npm install express --no-save
+```
+
 <div class="doc-box doc-info" markdown="1">
-Node-Module, die mit der Option `--save` installiert werden, werden zur `Abhängigkeitsliste` in der Datei `package.json` hinzugefügt. Danach werden bei der Ausführung von `npm install` im Verzeichnis `app` automatisch alle Module in der Abhängigkeitsliste installiert.
+Standardmäßig fügt `npm install` mit Version npm 5.0+ das Modul der `dependencies` Liste im `package hinzu. son` file; mit früheren Versionen von npm musst du die `--save` Option explizit angeben. Danach wird das Ausführen von `npm install` im App-Verzeichnis automatisch Module in der Abhängigkeitsliste installiert.
 </div>
+
+### [Weiter: Hallo Welt ](/{{ page.lang }}/starter/hello-world.html)

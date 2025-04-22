@@ -1,38 +1,49 @@
 ---
 layout: page
-title: Utilizzo di motori di template con Express
+title: Utilizzo di modelli di motori con Express
+description: Scopri come integrare e utilizzare modelli di motori come Pug, Manubri ed EJS con Express.js per rendere le pagine HTML dinamiche in modo efficiente.
 menu: guide
 lang: it
-description: Discover how to integrate and use template engines like Pug, Handlebars,
-  and EJS with Express.js to render dynamic HTML pages efficiently.
+redirect_from: ""
 ---
 
-# Utilizzo di motori di template con Express
+# Utilizzo di modelli di motori con Express
 
-Prima che Express possa eseguire il rendering di file template, è necessario specificare le seguenti impostazioni dell'applicazione:
+Un motore _modello_ ti permette di utilizzare file di template statici nella tua applicazione. Al runtime, il modello del motore sostituisce le variabili
+in un modello di file con valori reali, e trasforma il modello in un file HTML inviato al client.
+Questo approccio rende più facile progettare una pagina HTML.
 
-* `views`, la directory dove sono ubicati i file di template. Ad esempio: `app.set('views', './views')`
-* `view engine`, il motore di template da utilizzare. Ad esempio: `app.set('view engine', 'pug')`
+Il generatore di applicazioni [Express](/{{ page.lang }}/starter/generator. tml) usa [Pug](https://pugjs.org/api/getting-started.html) come predefinito, ma supporta anche [Handlebars](https://www.npmjs.com/package/handlebars), e [EJS](https://www.npmjs.com/package/ejs), tra gli altri.
 
-Quindi, installare il pacchetto npm del motore di template corrispondente:
+Per rendere i file dei modelli, imposta le seguenti [proprietà delle impostazioni dell'applicazione](/{{ page.lang }}/4x/api.html#app.set), nel file `app.js` predefinito creato dal generatore:
+
+- `views`, la directory dove si trovano i file del modello. Eg: `app.set('views', './views')`.
+  Questo valore predefinito è la directory `views` nella directory radice dell'applicazione.
+- `view engine`, il modello motore da usare. Ad esempio, per usare il motore modello Pug: `app.set('view engine', 'pug')`.
+
+Quindi installare il corrispondente pacchetto npm del motore del modello; per esempio per installare Pug:
 
 ```bash
 $ npm install pug --save
 ```
 
-<div class="doc-box doc-notice" markdown="1">
-I motori di template compatibili con Express, ad esempio Pug esportano una funzione denominata `__express(filePath, options, callback)`, che viene richiamata dalla funzione `res.render()`, per il rendering del codice di template.
+<div class="doc-box doc-notice" markdown="1">Motori di modelli 
+conformi ad espresso, come Pug esportano una funzione chiamata `__express(filePath, options, callback)`,
+che `res.render()` chiama per rendere il codice del modello.
 
-Alcuni motori di template non seguono questa convenzione. La libreria [Consolidate.js](https://www.npmjs.org/package/consolidate) segue questa convenzione, associando tutti i motori di template Node.js popolari e, perciò, funziona ininterrottamente in Express.
+Alcuni modelli di motori non seguono questa convenzione. La libreria [@ladjs/consolidate](https://www.npmjs.com/package/@ladjs/consolidate)
+segue questa convenzione mappando tutti i popolari motori di template Node.js, e quindi funziona perfettamente all'interno di Express.
+
 </div>
 
-Una volta specificata l'impostazione view engine, non è necessario specificare il motore o caricare il modulo del motore di template nella propria app; Express carica il modulo internamente, come mostrato di seguito (per l'esempio precedente).
+Dopo che il motore di visualizzazione è stato impostato, non è necessario specificare il motore o caricare il modulo del motore modello nella tua app;
+Express carica il modulo internamente, per esempio:
 
 ```js
 app.set('view engine', 'pug')
 ```
 
-Creare un file di template Pug denominato `index.pug` nella directory `views`, con il seguente contenuto:
+Quindi, crea un file modello Pug chiamato `index.pug` nella directory `views`, con il seguente contenuto:
 
 ```pug
 html
@@ -42,7 +53,8 @@ html
     h1= message
 ```
 
-Quindi, creare una route per il rendering del file `index.pug`. Se la proprietà `view engine` non è impostata, è necessario specificare l'estensione del file `view`. Altrimenti, è possibile ometterla.
+Crea un percorso per rendere il file `index.pug`. Se la proprietà `view engine` non è impostata,
+è necessario specificare l'estensione del file `view`. Altrimenti, puoi ometterlo.
 
 ```js
 app.get('/', (req, res) => {
@@ -50,6 +62,6 @@ app.get('/', (req, res) => {
 })
 ```
 
-Quando si fa una richiesta alla home page, verrà eseguito il rendering del file `index.pug` come HTML.
+Quando effettui una richiesta alla home page, il file `index.pug` verrà renderizzato come HTML.
 
-Per ulteriori informazioni su come funzionano i motori di template in Express, consultare la sezione: ["Sviluppo dei motori di template per Express"](/{{ page.lang }}/advanced/developing-template-engines.html).
+La cache del motore di visualizzazione non memorizza in cache il contenuto dell'output del modello, solo il modello sottostante. La vista è ancora ri-renderizzata con ogni richiesta anche quando la cache è accesa.

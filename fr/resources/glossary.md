@@ -1,58 +1,60 @@
 ---
 layout: page
-title: Glossaire Express
+title: Glossaire express
+description: Un glossaire complet de termes liés à Express.js, Node.js, middleware, routing et autres concepts clés pour vous aider à comprendre et utiliser Express efficacement.
 menu: resources
 lang: fr
-description: A comprehensive glossary of terms related to Express.js, Node.js, middleware,
-  routing, and other key concepts to help you understand and use Express effectively.
+redirect_from: ""
 ---
 
-# Glossaire
+# Glossary
 
 ### application
 
-En général, un ou plusieurs programmes conçus pour réaliser des opérations dans un but précis.  Dans le contexte d'Express, il s'agit d'un programme qui utilise l'API Express s'exécutant sur la plateforme Node.js.  Peut également faire référence à un [objet d'application](/{{ page.lang }}/api.html#express).
+En général, un ou plusieurs programmes sont conçus pour réaliser des opérations à des fins précises.  Dans le contexte d'Express, un programme qui utilise l'API Express exécutée sur la plate-forme Node.js.  Peut également se référer à un [objet application](/{{ page.lang }}/api.html#express).
 
 ### API
 
-Interface de programme d'application.  Développez l'abréviation lorsqu'elle est utilisée pour la première fois.
+Interface de programmation applicative. Sortez l'abréviation quand elle est utilisée pour la première fois.
 
-### demande
+### Exprimé
 
-Demande HTTP.  Un client soumet un message de demande HTTP à un serveur, qui renvoie une réponse.  La demande doit utiliser une des [méthodes de demande](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) telles que GET, POST...
-
-### Express
-
-Infrastructure Web minimaliste, souple et rapide pour les applications Node.js.  En général, on préfère utiliser "Express" que "Express.js," bien que ce dernier soit acceptable.
+Un framework web rapide, sans avis et minimaliste pour les applications Node.js. En général, "Express" est préféré à "Express.js", bien que ce dernier soit acceptable.
 
 ### libuv
 
-Bibliothèque de prise en charge multiplateforme qui se centralise sur les E-S asynchrones, développée principalement pour être utilisée par Node.js.
+Une bibliothèque de support multi-plateforme qui se concentre sur les E/S asynchrones, principalement développée pour Node.js.
 
 ### middleware
 
-Fonction qui est appelée par la couche de routage Express avant le gestionnaire de demande final, et qui se trouve entre une demande brute et la route finale prévue.  Quelques points subtiles de terminologie autour des middleware :
+Une fonction qui est appelée par la couche de routage Express avant le gestionnaire de requête finale, et se trouve donc au milieu entre une requête brute et la route finale. Quelques bons points de terminologie autour du middleware :
 
-  * `var foo = require('middleware')` est appelé *demande* ou *utilisation* d'un module Node.js. Ensuite, l'instruction `var mw = foo()`  renvoie généralement le middleware.
-  * `app.use(mw)` est appelé *ajout du middleware à la pile de processus global*.
-  * `app.get('/foo', mw, function (req, res) { ... })` est appelé *ajout du middleware à la pile de processus "GET /foo"*.
+- `var foo = require('middleware')` est appelé _requiring_ ou _using_ un module Node.js. Puis l'instruction `var mw = foo()` retourne typiquement le middleware.
+- `app.use(mw)` est appelé _adding the middleware to the global processing stack_.
+- `app.get('/foo', mw, function (req, res) { ... })` est appelé _ajoutant le middleware à la pile de traitement "GET /foo".
 
 ### Node.js
 
-Plateforme logicielle utilisée pour générer des applications réseau évolutives. Node.js utilise JavaScript comme langage de script, et atteint un rendement élevé via une E-S non bloquante et une boucle d'événements à une seule unité d'exécution.  Voir [nodejs.org](http://nodejs.org/). **Note d'utilisation** : En général, "Node.js," "Node" par la suite.
+Une plate-forme logicielle utilisée pour construire des applications réseau évolutives. Node.js utilise JavaScript comme langage de script, et obtient un débit élevé via des E/S non-bloquantes et une boucle d'événements à un seul thread. Voir [nodejs.org](https://nodejs.org/en/). **Note d'utilisation**: Initialement, "Node.js," ensuite "Node".
 
 ### open-source, open source
 
-Lorsqu'il est utilisé comme adjectif, utilisez la forme avec le trait d'union. Par exemple : "Il s'agit d'un logiciel open-source." Voir [Open-source software sur Wikipedia](http://en.wikipedia.org/wiki/Open-source_software). Remarque : Bien qu'open-source ne soit pas commun, nous utilisons les règles anglaises standard pour unir par un trait d'union un adjectif composé.
+Lorsqu'il est utilisé comme adjectif, trait d'union, par exemple : "Il s'agit d'un logiciel open-source". Voir [Logiciel open source sur Wikipédia](http://en.wikipedia.org/wiki/Open-source_software).
+
+{% include admonitions/note.html content="Bien qu'il soit commun de ne pas césure ce terme, nous utilisons les règles standard anglaises pour séparer un adjectif composé." %}
+
+### demande
+
+Une requête HTTP. Un client envoie un message de requête HTTP à un serveur, qui retourne une réponse.  La requête doit utiliser une de plusieurs [méthodes de requête] (https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) telles que GET, POST, etc.
 
 ### réponse
 
-Réponse HTTP. Un serveur renvoie un message de réponse HTTP au client. La réponse contient des informations relatives à l'état d'achèvement de la demande et peut également contenir le contenu demandé dans le corps du message.
+Une réponse HTTP. Un serveur retourne un message de réponse HTTP au client. La réponse contient des informations sur l'état de la requête et peut également contenir le contenu demandé dans le corps du message.
 
 ### route
 
-Partie de l'URL qui permet d'identifier une ressource.  Par exemple, dans `http://foo.com/products/id`, "/products/id" est la route.
+Partie d'une URL qui identifie une ressource. Par exemple, dans `http://foo.com/products/id`, "/products/id" est la route.
 
 ### routeur
 
-Voir [routeur](/{{ page.lang }}/4x/api.html#router) dans Référence de l'API.
+Voir [router](/{{ page.lang }}/api.html#router) dans la référence de l'API.

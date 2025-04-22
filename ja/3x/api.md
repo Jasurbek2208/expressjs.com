@@ -1,35 +1,29 @@
 ---
 layout: 3x-api
 title: Express 3.x - API リファレンス
+description: Express.js バージョン 3.x の API リファレンスにアクセスします。このバージョンは寿命が終わり、メンテナンスされなくなりました。モジュールとメソッドの詳細が含まれています。
 menu: api
-lang: ja
-description: Access the API reference for Express.js version 3.x, noting that this
-  version is end-of-life and no longer maintained - includes details on modules and
-  methods.
+lang: en
+redirect_from: ""
 ---
+
 <div id="api-doc" markdown="1">
 
   <div class="doc-box doc-warn" markdown="1">
-  **Express 3.x は保守されなくなりました**
+  **エクスプレス 3.x is END-OF-LIFE and no longer MAINTAINED**
 
-  最終更新日 (2015 年 8 月 1 日) 以降、3.x における既知および不明のセキュリティーとパフォーマンスの問題には対応していません。最新バージョンの Express を使用することを強くお勧めします。
+3.x における既知のセキュリティとパフォーマンスの問題は、前回のアップデート(2015年8月1日)から解決されていません。 最新版のExpressをご利用いただくことを強くお勧めします。
+
+3.xを超えてアップグレードできない場合は、[Commercial Support Options](/{{ page.lang }}/support#commercial-support-options)をご検討ください。
+
   </div>
 
   <h1>3.x API</h1>
 
-  <a id='express' class='h2'></a>
-  {% include api/en/3x/express.md %}
-
-  <a id='application' class='h2'></a>
-  {% include api/en/3x/app.md %}
-
-  <a id='request' class='h2'></a>
-  {% include api/en/3x/req.md %}
-
-  <a id='response' class='h2'></a>
-  {% include api/en/3x/res.md %}
-
-  <a id='middleware' class='h2'></a>
-  {% include api/en/3x/middleware.md %}
+{% include api/en/3x/express.md %}
+{% include api/en/3x/app.md %}
+{% include api/en/3x/req.md %}
+{% include api/en/3x/res.md %}
+{% include api/en/3x/middleware.md %}
 
 </div>

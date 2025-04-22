@@ -1,58 +1,60 @@
 ---
 layout: page
-title: Glossario di Express
+title: Glossario espresso
+description: Un glossario completo di termini relativi a Express.js, Node.js, middleware, routing e altri concetti chiave per aiutarti a capire e utilizzare Express in modo efficace.
 menu: resources
 lang: it
-description: A comprehensive glossary of terms related to Express.js, Node.js, middleware,
-  routing, and other key concepts to help you understand and use Express effectively.
+redirect_from: ""
 ---
 
-# Glossario
+# Glossary
 
 ### applicazione
 
-Solitamente, uno o più programmi progettati per gestire operazioni per uno scopo specifico.  In ambito di Express, un programma che utilizza API Express in esecuzione su una piattaforma Node.js.  Potrebbe inoltre fare riferimento a [app object](/{{ page.lang }}/api.html#express).
+In generale, uno o più programmi che sono progettati per effettuare operazioni per uno scopo specifico.  Nel contesto di Express, un programma che utilizza l'API Express in esecuzione sulla piattaforma Node.js.  Potrebbe anche fare riferimento a un [app object](/{{ page.lang }}/api.html#express).
 
 ### API
 
-Interfaccia di programmazione dell'applicazione.  Si consiglia di scrivere per intero l'acronimo quando lo si usa per la prima volta.
+Interfaccia di programmazione applicativa. Spiega l'abbreviazione quando viene usata per la prima volta.
 
-### Express
+### Espresso
 
-Un framework web veloce, non categorico e minimalista per le applicazioni Node.js.  Solitamente, si preferisce utilizzare "Express" piuttosto che "Express.js," anche se il secondo è accettabile.
+Un framework web veloce, non opinabile, minimalista per applicazioni Node.js. In generale, "Express" è preferito a "Express.js", anche se quest'ultimo è accettabile.
 
 ### libuv
 
-Una libreria di supporto multi-piattaforma che si focalizza su I/O asincrono, in principio sviluppato per essere utilizzato da Node.js.
+Una libreria di supporto multi-piattaforma che si concentra su I/O asincrono sviluppato principalmente per l'uso da Node.js.
 
 ### middleware
 
-Una funzione che viene richiamata dal livello di routing Express prima dell'handler di richiesta finale, pertanto si trova al centro tra una richiesta base e la route prevista.  Segue un elenco che indica alcune terminologie utilizzate per middleware:
+Una funzione che viene invocata dallo strato di routing Express prima del gestore finale della richiesta, e si siede così al centro tra una richiesta grezza e il percorso finale previsto. Alcuni punti di fine terminologia intorno al middleware:
 
-  * `var foo = require('middleware')` significa *richiesta* o *utilizzo* di un modulo Node.js. E l'istruzione `var mw = foo()` solitamente restituisce il middleware.
-  * `app.use(mw)` significa *aggiunta del middleware allo stack di elaborazione globale*.
-  * `app.get('/foo', mw, function (req, res) { ... })` significa *aggiunta del middleware allo stack di elaborazione "GET /foo"*.
+- `var foo = require('middleware')` si chiama _requiring_ o _using_ un modulo Node.js. Quindi la dichiarazione `var mw = foo()` restituisce tipicamente il middleware.
+- `app.use(mw)` si chiama _aggiungendo il middleware allo stack globale di elaborazione_.
+- `app.get('/foo', mw, function (req, res) { ... })` si chiama _aggiungendo il middleware allo stack di elaborazione "GET /foo" .
 
 ### Node.js
 
-Una piattaforma software utilizzata per creare applicazioni di rete scalabili. Node.js utilizza JavaScript e il relativo linguaggio di scripting e raggiunge una trasmissione di dati elevata tramite un I/O non a blocchi e un loop di evento a thread singolo.  Consultare [nodejs.org](http://nodejs.org/). **Nota di utilizzo**: Inizialmente, "Node.js," successivamente "Node".
+Una piattaforma software che viene utilizzata per costruire applicazioni di rete scalabili. Node.js utilizza JavaScript come linguaggio di scripting e raggiunge un elevato rendimento tramite I/O non bloccante e un ciclo di eventi a filettatura singola. Vedi [nodejs.org](https://nodejs.org/en/). **Nota di utilizzo**: Inizialmente, "Node.js," in seguito "Node".
 
 ### open-source, open source
 
-Quando utilizzato come aggettivo, viene aggiunto un trattino; ad esempio: "Questo è un software open-source." Consultare [Software open-source su Wikipedia](http://en.wikipedia.org/wiki/Open-source_software). Nota: anche se è molto comune scriverlo senza trattino, stiamo utilizzando le regole dell'inglese standard che richiedono di inserire un trattino in un aggettivo composto.
+Quando usato come aggettivo, ifenato; per esempio: "Questo è software open-source." Vedi [Software Open-source su Wikipedia](http://en.wikipedia.org/wiki/Open-source_software).
+
+{% include admonitions/note.html content="Anche se è comune non trattenere questo termine, stiamo usando le regole standard inglesi per trattenere un aggettivo composto." %}
 
 ### richiesta
 
-Una richiesta HTTP.  Un client un messaggio di richiesta HTTP a un server, il quale restituisce una risposta.  La richiesta deve utilizzare uno dei diversi [metodi di richiesta](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) ad esempio GET, POST e così via.
+Una richiesta HTTP. Un client invia un messaggio di richiesta HTTP a un server, che restituisce una risposta.  La richiesta deve utilizzare uno dei diversi [metodi di richiesta](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) come GET, POST, e così via.
 
 ### risposta
 
-Una risposta HTTP. Un server restituisce un messaggio di risposta HTTP al client. La risposta contiene le informazioni sullo stato di completamento su una richiesta e potrebbe inoltre contenere del contenuto richiesto nel corpo del messaggio.
+Una risposta HTTP. Un server restituisce un messaggio di risposta HTTP al client. La risposta contiene informazioni sullo stato di completamento della richiesta e potrebbe anche contenere contenuto richiesto nel suo corpo del messaggio.
 
-### route
+### percorso
 
-Parte di un URL che identifica una risorsa.  Ad esempio, in `http://foo.com/products/id`, "/products/id" è la route.
+Parte di un URL che identifica una risorsa. Ad esempio, in `http://foo.com/products/id`, "/products/id" è il percorso.
 
 ### router
 
-Consultare [router](/{{ page.lang }}/4x/api.html#router) nei riferimenti API.
+Vedi [router](/{{ page.lang }}/api.html#router) nel riferimento API.

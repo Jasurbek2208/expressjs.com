@@ -1,45 +1,38 @@
 ---
 layout: page
-title: Roteamento básico no Express
+title: Roteamento básico expresso
+description: Aprenda os fundamentos do roteamento em aplicações Express.js, incluindo como definir rotas, lidar com métodos HTTP e criar manipuladores de rotas para seu servidor web.
 menu: starter
 lang: pt-br
-description: Learn the fundamentals of routing in Express.js applications, including
-  how to define routes, handle HTTP methods, and create route handlers for your web
-  server.
+redirect_from: ""
 ---
 
-# Roteamento Básico
+# Roteamento básico
 
-O *Roteamento* refere-se à determinação de como um
-aplicativo responde a uma solicitação do cliente por um endpoint
-específico, que é uma URI (ou caminho) e um método de solicitação HTTP
-específico (GET, POST, e assim por diante).
+_Routing_ refere-se a determinar como uma aplicação responde a uma solicitação do cliente para um ponto final específico, que é um URI (ou caminho) e um método de requisição HTTP específico (GET, POST, e assim por diante).
 
-Cada rota pode ter uma ou mais funções de manipulação, que são
-executadas quando a rota é correspondida.
+Cada rota pode ter uma ou mais funções de manipulador, que são executadas quando a rota é correspondente.
 
-A definição de rotas aceita a seguinte estrutura:
+A definição de rota aceita a seguinte estrutura:
+
 ```js
 app.METHOD(PATH, HANDLER)
 ```
 
 Onde:
 
-- `app` é uma instância do `express`.
-- `METHOD` é um [método de solicitação HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol).
-- `PATH` é um caminho no servidor.
-- `HANDLER` é a função executada quando a rota é correspondida.
+- `app` é uma instância de `express`.
+- `METHOD` é um [método de solicitação HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods), em minúsculas.
+- O `PATH` é um caminho no servidor.
+- `HANDLER` é a função executada quando a rota é correspondente.
 
 <div class="doc-box doc-notice" markdown="1">
-Este tutorial assume que uma instância de `express`
-chamada `app` está criada e o servidor está em
-execução. Caso não tenha familiaridade com a criação e inicialização
-de um aplicativo, consulte o [exemplo Hello world](/{{ page.lang }}/starter/hello-world.html).
+Este tutorial assume que uma instância `express` chamada `app` é criada e o servidor está sendo executado. Se você não estiver familiarizado com a criação de um aplicativo e iniciando-o, veja o [exemplo Olá mundo](/{{ page.lang }}/starter/hello-world.html).
 </div>
 
-Os seguintes exemplos ilustram a definição de rotas simples.
+Os exemplos seguintes ilustram a definição de rotas simples.
 
-Responder com `Hello World!` na página inicial:
+Responda com `Olá Mundo!` na página inicial:
 
 ```js
 app.get('/', (req, res) => {
@@ -47,7 +40,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-Responder a uma solicitação POST na rota raiz (`/`) com a página inicial do aplicativo:
+Responder a solicitação POST na rota raiz (`/`), a página inicial do aplicativo:
 
 ```js
 app.post('/', (req, res) => {
@@ -55,7 +48,7 @@ app.post('/', (req, res) => {
 })
 ```
 
-Responder a uma solicitação PUT para a rota `/user`:
+Responda a uma solicitação PUT para a rota `/user`:
 
 ```js
 app.put('/user', (req, res) => {
@@ -63,7 +56,7 @@ app.put('/user', (req, res) => {
 })
 ```
 
-Responder a uma solicitação DELETE para a rota `/user`:
+Responder a uma solicitação de DELETE para a rota `/user`:
 
 ```js
 app.delete('/user', (req, res) => {
@@ -71,4 +64,6 @@ app.delete('/user', (req, res) => {
 })
 ```
 
-Para obter mais detalhes  sobre roteamento, consulte o [guia de roteamento](/{{ page.lang }}/guide/routing.html).
+Para obter mais detalhes sobre roteamento, consulte o [guia de roteamento](/{{ page.lang }}/guide/routing.html).
+
+### [Anterior: Gerador de aplicativo expresso ](/{{ page.lang }}/starter/generator.html)&nbsp;&nbsp;&nbsp;&nbsp;[Próximo: Servendo arquivos estáticos no Express ](/{{ page.lang }}/starter/static-files.html)

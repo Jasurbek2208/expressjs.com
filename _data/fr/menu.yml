@@ -1,60 +1,52 @@
 # Home
-home: Accueil
-
+home: Domicile
 # Getting started
-getting_started: Mise en route
-installing: Installing
-hello_world: Hello world
+getting_started: Commencer
+installing: Installation en cours
+hello_world: Bonjour le monde
 generator: Générateur Express
 basic_routing: Routage de base
 static_files: Fichiers statiques
-examples: More examples
-faq: FAQ
-
+examples: Plus d'exemples
+faq: Foire Aux Questions
 # Guide
-guide: Guide
+guide: Tutoriel
 routing: Routage
-writing_middleware: Ecriture de middleware
-using_middleware: Utilisation de middleware
-overriding_express_api: Overriding the Express API
-using_template_engines: Utilisation de moteurs de modèles
-error_handling: Traitement d'erreurs
+writing_middleware: Écriture du middleware
+using_middleware: Utilisation du middleware
+overriding_express_api: Outrepasser l'API Express
+using_template_engines: Utiliser les moteurs de gabarits
+error_handling: Gestion des erreurs
 debugging: Débogage
-behind_proxies: Express derrière Proxys
-migrating_4: Migration vers Express 4
-migrating_5: Migration vers Express 5
-database_integration: Intégration de bases de données
-
+behind_proxies: Exprimez derrière les mandataires
+migrating_4: Déplacement vers Express 4
+migrating_5: Déplacement vers Express 5
+database_integration: Intégration de la base de données
 # API reference
-
-api: API reference
+api: Référence API
 5x: 5.x
 4x: 4.x
 3x: 3.x (obsolète)
 2x: 2.x (obsolète)
-
 # Advanced topics
-advanced: Rubriques avancées
-developing_template_engines: Moteurs de modèles
+advanced: Sujets avancés
+developing_template_engines: Construire des moteurs de gabarits
 security_updates: Mises à jour de sécurité
-best_practice_security: Meilleures pratiques en termes de sécurité
-best_practice_performance: Meilleures pratiques en termes de performances
-healthcheck_graceful_shutdown: Health checks & shutdown
-
+best_practice_security: Meilleures pratiques de sécurité
+best_practice_performance: Meilleures pratiques de performance
+healthcheck_graceful_shutdown: Extinction des contrôles de santé
 # Resources
-resources: Ressources
-glossary: Glossaire
+resources: Ressource
+glossary: Glossary
 middleware: Middleware
 community: Communauté
-utils: Utility modules
-contributing: Contributing to Express
-changelog: Release Change Log
-
+utils: Modules utilitaires
+contributing: Contribuer à Express
+changelog: Journal des changements de version
 # Support
-support: Support
-
+support: Soutien
 # Blog
-blog: Blog
-latest_post: Latest post
-all_posts: All posts
-write_post: Write a Post
+blog: Blogue
+latest_post: Dernier message
+all_posts: Toutes les publications
+write_post: Écrire un message

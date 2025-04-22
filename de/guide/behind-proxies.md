@@ -1,38 +1,47 @@
 ---
 layout: page
-title: Express hinter Proxys
-description: Learn how to configure Express.js applications to work correctly behind reverse proxies, including using the trust proxy setting to handle client IP addresses.
+title: Express hinter Proxies
+description: Lernen Sie, wie Sie Express.js Anwendungen so konfigurieren, dass sie hinter Reverse Proxies korrekt arbeiten, einschließlich der Trust-Proxy-Einstellung für Client-IP-Adressen.
 menu: guide
 lang: de
+redirect_from: ""
 ---
 
-# Express hinter Proxys
+# Express hinter Proxies
 
-Bei der Ausführung einer Express-Anwendung hinter einem Proxy legen Sie die Anwendungsvariable `trust proxy` (mithilfe von [app.set()](/{{ page.lang }}/4x/api.html#app.set)) auf einen der in der folgenden Tabelle enthaltenen Werte fest:
+Wenn Sie eine Express-App hinter einem Reverse Proxy ausführen, können einige der Express-APIs andere Werte als erwartet zurückgeben. Um dies anzupassen die Einstellung `trust proxy` kann verwendet werden, um Informationen auszublenden, die vom Reverse Proxy in den Express API bereitgestellt werden. Das häufigste Problem sind Express-APIs, die die IP-Adresse des Clients offenlegen, statt dessen eine interne IP-Adresse des Reverse Proxy anzeigen.
 
 <div class="doc-box doc-info" markdown="1">
-Auch wenn die Anwendungsausführung nicht fehlschlägt, wenn die Anwendungsvariable `trust proxy` nicht festgelegt wurde, wird die IP-Adresse des Proxys nicht ordnungsgemäß als Client-IP-Adresse eingetragen, es sei denn, `trust proxy` wurde konfiguriert.
+Bei der Konfiguration der `trust proxy` Einstellung ist es wichtig, das genaue Setup des Reverse Proxy zu verstehen. Da diese Einstellung den in der Anfrage angegebenen Werten vertrauen wird ist es wichtig, dass die Kombination der Einstellung in Express mit der Funktionsweise des Reverse Proxy übereinstimmt.
 </div>
+
+Die Anwendungseinstellung `trust proxy` kann auf einen der in der folgenden Tabelle aufgelisteten Werte gesetzt werden.
 
 <table class="doctable" border="1" markdown="1">
   <thead><tr><th>Typ</th><th>Wert</th></tr></thead>
   <tbody>
     <tr>
-      <td>Boolesch</td>
+      <td>Boolean</td>
 <td markdown="1">
-Wenn `true` angegeben wird, wird die IP-Adresse des Clients als der äußerst rechte Eintrag im Header `X-Forwarded-*` interpretiert.
-Wenn `false` angegeben wird, wird die Anwendung als direkte Verbindung zum Internet gesehen. Die IP-Adresse des Clients wird dann von `req.connection.remoteAddress` abgeleitet. Dies ist die Standardeinstellung.
+Wenn `true`, wird die IP-Adresse des Clients als linker Eintrag im `X-Forwarded-For` Header verstanden.
+
+Falls „falsch“ die App als direkt gegenüber dem Client verstanden wird und die IP-Adresse des Clients von „req.socket.remoteAddress“ abgeleitet wird. Dies ist die Standardeinstellung.
+
+<div class="doc-box doc-warn" markdown="1">
+wenn auf `true` gesetzt wird, ist es wichtig sicherzustellen, dass der letzte Reverse Proxy alle folgenden HTTP-Header entfernt/überschreibt: `X-Forwarded-For`, `X-Forwarded-Host` und `X-Forwarded-Proto`, andernfalls ist es möglich, dass der Client irgendeinen Wert angibt.
+</div>
 </td>
     </tr>
     <tr>
-      <td>IP-Adressen</td>
+      <td>IP addresses</td>
 <td markdown="1">
-Eine einzelne IP-Adresse, ein Teilnetz oder ein Array von IP-Adressen und Teilnetzen, denen vertraut werden kann. Die folgende Liste zeigt die vorkonfigurierten Teilnetznamen:
-* loopback - `127.0.0.1/8`, `::1/128`
-* linklocal - `169.254.0.0/16`, `fe80::/10`
-* uniquelocal - `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `fc00::/7`.
+An IP address, subnet, or an array of IP addresses and subnets to trust as being a reverse proxy. The following list shows the pre-configured subnet names:
 
-Sie können IP-Adressen wie folgt festlegen:
+- loopback - `127.0.0.1/8`, `::1/128`
+- linklocal - `169.254.0.0/16`, `fe80::/10`
+- uniquelocal - `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `fc00::/7`
+
+Sie können IP-Adressen auf jede der folgenden Arten festlegen:
 
 ```js
 app.set('trust proxy', 'loopback') // specify a single subnet
@@ -41,19 +50,24 @@ app.set('trust proxy', 'loopback, linklocal, uniquelocal') // specify multiple s
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']) // specify multiple subnets as an array
 ```
 
-Sobald die Werte angegeben wurden, werden die betreffenden IP-Adressen und Teilnetze aus dem Adressfeststellungsprozess ausgeschlossen. Die nicht vertrauenswürdige IP-Adresse, die am nächsten zum Anwendungsserver liegt, wird als IP-Adresse des Clients festgelegt.
+Wenn angegeben, werden die IP-Adressen oder Subnetze vom Prozess der Adressermittlung ausgeschlossen und die dem Anwendungsserver nächstgelegene nicht vertrauenswürdige IP-Adresse wird als IP-Adresse des Clients ermittelt. Dies funktioniert indem überprüft wird, ob `req.socket.remoteAddress` vertrauenswürdig ist. Wenn ja, dann wird jede Adresse in `X-Forwarded-For` von rechts nach links bis zur ersten Adresse überprüft, die nicht vertrauenswürdig ist.
+
 </td>
     </tr>
     <tr>
-      <td>Zahl</td>
+      <td>Nummer</td>
 <td markdown="1">
-Dem `n`-ten Hop vom Proxy-Server soll als Client vertraut werden.
+Benutzen Sie die Adresse, die höchstens `n` von der Express-Anwendung entfernt ist. `req.socket.remoteAddress` ist der erste Hop, und der Rest wird im `X-Forwarded-For` Header von rechts nach links gesucht. Ein Wert von `0` bedeutet, dass die erste nicht vertrauenswürdige Adresse `req.socket.remoteAddress` ist, d.h. es gibt keinen Reverse-Proxy.
+
+<div class="doc-box doc-warn" markdown="1">
+Wenn Sie diese Einstellung verwenden, ist es wichtig sicherzustellen, dass es keine Multiple gibt, verschiedene Pfade zur Express-Anwendung, so dass der Client kleiner sein kann als die konfigurierte Anzahl von Hops, die entfernt sind andernfalls kann es möglich sein, dass der Kunde irgendeinen Wert angibt.
+</div>
 </td>
     </tr>
     <tr>
-      <td>Funktion</td>
+      <td>Function</td>
 <td markdown="1">
-Individuell angepasste, vertrauenswürdige Implementierung. Dies sollten Sie nur verwenden, wenn Sie genau wissen, was Sie tun. 
+Custom trust implementation.
 
 ```js
 app.set('trust proxy', (ip) => {
@@ -61,20 +75,21 @@ app.set('trust proxy', (ip) => {
   else return false
 })
 ```
+
 </td>
     </tr>
   </tbody>
 </table>
 
-Die Festlegung eines anderen `trust proxy`-Werts als `false` resultiert in drei wichtigen Änderungen:
+Das Aktivieren von `trust proxy` hat folgende Auswirkungen:
 
 <ul>
-  <li markdown="1">Der Wert für [req.hostname](/{{ page.lang }}/api.html#req.hostname) wird vom Wert abgeleitet, der im Header `X-Forwarded-Host` festgelegt wurde. Dieser Wert kann vom Client oder Proxy festgelegt werden.
-</li>
-  <li markdown="1">`X-Forwarded-Proto` kann vom Reverse Proxy festgelegt werden, um der Anwendung mitzuteilen, ob es sich um `https` oder `http` oder sogar um einen ungültigen Namen handelt. Dieser Wert wird durch [req.protocol](/{{ page.lang }}/api.html#req.protocol) abgebildet.
+  <li markdown="1">Der Wert von [req.hostname](/{{ page.lang }}/api.html#req. ostname) wird aus dem Wert abgeleitet, der im `X-Forwarded-Host` Header gesetzt wird, der vom Client oder vom Proxy gesetzt werden kann.
   </li>
-  <li markdown="1">Als Werte für [req.ip](/{{ page.lang }}/api.html#req.ip) und [req.ips](/{{ page.lang }}/api.html#req.ips) wird die Liste der Adressen aus `X-Forwarded-For` herangezogen.
+  <li markdown="1">`X-Forwarded-Proto` kann vom Reverse Proxy gesetzt werden, um der App mitzuteilen, ob es `https` oder `http` oder sogar ein ungültiger Name ist. Dieser Wert wird von [req.protocol](/{{ page.lang }}/api.html#req.protocol) reflektiert.
+  </li>
+  <li markdown="1">Die [req.ip](/{{ page.lang }}/api.html#req.ip) und [req.ips](/{{ page.lang }}/api.html#req. ps) Werte werden basierend auf der Socket-Adresse und dem "X-Forwarded-For"-Header gefüllt, beginnend mit der ersten nicht vertrauenswürdigen Adresse.
   </li>
 </ul>
 
-Die Einstellung für `trust proxy` wird mithilfe des [proxy-addr](https://www.npmjs.com/package/proxy-addr)-Pakets implementiert. Weitere Informationen finden Sie in der zugehörigen Dokumentation.
+Die `trust proxy` Einstellung ist mit dem [proxy-addr](https://www.npmjs.com/package/proxy-addr) Paket implementiert. Weitere Informationen finden Sie in der Dokumentation.

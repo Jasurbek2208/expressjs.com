@@ -1,60 +1,52 @@
 # Home
-home: Página Inicial
-
+home: Residencial
 # Getting started
-getting_started: Introdução
-installing: Instalação
-hello_world: Hello world
-generator: Gerador do Express
-basic_routing: Roteamento Básico
-static_files: Arquivos Estáticos
-examples: Perguntas mais frequentes
-faq: FAQ
-
+getting_started: Primeiros Passos
+installing: Instalando
+hello_world: Olá, mundo
+generator: Gerador expresso
+basic_routing: Roteamento básico
+static_files: Arquivos estáticos
+examples: Mais exemplos
+faq: Perguntas Frequentes
 # Guide
-guide: Guide
+guide: Guia
 routing: Roteamento
-writing_middleware: Escrevendo o middleware
+writing_middleware: Escrevendo middleware
 using_middleware: Usando o middleware
-overriding_express_api: Overriding the Express API
-using_template_engines: Usando o mecanismo de modelo
+overriding_express_api: Sobrescrevendo a API Expresso
+using_template_engines: Usando motores de modelos
 error_handling: Manipulação de erros
 debugging: Depuração
-behind_proxies: Express atrás de proxies
-migrating_4: Migrando para o Express 4
-migrating_5: Migrando para o Express 5
-database_integration: Integração de Banco de dados
-
+behind_proxies: Expresso atrás dos proxies
+migrating_4: Mover para Expresso 4
+migrating_5: Movendo para Expresso 5
+database_integration: Integração com base de dados
 # API reference
-
 api: Referência da API
 5x: 5.x
 4x: 4.x
-3x: 3.x (descontinuada)
-2x: 2.x (descontinuada)
-
+3x: 3.x (obsoleto)
+2x: 2. x (obsoleto)
 # Advanced topics
-advanced: Tópicos Avançados
-developing_template_engines: Mecanismos de modelo
+advanced: Tópicos avançados
+developing_template_engines: Mecanismos de construção
 security_updates: Atualizações de segurança
 best_practice_security: Melhores práticas de segurança
 best_practice_performance: Melhores práticas de desempenho
-healthcheck_graceful_shutdown: Health checks & shutdown
-
+healthcheck_graceful_shutdown: Verificações de saúde e desligamento
 # Resources
 resources: Recursos
-glossary: Glossário
-middleware: Middleware
+glossary: Glossary
+middleware: Mediador
 community: Comunidade
-utils: Utility modules
-contributing: Contributing to Express
-changelog: Release Change Log
-
+utils: Módulos utilitários
+contributing: Contribuindo para Expresso
+changelog: Lançar Registro de Alterações
 # Support
-support: Suporte
-
+support: SUPORTE
 # Blog
-blog: Blog
-latest_post: Ultimos post
-all_posts: Todos posts
-write_post: Escreva um Post
+blog: Blogue
+latest_post: Última publicação
+all_posts: Todas as postagens
+write_post: Escrever uma publicação

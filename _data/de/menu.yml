@@ -1,60 +1,52 @@
 # Home
-home: Home
-
+home: Zuhause
 # Getting started
-getting_started: Einführung
-installing: Installing
-hello_world: Hello world
-generator: Express generator
+getting_started: Erste Schritte
+installing: Installiere
+hello_world: Hallo Welt
+generator: Express-Generator
 basic_routing: Basisrouting
 static_files: Statische Dateien
-examples: More examples
-faq: Häufig gestellte Fragen
-
+examples: Weitere Beispiele
+faq: FAQ
 # Guide
-guide: Leitfaden
+guide: Anleitung
 routing: Routing
 writing_middleware: Middleware schreiben
 using_middleware: Middleware verwenden
-overriding_express_api: Overriding the Express API
+overriding_express_api: Überschreiben der Express-API
 using_template_engines: Template-Engines verwenden
 error_handling: Fehlerbehandlung
-debugging: Debugging
-behind_proxies: Express hinter Proxys
-migrating_4: Wechsel zu Express 4
-migrating_5: Wechsel zu Express 5
+debugging: Debuggen
+behind_proxies: Express hinter Proxies
+migrating_4: Umzug nach Express 4
+migrating_5: Umzug nach Express 5
 database_integration: Datenbankintegration
-
 # API reference
-
 api: API-Referenz
 5x: 5.x
-4x: 4.x
+4x: 4,x
 3x: 3.x (veraltet)
 2x: 2.x (veraltet)
-
 # Advanced topics
-advanced: Themen für Fortgeschrittene
-developing_template_engines: Template-Engines
+advanced: Erweiterte Themen
+developing_template_engines: Bauvorlagen-Engines
 security_updates: Sicherheitsupdates
-best_practice_security: Sicherheitsspezifische Best Practices
-best_practice_performance: Leistungsspezifische Best Practices
-healthcheck_graceful_shutdown: Health checks & shutdown
-
+best_practice_security: Sicherheits-Best Practices
+best_practice_performance: Best Practices
+healthcheck_graceful_shutdown: Gesundheitschecks & Herunterfahren
 # Resources
 resources: Ressourcen
-glossary: Glossar
+glossary: Glossary
 middleware: Middleware
 community: Community
-utils: Utility modules
-contributing: Contributing to Express
-changelog: Release Change Log
-
+utils: Utility Module
+contributing: Beitrag zu Express
+changelog: Änderungsprotokoll freigeben
 # Support
-support: Support
-
+support: Unterstützung
 # Blog
 blog: Blog
-latest_post: Latest post
-all_posts: All posts
-write_post: Write a Post
+latest_post: Neuester Beitrag
+all_posts: Alle Beiträge
+write_post: Beitrag schreiben

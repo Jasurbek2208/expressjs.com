@@ -1,65 +1,87 @@
 ---
 layout: page
-title: Atualizações de segurança do Express
+title: Atualizações de segurança expressa
+description: Revise as últimas atualizações de segurança e patches do Express.js, incluindo listas detalhadas de vulnerabilidades para diferentes versões para ajudar a manter um aplicativo seguro.
 menu: advanced
 lang: pt-br
-description: Review the latest security updates and patches for Express.js, including
-  detailed vulnerability lists for different versions to help maintain a secure application.
+redirect_from: ""
 ---
 
 # Atualizações de segurança
 
 <div class="doc-box doc-notice" markdown="1">
-As vulnerabilidades do Node.js afetam diretamente o Express. Portanto
-[fique atento às
-vulnerabilidades do Node.js](https://nodejs.org
-/en/blog/vulnerability/) e certifique-se de que você está
-usando a versão estável mais recente do Node.js.
+vulnerabilidades do Node.js afetam diretamente o Express. Portanto, [mantenha um relógio nas vulnerabilidades do Node.js](https://nodejs.org/en/blog/vulnerability/) e certifique-se de estar usando a última versão estável do Node.js.
 </div>
 
-A lista abaixo enumera as vulnerabilidades do Express que foram
-corrigidas na versão da atualização especificadas.
+A lista abaixo enumera as vulnerabilidades Express que foram corrigidas na atualização da versão especificada.
+
+{% capture security-policy %}
+Se você acredita que descobriu uma vulnerabilidade de segurança em Express, por favor, veja
+[Políticas de Segurança e Procedimentos](/{{page.lang}}/resources/contributing.html#security-policies-and-procedures).
+{% endcapture %}
+
+{% include admonitions/note.html content=security-policy %}
 
 ## 4.x
 
-  * 4.11.1
-    * Corrigida a vulnerabilidade de divulgação do caminho
-raiz no `express.static`, `res.sendfile`, e `res.sendFile`
-  * 4.10.7
-    * Corrigida a vulnerabilidade de redirecionamento aberto
-no `express.static` ([recomendação](https://npmjs.com/advisories/35),
-[CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)).
-  * 4.8.8
-    * Corrigida a vulnerabilidade de travessia de diretório no `express.static` ([recomendação](http://npmjs.com/advisories/32), [CVE-2014-6394](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6394)).
-  * 4.8.4
-    * O Node.js 0.10 pode vazar os `fd`s em certas situações que afetam o `express.static` e o
-`res.sendfile`. Solicitações maliciosas podem causar os `fd`s a vazar e eventualmente levar a erros
-de `EMFILE` e servidores sem capacidade de resposta.
-  * 4.8.0
-    * Matrizes esparsas que possuem índices extremamente altos na sequência de consulta podem fazer com que o processo sofra um
-esgotamento de memória e derrubar o servidor.
-    * Objetos de sequência de consulta extremamente aninhados podem fazer com que o processo fique bloqueado e o servidor
-temporariamente não responsivo.
-
+- 4.21.2
+  - A dependência `path-to-regexp` foi atualizada para o endereço de um [vulnerability](https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-rhx6-c78j-4q9w).
+- 4.21.1
+  - A dependência `cookie` foi atualizada para o endereço [vulnerability](https://github.com/jshttp/cookie/security/advisories/GHSA-pxg6-pf52-xh8x), isso pode afetar sua aplicação se você usar `res.cookie`.
+- 4.20.0
+  - Vulnerabilidade XSS corrigida em `res.redirect` ([advisory](https://github.com/expressjs/express/security/advisories/GHSA-qw6h-vgh9-j6wx), [CVE-2024-43796](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-43796)).
+  - A dependência `serve-static` foi atualizada para o endereço [vulnerability](https://github.com/advisories/GHSA-cm22-4g7w-348p).
+  - A dependência `enviar` foi atualizada para o endereço [vulnerability](https://github.com/advisories/GHSA-m6fv-jmcg-4jfg).
+  - A dependência `path-to-regexp` foi atualizada para o endereço de um [vulnerability](https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-9wv6-86v2-598j).
+  - A dependência `body-parser` foi atualizada para adicionar um [vulnerability](https://github.com/advisories/GHSA-qwcr-r2fm-qrc7), isso pode afetar sua aplicação se você tiver uma url ativa de codificação.
+- 4.19.0, 4.19.1
+  - Corrigido a vulnerabilidade de redirecionamento aberto em `res.location` e `res.redirect` ([advisory](https://github.com/expressjs/express/security/advisories/GHSA-rv95-896h-c2vc), [CVE-2024-29041](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-29041)).
+- 4.17.3
+  - A dependência `qs` foi atualizada para o endereço [vulnerability](https://github.com/advisories/GHSA-hrpp-h998-j3pp). Isso pode afetar sua aplicação se as seguintes APIs forem usadas: `req.query`, `req.body`, `req.param`.
+- 4.16.0
+  - A dependência `encaminhado` foi atualizada para o endereço [vulnerability](https://npmjs.com/advisories/527). Isso pode afetar sua aplicação se as seguintes APIs forem usadas: `req.host`, `req.hostname`, `req.ip`, `req.ips`, `req.protocol`.
+  - A dependência `mime` foi atualizada para endereçar um [vulnerability](https://npmjs.com/advisories/535), mas esta issue não afeta o Express.
+  - A dependência `send` foi atualizada para fornecer uma proteção contra uma [Node.js 8.5.0 vulnerabilidade](https://nodejs.org/en/blog/vulnerability/september-2017-path-validation/). Isso só afeta a execução do Express na versão 8.5.0 específica do Node.js.
+- 4.15.5
+  - A dependência `debug` foi atualizada para endereçar um [vulnerability](https://snyk.io/vuln/npm:debug:20170905), mas esta issue não afeta o Express.
+  - A dependência `fresh` foi atualizada para endereço [vulnerability](https://npmjs.com/advisories/526). Isso afetará sua aplicação se as seguintes APIs forem usadas: `express.static`, `req.fresh`, `res.json`, `res.jsonp`, `res.send`, `res.sendfile` `res.sendFile`, `res.sendFile`, `res.sendStatus`.
+- 4.15.3
+  - A dependência `ms` foi atualizada para endereço [vulnerability](https://snyk.io/vuln/npm:ms:20170412). Isso pode afetar sua aplicação se entrada de string não confiável for passada para a opção `maxAge` nas seguintes APIs: `express.static`, `res.sendfile` e `res.sendFile`.
+- 4.15.2
+  - A dependência `qs` foi atualizada para endereçar um [vulnerability](https://snyk.io/vuln/npm:qs:20170213), mas esta issue não afeta o Express. Atualizar para 4.15.2 é uma boa prática, mas não é necessário para resolver a vulnerabilidade.
+- 4.11.1
+  - vulnerabilidade de divulgação de caminhos raiz corrigidos em `express.static`, `res.sendfile`, e `res.sendFile`
+- 4.10.7
+  - Corrigido a vulnerabilidade de redirecionamento aberto em `express.static` ([advisory](https://npmjs.com/advisories/35), [CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)).
+- 4.8.8
+  - Vulnerabilidades de travessia de diretório fixas em `express.static` ([advisory](http://npmjs.com/advisories/32) , [CVE-2014-6394](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6394)).
+- 4.8.4
+  - Node.js 0.10 pode vazar `fd`s em certas situações que afetam `express.static` e `res.sendfile`. Solicitações maliciosas podem causar vazamento de `fd`s e eventualmente levar a erros `EMFILE` e servidor sem resposta.
+- 4.8.0
+  - Matrizes Sparse que possuem índices extremamente altos na cadeia de consulta pode fazer com que o processo fique sem memória e falhe o servidor.
+  - Objetos de string de consulta extremamente aninhados poderiam fazer com que o processo bloqueasse e tornar o servidor temporariamente não responsivo.
 
 ## 3.x
 
-  * 3.19.1
-    * Corrigida a vulnerabilidade de divulgação do caminho raiz no `express.static`,
-`res.sendfile`, e `res.sendFile`
-  * 3.19.0
-    * Corrigida a vulnerabilidade de redirecionamento aberto no `express.static` ([recomendação](https://npmjs.com/advisories/35),
-[CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)).
-  * 3.16.10
-    * Corrigida a vulnerabilidade de travessia de diretório no `express.static`.
-  * 3.16.6
-    * O Node.js 0.10 pode vazar os `fd`s em certas situações que afetam o `express.static` e o
-`res.sendfile`. Solicitações maliciosas podem causar os `fd`s a vazar e eventualmente levar a erros de
-`EMFILE` e servidores sem capacidade de resposta.
-  * 3.16.0
-    * Matrizes esparsas que possuem índices extremamente altos na sequência de consulta podem fazer com que o processo sofra um
-esgotamento de memória e derrubar o servidor.
-    * Objetos de sequência de consulta extremamente aninhados podem fazer com que o processo fique bloqueado e o servidor
-temporariamente não responsivo.
-  * 3.3.0
-    * A resposta 404 de uma tentativa de substituição de um método não suportado era suscetível a ataques de cross-site scripting.
+  <div class="doc-box doc-warn" markdown="1">
+  **Express 3.x support is ending soon**
+
+Problemas conhecidos e desconhecidos de segurança e desempenho em 3.x não foram abordados desde a última atualização (1 de agosto de 2015). É altamente recomendado usar a versão mais recente do Express.
+
+Se você não puder atualizar as últimas 3.x, por favor considere as [Opções de Suporte Comercial](/{{ page.lang }}/support#comercial-support-options).
+
+  </div>
+
+- 3.19.1
+  - vulnerabilidade de divulgação de caminhos raiz corrigidos em `express.static`, `res.sendfile`, e `res.sendFile`
+- 3.19.0
+  - Corrigido a vulnerabilidade de redirecionamento aberto em `express.static` ([advisory](https://npmjs.com/advisories/35), [CVE-2015-1164](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1164)).
+- 3.16.10
+  - Vulnerabilidades de transposição de diretório fixas em `express.static`.
+- 3.16.6
+  - Node.js 0.10 pode vazar `fd`s em certas situações que afetam `express.static` e `res.sendfile`. Solicitações maliciosas podem causar vazamento de `fd`s e eventualmente levar a erros `EMFILE` e servidor sem resposta.
+- 3.16.0
+  - Matrizes Sparse que possuem índices extremamente altos em cadeia de consulta pode fazer com que o processo fique sem memória e falhe o servidor.
+  - Objetos de string de consulta extremamente aninhados poderiam fazer com que o processo bloqueasse e tornar o servidor temporariamente não responsivo.
+- 3.3.0
+  - A resposta 404 de uma tentativa de substituição de método não suportado era suscetível a ataques de script entre sites.

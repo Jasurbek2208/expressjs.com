@@ -1,68 +1,112 @@
 ---
 layout: page
-title: 実稼働環境における Express のセキュリティーに関するベスト・プラクティス
+title: 本番環境におけるエクスプレスのセキュリティベストプラクティスについて
+description: 運用中のExpressアプリのセキュリティベストプラクティス(TLSの使用、入力検証、セキュリティ保護されたCookieの使用、脆弱性の防止など)をご覧ください。
 menu: advanced
-lang: ja
-description: Discover crucial security best practices for Express apps in production,
-  including using TLS, input validation, secure cookies, and preventing vulnerabilities.
+lang: en
+redirect_from: ""
 ---
 
-# 実稼働環境におけるベスト・プラクティス: セキュリティー
+# プロダクションのベストプラクティス：セキュリティ
 
-## 概説
+## 概要
 
-「*実稼働*」という用語は、ソフトウェアのライフサイクルにおいて、アプリケーションや API をエンド・ユーザーまたはコンシューマーが広く使用できる段階を指します。対照的に、「*開発*」段階では、まだコードの作成とテストを積極的に行っていて、アプリケーションへの外部アクセスは不可能です。対応するシステム環境は、それぞれ*実稼働* 環境と*開発* 環境と呼ばれています。
+_"production"_ という用語は、アプリケーションや API がエンドユーザーや消費者に一般的に提供されるソフトウェアのライフサイクルにおける段階を指します。 対照的に、_"development"_段階では、コードを積極的に書いたりテストしたりしており、アプリケーションは外部からのアクセスに開かれていません。 対応するシステム環境はそれぞれ _production_ と _development_ と呼ばれています。
 
-開発環境と実稼働環境は通常、別々にセットアップされ、それぞれの要件は大きく異なっています。開発環境では許可されることが、実稼働環境では許可されないことがあります。例えば、開発環境ではデバッグのためにエラーの詳細なロギングを実行できますが、同じ動作が実稼働環境ではセキュリティー上の問題となります。開発環境では、スケーラビリティー、信頼性、パフォーマンスについて心配する必要はありませんが、それらは実稼働環境では重大な問題となります。
+開発環境と生産環境は通常、異なる設定であり、非常に異なる要件を持っています。 開発で問題のあるものは、生産では受け入れられないかもしれません。 たとえば、開発環境では、デバッグ用のエラーの詳細なロギングを行うことができます。 同じ行動が本番環境ではセキュリティ上の懸念になることがあります 開発では拡張性、信頼性、パフォーマンスを心配する必要はありませんが、それらの懸念は生産において重要になります。
 
-{% include admonitions/note.html content="If you believe you have discovered a security vulnerability in Express, please see [Security Policies and Procedures](/en/resources/contributing.html#security-policies-and-procedures)." %}
+{% include admonitions/note.html content="Express でセキュリティ上の脆弱性を発見したと思われる場合は、
+[Security Policies and Procedures](/en/resources/contributing.html#security-policies-and-procedures) をご覧ください。
+" %}
 
-本番環境でのExpressアプリケーションのセキュリティのベスト・プラクティスは次のとおりです。
+実稼働中の Express アプリケーションのセキュリティのベスト プラクティスは以下のとおりです。
 
-- [非推奨バージョンや脆弱なバージョンの Express を使用しない](#dont-use-deprecated-or-vulnerable-versions-of-express)
-- [TLS を使用する](#use-tls)
-- [Helmet を使用する](#use-helmet)
-- [Cookie をセキュアに使用する](#use-cookies-securely)
-- [依存関係がセキュアであることを確認する](#ensure-your-dependencies-are-secure)
-- [その他の既知の脆弱性を回避する](#avoid-other-known-vulnerabilities)
-- [その他の考慮事項](#additional-considerations)
+- [プロダクションのベストプラクティス: セキュリティ] (#production-best-practices-security)
+  - [Overview](#overview)
+  - [非推奨バージョンや脆弱なバージョンの Express を使用しない](#dont-use-deprecated-or-vulnerable-versions-of-express)
+  - [Use TLS](#use-tls)
+  - [Do not trust user input](#do-not-trust-user-input)
+    - [Prevent open redirects](#prevent-open-redirects)
+  - [Helmet を使用する](#use-helmet)
+  - [Reduce fingerprinting](#reduce-fingerprinting)
+  - [Cookie をセキュアに使用する](#use-cookies-securely)
+    - 対照的に、[cookie-session](https://www.npmjs.com/package/cookie-session) ミドルウェアは、Cookie が支持するストレージを実装します。セッション・キーだけでなく、セッション全体を Cookie に対して直列化します。これは、セッション・データが比較的小規模で、(オブジェクトではなく) プリミティブ値として容易にエンコードできる場合にのみ使用してください。ブラウザーは Cookie 当たり最小 4096 バイトをサポートすることが想定されますが、その制限を必ず超えないようにするために、ドメイン当たり 4093 バイトのサイズを超えないようにしてください。また、Cookie データがクライアントに対して可視になることに注意してください。何らかの理由でデータを保護したり覆い隠したりする必要がある場合は、express-session を使用することをお勧めします。
+    - [Set cookie security options](#set-cookie-security-options)
+  - [Prevent brute-force attacks against authorization](#prevent-brute-force-attacks-against-authorization)
+  - [依存関係がセキュアであることを確認する](#ensure-your-dependencies-are-secure)
+    - [その他の既知の脆弱性を回避する](#avoid-other-known-vulnerabilities)
+  - [その他の考慮事項](#additional-considerations)
 
-## 非推奨バージョンや脆弱なバージョンの Express を使用しない
+## 非推奨または脆弱なバージョンの Express を使用しない
 
-Express 2.x および 3.x は保守されなくなりました。これらのバージョンにおけるセキュリティーとパフォーマンスの問題は修正されません。これらのバージョンを決して使用しないでください。まだバージョン 4 に移行していない場合は、[マイグレーション・ガイド](/{{ page.lang }}/guide/migrating-4.html)に従ってください。
+Express 2.x と 3.x はメンテナンスされなくなりました。 これらのバージョンのセキュリティとパフォーマンスの問題は修正されません。 それらを使用しないでください! If you haven't moved to version 4, follow the [migration guide](/{{ page.lang }}/guide/migrating-4.html) or consider [Commercial Support Options](/{{ page.lang }}/support#commercial-support-options).
 
-また、[セキュリティー更新ページ](/{{ page.lang }}/advanced/security-updates.html)にリストされている脆弱な Express バージョンを使用していないことを確認してください。使用している場合は、安定しているリリース (最新を推奨します) に更新してください。
+また、[セキュリティー更新ページ](/{{ page.lang }}/advanced/security-updates.html)にリストされている脆弱な Express バージョンを使用していないことを確認してください。使用している場合は、安定しているリリース (最新を推奨します) に更新してください。 もしそうであれば、安定版リリースのいずれかにアップデートしてください。
 
-## TLS を使用する
+## TLS を使用
 
-アプリケーションが機密データを処理または送信する場合は、[Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS) を使用して、接続とデータを保護してください。このテクノロジーは、データをクライアントからサーバーへの送信前に暗号化するため、一般的 (容易) なハッキングを防止します。Ajax と POST 要求は明白ではなく、ブラウザーに対して「非表示」になっているように見えますが、そのネットワーク・トラフィックは、[パケットのスニッフィング](https://en.wikipedia.org/wiki/Packet_analyzer)と[中間者攻撃](https://en.wikipedia.org/wiki/Man-in-the-middle_attack)に対して脆弱です。
+機密データを扱ったり転送したりする場合は、[Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS) を使用して接続とデータを保護します。 この技術は、クライアントからサーバーに送信される前にデータを暗号化し、一般的な(そして簡単な)ハッキングを防ぎます。 Ajax と POST リクエストは目に見えて明らかではなく、ブラウザーでは「非表示」に見えるかもしれません。 彼らのネットワークトラフィックは、[パケットスニッフィング](https://en.wikipedia.org/wiki/Packet_analyzer)と[man-in-the-middle攻撃](https://en.wikipedia.org/wiki/Man-in-the-middle_attack)に対して脆弱です。
 
-Secure Socket Layer (SSL) 暗号化については理解されていると思います。[TLS は、単に SSL が進化したものです](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380515(v=vs.85).aspx)。つまり、以前に SSL を使用していた場合は、TLS へのアップグレードを検討してください。一般に、TLS を処理するために Nginx を使用することをお勧めします。Nginx (およびその他のサーバー) で TLS を構成するための解説については、[Recommended Server Configurations (Mozilla Wiki)](https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_Server_Configurations) を参照してください。
+SSL(Secure Socket Layer)暗号化に精通しているかもしれません。 [TLS は SSLの次の進行である] (https://msdn.microsoft.com/en-us/library/windows/desktop/aa380515(v=vs.85).aspx )。 言い換えれば、以前SSLを使用していた場合は、TLSへのアップグレードを検討してください。 一般的に、Nginx は TLS を扱うことをお勧めします。 Nginx (および他のサーバ) で TLS を設定するための参考情報については、[推奨サーバー構成 (Mozilla Wiki)](https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_Server_Configurations)を参照してください。
 
 また、[Let's Encrypt](https://letsencrypt.org/about/) は、無料の TLS 証明書を取得するための便利なツールです。このツールは、[Internet Security Research Group (ISRG)](https://letsencrypt.org/isrg/) が提供する、無料の自動的かつオープンな認証局 (CA) です。
 
-## Helmet を使用する
+## ユーザー入力を信頼しない
 
-[Helmet](https://www.npmjs.com/package/helmet) は、HTTP ヘッダーを適切に設定することによって、いくつかの既知の Web の脆弱性からアプリケーションを保護します。
+Webアプリケーションの場合、最も重要なセキュリティ要件の1つは、適切なユーザー入力検証と処理です。 これは多くの形態で来て、我々はここでそれらのすべてをカバーしません。
+最終的に、アプリケーションが受け入れるユーザー入力の種類を検証し、正しく処理する責任はあなたのものです。
 
-Helmet は、実際には、セキュリティー関連の HTTP ヘッダーを設定する 9 個の小さなミドルウェア関数の単なる集合です。
+### 開いているリダイレクトを防止
 
-* [csp](https://github.com/helmetjs/csp) は、クロスサイト・スクリプティング攻撃やその他のクロスサイト・インジェクションを防止するために `Content-Security-Policy` ヘッダーを設定します。
-* [hidePoweredBy](https://github.com/helmetjs/hide-powered-by) は、`X-Powered-By` ヘッダーを削除します。
-* [hsts](https://github.com/helmetjs/hsts) は、サーバーへのセキュア (SSL/TLS を介して HTTP) 接続を適用する `Strict-Transport-Security` ヘッダーを設定します。
-* [ieNoOpen](https://github.com/helmetjs/ienoopen) は、IE8+ の `X-Download-Options` を設定します。
-* [noCache](https://github.com/helmetjs/nocache) は、クライアント側のキャッシュを無効にするために `Cache-Control` ヘッダーと Pragma ヘッダーを設定します。
-* [noSniff](https://github.com/helmetjs/dont-sniff-mimetype) は、宣言されているコンテンツの種類からの応答をブラウザーが MIME スニッフィングしないように、`X-Content-Type-Options` を設定します。
-* [frameguard](https://github.com/helmetjs/frameguard) は、[クリックジャッキング](https://www.owasp.org/index.php/Clickjacking)保護を有効にするために `X-Frame-Options` ヘッダーを設定します。
-* [xssFilter](https://github.com/helmetjs/x-xss-protection) は、最新の Web ブラウザーでクロスサイト・スクリプティング (XSS) フィルターを有効にするために `X-XSS-Protection` を設定します。
+潜在的に危険なユーザー入力の例は _open redirect_ です。 ここで、アプリケーションはユーザー入力としてURLを受け入れます (多くの場合、URLクエリでは、例えば`? rl=https://example. om`) `res.redirect` を使用して、 `location` ヘッダーを設定し、
+は 3xx ステータスを返します。
 
-その他のモジュールと同様に Helmet をインストールします。
+アプリケーションは、フィッシングサイトなどの悪意のあるリンクにユーザーを送信しないように、着信URLへのリダイレクトをサポートしていることを検証する必要があります。 他のリスクの中でもね
 
-```bash
-$ npm install --save helmet
+`res.redirect`または`res.location`を使用する前にURLをチェックする例を示します。
+
+```js
+app.use((req, res) => {
+  try {
+    if (new Url(req.query.url).host !== 'example.com') {
+      return res.status(400).end(`Unsupported redirect to host: ${req.query.url}`)
+    }
+  } catch (e) {
+    return res.status(400).end(`Invalid url: ${req.query.url}`)
+  }
+  res.redirect(req.query.url)
+})
 ```
 
-次に、コードで使用します。
+## ヘルメットを使用
+
+[Helmet][helmet] は、HTTPヘッダーを適切に設定することで、よく知られているWeb脆弱性からアプリを保護するのに役立ちます。
+
+Helmet は、セキュリティ関連の HTTP レスポンスヘッダーを設定するミドルウェア機能です。 ヘルメットは、デフォルトで次のヘッダーを設定します。
+
+- `Content-Security-Policy`: 多くの攻撃を軽減するためにあなたのページで何が起こるかを許可する強力なリスト
+- `Cross-Origin-Opener-Policy`: あなたのページを分離するのに役立ちます
+- `Cross-Origin-Resource-Policy`: クロスオリジンからリソースを読み込むことをブロックします
+- `Origin-Agent-Cluster`: プロセスの分離を元ベースに変更します
+- `Referrer-Policy`: [`Referer`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) ヘッダーを制御します
+- `Strict-Transport-Security`: HTTPSを好むようブラウザーに教える
+- `X-Content-Type-Options`: 回避 [MIME sniffing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#mime_sniffing)
+- `X-DNS-Prefetch-Control`: DNS プリフェッチを制御します
+- `X-Download-Options`: 強制的にダウンロードを保存します (Internet Explorerのみ)
+- `X-Frame-Options`: [Clickjacking](https://en.wikipedia.org/wiki/Clickjacking) 攻撃を軽減する従来のヘッダー
+- `X-Permitted-Cross-Domain-Policies`: Acrobat など、Adobe 製品のクロスドメイン動作を制御します
+- `X-Powered-By`: Webサーバーに関する情報。 簡単な攻撃で使用できるため削除されました
+- `X-XSS-Protection`: [XSS アタック]（https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting）を軽減しようとするレガシーヘッダーが悪化するため、ヘルメットは無効にします
+
+各ヘッダーは、設定または無効にできます。 詳細については、[its documentation website][helmet] をご覧ください。
+
+他のモジュールと同様にヘルメットをインストール：
+
+```bash
+$ npm install helmet
+```
+
+次に、コードでそれを使用します:
 
 ```js
 // ...
@@ -73,9 +117,13 @@ app.use(helmet())
 // ...
 ```
 
-### 少なくとも X-Powered-By ヘッダーを無効にする
+## フィンガープリントを減らす
 
-Helmet を使用しない場合は、少なくとも `X-Powered-By` ヘッダーを無効にしてください。アタッカーが、(デフォルトで有効になっている) このヘッダーを使用して、Express を実行しているアプリケーションを検出し、具体的に対象を絞った攻撃を開始する可能性があります。
+サーバーが使用する
+ソフトウェアを判断する攻撃者の能力を低下させるために、セキュリティの追加層を提供するのに役立ちます。 「指紋」として知られています セキュリティ問題自体ではありませんが、
+アプリケーションの指紋化能力を低下させることで、セキュリティ全体の姿勢が改善されます。
+サーバーソフトウェアは、例えば、
+HTTPレスポンスヘッダのように、特定のリクエストにどのように応答するかの癖でフィンガープリントすることができます。
 
 そのため、`app.disable()` メソッドを使用してこのヘッダーをオフにすることがベスト・プラクティスです。
 
@@ -83,28 +131,49 @@ Helmet を使用しない場合は、少なくとも `X-Powered-By` ヘッダー
 app.disable('x-powered-by')
 ```
 
-`helmet.js` を使用する場合は、この操作が自動的に実行されます。
+{% include admonitions/note.html content="Disabling the `X-Powered-By header` does not prevent a sophisticated attacker from determining that an app is running Express.
+はカジュアルなエクスプロイトを阻害するかもしれませんが、アプリが
+Expressを実行しているかどうかを判断する他の方法があります。 %}
 
-{% include admonitions/note.html content="Disabling the `X-Powered-By header` does not prevent a sophisticated attacker from determining that an app is running Express. It may discourage a casual exploit, but there are other ways to determine an app is running Express. "%}
+Expressはまた、独自のフォーマットされた「404 Not Found」メッセージとフォーマッタエラー
+応答メッセージを送信します。 これらは、
+[自分の見つからないハンドラを追加する](/en/starter/faq.html#how-do-i-handle-404-responses)
+と
+[自分のエラーハンドラを書く](/en/guide/error-handling.html#writing-error-handlers): によって変更できます。
 
-## Cookie をセキュアに使用する
+```js
+// last app.use calls right before app.listen():
 
-Cookie を介してアプリケーションが悪用されないように、デフォルトの セッション Cookie 名を使用しないでください。また、Cookie のセキュリティー・オプションを適切に設定してください。
+// custom 404
+app.use((req, res, next) => {
+  res.status(404).send("Sorry can't find that!")
+})
 
-主なミドルウェア Cookie セッション・モジュールが 2 つあります。
+// custom error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+```
 
-* [express-session](https://www.npmjs.com/package/express-session) は、Express 3.x に組み込まれていた `express.session` ミドルウェアに取って代わります。
-* [cookie-session](https://www.npmjs.com/package/cookie-session) は、Express 3.x に組み込まれていた `express.cookieSession` ミドルウェアに取って代わります。
+## Cookieを安全に使用
 
-これらの 2 つのモジュールの主な違いは、Cookie セッション・データの保存方法です。[express-session](https://www.npmjs.com/package/express-session) ミドルウェアは、セッション・データをサーバーに保管します。セッション・データではなく、Cookie 自体の中にあるセッション ID のみを保存します。デフォルトで、メモリー内のストレージを使用し、実稼働環境向けには設計されていません。実稼働環境では、スケーラブルなセッション・ストアをセットアップする必要があります。[互換性のあるセッション・ストア](https://github.com/expressjs/session#compatible-session-stores)のリストを参照してください。
+クッキーが悪用されるようにアプリを開かないようにするため、デフォルトのセッションクッキー名を使用しないでください。また、クッキーのセキュリティオプションを適切に設定してください。
 
-対照的に、[cookie-session](https://www.npmjs.com/package/cookie-session) ミドルウェアは、Cookie が支持するストレージを実装します。セッション・キーだけでなく、セッション全体を Cookie に対して直列化します。これは、セッション・データが比較的小規模で、(オブジェクトではなく) プリミティブ値として容易にエンコードできる場合にのみ使用してください。ブラウザーは Cookie 当たり最小 4096 バイトをサポートすることが想定されますが、その制限を必ず超えないようにするために、ドメイン当たり 4093 バイトのサイズを超えないようにしてください。また、Cookie データがクライアントに対して可視になることに注意してください。何らかの理由でデータを保護したり覆い隠したりする必要がある場合は、express-session を使用することをお勧めします。
+2つの主なミドルウェアのセッションモジュールがあります。
 
-### デフォルトのセッション Cookie 名を使用しない
+- `express.session`ミドルウェアをExpress 3.xに置き換える[express-session](https://www.npmjs.com/package/express-session)
+- `express.cookieSession` ミドルウェアをExpress 3.xに置き換える[cookie-session](https://www.npmjs.com/package/cookie-session)
 
-デフォルトのセッション Cookie 名を使用すると、アプリケーションが攻撃を受けやすくなります。提起されているセキュリティー問題は `X-Powered-By` と似ています。潜在的なアタッカーがこれを使用して、サーバーに対して指紋認証し、攻撃の標的にする可能性があります。
+これらの2つのモジュールの主な違いは、クッキーセッションデータの保存方法です。 [express-session](https://www.npmjs.com/package/express-session) ミドルウェアは、セッションデータをサーバー上に保存します。セッションIDは、セッションデータではなく、クッキー自体にのみ保存します。 デフォルトでは、インメモリストレージを使用し、本番環境用に設計されていません。 本番環境では、スケーラブルな session-store を設定する必要があります。[compatible session store](https://github.com/expressjs/session#compatible-session-stores) のリストを参照してください。
 
-この問題を回避するには、汎用な Cookie 名を使用します。例えば、[express-session](https://www.npmjs.com/package/express-session) ミドルウェアを使用します。
+対照的に、 [cookie-session](https://www.npmjs.com/package/cookie-session) middleware は、セッションキーだけではなく、セッション全体を Cookie にシリアライズします。 セッションデータが比較的小さく、(オブジェクトではなく)プリミティブ値としてエンコードしやすい場合にのみ使用してください。 ブラウザはクッキーごとに少なくとも4096バイトをサポートすることになっていますが。 制限を超えないようにするには、ドメインあたり4093バイトのサイズを超えないようにします。 また、クッキーデータがクライアントに表示されることに注意してください ですから、もしそれを安全または不明瞭に保つ理由がある場合は、 `express-session` はより良い選択かもしれません。
+
+### デフォルトのセッションクッキー名を使用しない
+
+デフォルトのセッションクッキー名を使用すると、あなたのアプリを攻撃することができます。 提起されたセキュリティ上の問題は `X-Powered-By` と似ています。潜在的な攻撃者がそれを使用してサーバーにフィンガープリントを行い、それに応じて攻撃を標的にすることができます。
+
+この問題を回避するには、ジェネリックな Cookie 名を使用してください。例えば、 [express-session](https://www.npmjs.com/package/express-session) ミドルウェアを使用してください。
 
 ```js
 const session = require('express-session')
@@ -115,17 +184,17 @@ app.use(session({
 }))
 ```
 
-### Cookie のセキュリティー・オプションを設定する
+### Cookie のセキュリティオプションを設定
 
-セキュリティーを強化するために、以下の Cookie オプションを設定します。
+セキュリティを強化するために、次のクッキーオプションを設定します。
 
-* `secure` - ブラウザーが確実に HTTPS のみを介して Cookie を送信するようにします。
-* `httpOnly` - Cookie がクライアント JavaScript ではなく、HTTP(S) のみを介して送信されるようにして、クロスサイト・スクリプティング攻撃から保護します。
-* `domain` - Cookie のドメインを指定します。URL が要求されているサーバーのドメインとの比較に使用します。一致する場合は、次にパス属性を確認します。
-* `path` - Cookie のパスを指定します。要求パスとの比較に使用します。このパスがドメインと一致する場合は、要求の Cookie を送信します。
-* `expires` - 永続的な Cookie の有効期限を設定するために使用します。
+- `secure` - HTTPS経由でのみCookieを送信できるようにします。
+- `httpOnly` - CookieがクライアントJavaScriptではなくHTTP(S)上でのみ送信されることを保証し、クロスサイトスクリプティング攻撃から保護します。
+- `domain` - Cookie のドメインを示します。URL がリクエストされているサーバーのドメインと比較するために使用します。 一致する場合は、次にパス属性を確認します。
+- `path` - クッキーのパスを示します。リクエストパスと比較するために使用します。 これとドメインが一致した場合は、リクエストにクッキーを送信します。
+- `expires` - 永続的クッキーの有効期限を設定するために使用します。
 
-次に、[cookie-session](https://www.npmjs.com/package/cookie-session) ミドルウェアの使用例を示します。
+[cookie-session](https://www.npmjs.com/package/cookie-session) ミドルウェアを使用した例を以下に示します。
 
 ```js
 const session = require('cookie-session')
@@ -146,19 +215,30 @@ app.use(session({
 }))
 ```
 
-## 依存関係がセキュアであることを確認する
+## 承認に対するブルートフォース攻撃を防止
 
-npm を使用したアプリケーションの依存関係の管理は、強力で便利な方法です。ただし、使用するパッケージに、アプリケーションにも影響を与える可能性がある重大なセキュリティーの脆弱性が含まれている可能性があります。アプリケーションのセキュリティーの強さは、依存関係の中で「最も弱いリンク」程度でしかありません。
+プライベートデータをより安全にするために、ログインエンドポイントが保護されていることを確認してください。
 
-npm@6以降、npmはすべてのインストール要求を自動的に確認します。また、'npm audit'を使用して依存関係ツリーを分析することもできます。
+シンプルで強力な手法は、2つの指標を使用して認証試行をブロックすることです。
+
+1. 同じユーザー名とIPアドレスによる連続失敗回数。
+2. 長期間IPアドレスからの失敗回数。 たとえば、1 日で 100 回失敗した場合、IP アドレスをブロックします。
+
+[rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible) パッケージは、このテクニックを簡単かつ高速にするためのツールを提供します。 You can find [an example of brute-force protection in the documentation](https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#login-endpoint-protection)
+
+## 依存関係が安全であることを確認する
+
+npm を使用してアプリケーションの依存関係を管理するのは強力で便利です。 ただし、使用するパッケージには、アプリケーションにも影響を与える可能性のある重大なセキュリティ脆弱性が含まれている場合があります。 アプリのセキュリティは、依存関係の「最も弱いリンク」と同じくらい強力です。
+
+npm@6 以降、npm は自動的にすべてのインストール リクエストをレビューします。 また、`npm audit` を使用して依存関係のツリーを分析することもできます。
 
 ```bash
 $ npm audit
 ```
 
-よりセキュアな状態を保ちたい場合は、[Snyk](https://snyk.io/)を検討してください。
+もっと安全な場合は、 [Snyk](https://snyk.io/) を検討してください。
 
-Snykは、[Snykのオープンソース脆弱性データベース](https://snyk.io/vuln/)に対して、依存関係の既知の脆弱性に対するアプリケーションをチェックする[コマンドラインツール](https://www.npmjs.com/package/snyk)と[Github integration](https://snyk.io/docs/github)を提供しています。 次のようにCLIをインストールします。
+Snyk は [コマンド ライン ツール](https://www.npmjs.com/package/snyk) と [Github 統合] (https://snyk.io/docs/github) の両方を提供しており、依存関係の既知の脆弱性についてアプリケーションを [Snyk のオープン ソース 脆弱性 データベース](https://snyk.io/vuln/) でチェックします。 CLI を以下のようにインストールします。
 
 ```bash
 $ npm install -g snyk
@@ -171,19 +251,20 @@ $ cd your-app
 $ snyk test
 ```
 
-## その他の既知の脆弱性を回避する
+### その他の既知の脆弱性を回避する
 
-アプリケーションで使用する Express やその他のモジュールに影響を与える可能性がある [Node Security Project](https://npmjs.com/advisories) のアドバイザリーに常に注意してください。一般に、Node Security Project は、Node のセキュリティーに関する知識とツールの優れたリソースです。
+アプリケーションで使用する Express やその他のモジュールに影響を与える可能性がある [Node Security Project](https://npmjs.com/advisories) のアドバイザリーに常に注意してください。一般に、Node Security Project は、Node のセキュリティーに関する知識とツールの優れたリソースです。 一般的に、これらのデータベースは、Node セキュリティに関する知識とツールのための優れたリソースです。
 
-最後に、Express アプリケーションは、その他の Web アプリケーションと同様、さまざまな Web ベースの攻撃に対して脆弱になりえます。既知の [Web の脆弱性](https://www.owasp.org/www-project-top-ten/)をよく理解して、それらを回避するための予防措置を取ってください。
+最後に、Express アプリケーションは、その他の Web アプリケーションと同様、さまざまな Web ベースの攻撃に対して脆弱になりえます。既知の [Web の脆弱性](https://www.owasp.org/www-project-top-ten/)をよく理解して、それらを回避するための予防措置を取ってください。 Familiarize yourself with known [web vulnerabilities](https://www.owasp.org/www-project-top-ten/) and take precautions to avoid them.
 
 ## その他の考慮事項
 
-次に、優れた [Node.js セキュリティー・チェックリスト](https://blog.risingstack.com/node-js-security-checklist/)に記載されているその他の推奨事項をリストします。これらの推奨事項の詳細については、ブログの投稿を参照してください。
+優れた [Node.js セキュリティ チェックリスト](https://blog.risingstack.com/node-js-security-checklist/) からのさらなる推奨事項をいくつか紹介します。 これらの推奨事項の詳細については、そのブログ記事を参照してください。
 
-* 認証に対する総当たり攻撃を防止するために、回数制限を実装してください。そのための 1 つの方法では、[StrongLoop API Gateway](https://web.archive.org/web/20240000000000/https://strongloop.com/node-js/api-gateway/) を使用して回数制限ポリシーを適用します。あるいは、[express-limiter](https://www.npmjs.com/package/express-limiter) などのミドルウェアを使用できますが、そのためにはコードを若干変更する必要があります。
-* クロスサイト・スクリプティング (XSS) とコマンド・インジェクション攻撃から保護するために、必ず、ユーザー入力のフィルタリングとサニタイズを実行してください。
-* パラメーター化照会または作成済みステートメントを使用して、SQL インジェクション攻撃に対して防衛してください。
-* オープン・ソースの [sqlmap](http://sqlmap.org/) ツールを使用して、アプリケーションの SQL インジェクションに対する脆弱性を検出してください。
-* [nmap](https://nmap.org/) ツールと [sslyze](https://github.com/nabla-c0d3/sslyze) ツールを使用して、SSL 暗号、鍵、再交渉の構成のほか、証明書の妥当性をテストしてください。
-* [safe-regex](https://www.npmjs.com/package/safe-regex) を使用して、使用している正規表現が[正規表現サービス妨害](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS)攻撃を受けやすくなっていないことを確認してください。
+- クロスサイト・スクリプティング(XSS)やコマンドインジェクション攻撃から保護するため、常にユーザー入力をフィルタリングしてサニタイズします。
+- パラメータ化されたクエリまたは準備された文を使用してSQLインジェクション攻撃を防御します。
+- アプリケーションのSQLインジェクションの脆弱性を検出するには、オープンソースの [sqlmap](http://sqlmap.org/)ツールを使用してください。
+- SSL暗号の設定をテストするには、 [nmap](https://nmap.org/) と [sslyze](https://github.com/nabla-c0d3/sslyze) ツールを使用します。 キー、再ネゴシエーション、および証明書の有効性。
+- [safe-regex](https://www.npmjs.com/package/safe-regex) を使用して、正規表現が [正規表現 サービス妨害](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS) 攻撃の影響を受けないようにしましょう。
+
+[helmet]: https://helmetjs.github.io/

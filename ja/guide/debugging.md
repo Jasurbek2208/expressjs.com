@@ -1,15 +1,16 @@
 ---
 layout: page
-title: Express のデバッグ
+title: Expressのデバッグ
+description: DEBUG環境変数を設定して、Express.jsアプリケーションでデバッグログを有効にして使用する方法を学び、トラブルシューティングを強化します。
 menu: guide
-lang: ja
-description: Learn how to enable and use debugging logs in Express.js applications
-  by setting the DEBUG environment variable for enhanced troubleshooting.
+lang: en
+redirect_from: ""
 ---
 
-# Express のデバッグ
+# Expressのデバッグ
 
-Express で使用されているすべての内部ログを表示するには、アプリケーションの起動時に `DEBUG` 環境変数を `express:*` に設定します。
+Express で使用されるすべての内部ログを表示するには、アプリを起動するときに `DEBUG` 環境変数を
+`express:*` に設定します。
 
 ```bash
 $ DEBUG=express:* node index.js
@@ -18,10 +19,10 @@ $ DEBUG=express:* node index.js
 Windows では、対応するコマンドを使用します。
 
 ```bash
-> set DEBUG=express:* & node index.js
+> $env:DEBUG = "express:*"; node index.js
 ```
 
-[express ジェネレーター](/{{ page.lang }}/starter/generator.html) で生成されるデフォルトのアプリケーションでこのコマンドを実行すると、以下の出力が表示されます。
+[express generator](/{{ page.lang }}/starter/generator.html) によって生成されたデフォルトのアプリでこのコマンドを実行すると、以下の出力が出力されます。
 
 ```bash
 $ DEBUG=express:* node ./bin/www
@@ -59,15 +60,15 @@ $ DEBUG=express:* node ./bin/www
   express:router:layer new / +1ms
   express:router use /users router +0ms
   express:router:layer new /users +0ms
-  express:router use / &lt;anonymous&gt; +0ms
+  express:router use / &amp;lt;anonymous&amp;gt; +0ms
   express:router:layer new / +0ms
-  express:router use / &lt;anonymous&gt; +0ms
+  express:router use / &amp;lt;anonymous&amp;gt; +0ms
   express:router:layer new / +0ms
-  express:router use / &lt;anonymous&gt; +0ms
+  express:router use / &amp;lt;anonymous&amp;gt; +0ms
   express:router:layer new / +0ms
 ```
 
-その後、アプリケーションに対して要求が出されると、Express コードで指定された次のログが表示されます。
+アプリへのリクエストが行われると、Express コードで指定されたログが表示されます。
 
 ```bash
   express:router dispatching GET / +4h
@@ -87,20 +88,38 @@ $ DEBUG=express:* node ./bin/www
   express:view render "/projects/example/views/index.pug" +1ms
 ```
 
-ルーター実装からのログのみを表示するには、`DEBUG` の値を `express:router` に設定します。同様に、アプリケーション実装からのログのみを表示するには、`DEBUG` を `express:application` に設定します。その他についても同様に設定します。
+ルータの実装からのみログを見るには、`DEBUG`の値を`express:router`に設定します。 同様に、アプリケーションの実装からのログのみを見るには、`DEBUG`の値を`express:application`などに設定します。
 
-## `express` によって生成されるアプリケーション
+## `express` で生成されたアプリケーション
 
-`express` コマンドによって生成されるアプリケーションも `debug` モジュールを使用します。そのデバッグ名前空間はアプリケーションの名前に設定されます。
+`express`コマンドによって生成されたアプリケーションは、`debug`モジュールを使用し、デバッグ名前空間はアプリケーションの名前をスコープします。
 
-例えば、`$ express sample-app` を使用してアプリケーションを生成する場合、次のコマンドを使用してデバッグ・ステートメントを有効にすることができます。
+例えば、 `$ express sample-app` を使用してアプリを生成した場合、次のコマンドでデバッグ文を有効にできます。
 
 ```bash
 $ DEBUG=sample-app:* node ./bin/www
 ```
 
-名前のコンマ区切りリストを割り当てることで、複数のデバッグ名前空間を指定できます。
+カンマ区切りの名前のリストを割り当てることで、複数のデバッグ名前空間を指定できます:
 
 ```bash
 $ DEBUG=http,mail,express:* node index.js
 ```
+
+## 高度なオプション
+
+Node.js を介して実行する場合、デバッグログの動作を変更するいくつかの環境変数を設定できます。
+
+| 名前                  | 目的                          |
+| ------------------- | --------------------------- |
+| `DEBUG`             | 特定のデバッグ名前空間を有効/無効にします。      |
+| `DEBUG_COLORS`      | デバッグ出力で色を使用するかどうか。          |
+| `DEBUG_DEPTH`       | 物体検査の深さ。                    |
+| `DEBUG_FD`          | デバッグ出力を書き込むファイル記述子。         |
+| `DEBUG_SHOW_HIDDEN` | 検査対象オブジェクトに非表示のプロパティを表示します。 |
+
+{% include admonitions/note.html content="The environment variables beginning with `DEBUG_` end up being
+converted into an Options object that gets used with `%o`/`%O` formatters.
+完全なリストについては、Node.js documentation for
+[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
+を参照してください。 %}

@@ -1,58 +1,60 @@
 ---
 layout: page
-title: Express 词汇表
+title: 快递术语表
+description: 与Express.js, Node.js, midleware, routing, 以及其他关键概念有关的术语的综合词汇，以帮助您有效地理解和使用Express。
 menu: resources
-lang: zh-cn
-description: A comprehensive glossary of terms related to Express.js, Node.js, middleware,
-  routing, and other key concepts to help you understand and use Express effectively.
+lang: 中
+redirect_from: ""
 ---
 
-# 词汇表
+# Glossary
 
-### 开放源码 (open-source, open source)
+### 应用程序
 
-英文中用作形容词时，以连字符连接；例如：“This is open-source software”。请参阅 [Wikipedia 上的开源软件](http://en.wikipedia.org/wiki/Open-source_software)。注：虽然不对此术语添加连字符也很常见，但是我们使用标准英语规则对复合形容词添加连字符。
-
-### 路由 (route)
-
-标识资源的部分 URL。例如，在 `http://foo.com/products/id` 中，“/products/id”是路由。
-
-### 路由器 (router)
-
-请参阅“API 参考”中的[路由器](/{{ page.lang }}/4x/api.html#router)。
-
-### 请求 (request)
-
-HTTP 请求。客户机向服务器提交 HTTP 请求消息，然后服务器返回响应。该请求必须使用若干[请求方法](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)之一，例如 GET、POST 等。
-
-### 响应 (response)
-
-HTTP 响应。服务器将 HTTP 响应消息返回给客户机。此响应包含关于请求的完整状态信息，可能还在消息体中包含请求的内容。
-
-### 应用程序 (application)
-
-一般而言，表示设计为针对特定目的执行操作的一个或多个程序。在 Express 的上下文中，表示使用 Node.js 平台上运行的 Express API 的一个程序。可能还指[应用程序对象](/{{ page.lang }}/api.html#express)。
-
-### 中间件 (middleware)
-
-在最终请求处理程序之前由 Express 路由层调用的函数，因此位于原始请求与最终期望的路由之间的中间位置。有关中间件的术语有几点说明：
-
-  * 调用 `var foo = require('middleware')`：*需要*或*使用* Node.js 模块。随后 `var mw = foo()` 语句通常返回中间件。
-  * 调用 `app.use(mw)`：*将中间件添加到全局处理堆栈*。
-  * 调用 `app.get('/foo', mw, function (req, res) { ... })`：*将中间件添加到“GET /foo”处理堆栈*。
+一般来说，一个或多个旨在为特定目的开展业务的方案。  在Express背景下，一个使用 Node.js 平台上运行的Express API程序。  Might also refer to an [app object](/{{ page.lang }}/api.html#express).
 
 ### API
 
-应用程序编程接口。在首次使用时包含此缩写。
+应用程序编程接口。 首次使用缩写时拼写。
 
-### Express
+### 快照
 
-Node.js 应用程序的一种高度包容、快速而极简的 Web 框架。一般而言，“Express”优先于“Express.js”，但是后者也可接受。
+为 Node.js 应用程序提供一个快速、无视、最小化的网页框架。 一般来说，“Express.js”比“Express.js”更受欢迎，尽管后者是可以接受的。
 
 ### libuv
 
-一种多平台支持库，关注异步 I/O，主要供 Node.js 使用。
+一个以异步I/O为重点的多平台支持库，主要开发供Node.js使用。
+
+### 中间件
+
+快速路由图层在最后请求处理器之前调用的函数， 并因此处于原始请求与最终预定路线之间的中间位置。 围绕中间层的几个精细术语：
+
+- `var foo = required('middleware)` 称为_requiring_ 或 _using_a Node.js 模块。 然后，语句`var mw = foo()`通常返回中间件。
+- `app.use(mw)` 称为_将中间件添加到全局处理堆栈。
+- `app.get('/foo', mw, function (req, res) })`被称为_添加中间件到"GET /foo"处理堆栈_。
 
 ### Node.js
 
-用于构建可扩展网络应用程序的一种软件平台。Node.js 将 JavaScript 用作其脚本编制语言，并通过非阻塞 I/O 和单线程事件循环实现大吞吐量。请参阅 [nodejs.org](http://nodejs.org/)。**使用说明**：最初为“Node.js”，后来成为“Node”。
+一个用于构建可扩展网络应用程序的软件平台。 Node.js 使用 JavaScript 作为其脚本语言，并通过非屏蔽I/O 和单线程事件循环实现了高通量。 见 [nodejs.org](https://nodejs.org/en/)。 **用法说明**：最初，"Node.js"之后"Node"。
+
+### 开源、开源
+
+当用作形容词时，连字符串。例如：“这是开源软件。” See [Open-source software on Wikipedia](http://en.wikipedia.org/wiki/Open-source_software).
+
+{% include admonitions/note.html content="虽然不将这个词混合是常见的，但我们正在使用标准的英国规则来混合复合形状。" %}
+
+### 请求
+
+HTTP请求。 客户端向服务器提交一个 HTTP 请求消息，服务器将返回响应。  HTTP 请求。客户机向服务器提交 HTTP 请求消息，然后服务器返回响应。该请求必须使用若干[请求方法](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)之一，例如 GET、POST 等。
+
+### 应答
+
+HTTP响应。 服务器返回客户端的 HTTP 响应消息。 回复包含请求的完成状态信息，并可能包含请求内容在其消息机构。
+
+### 路由
+
+识别资源的 URL 的一部分。 例如，在`http://fo.com/products/id`, "/products/id"是路线。
+
+### 路由器
+
+请参阅“API 参考”中的[路由器](/{{ page.lang }}/4x/api.html#router)。

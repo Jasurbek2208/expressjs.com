@@ -1,28 +1,35 @@
 ---
 layout: page
-title: Express のアプリケーション生成プログラム
+title: Express アプリケーションジェネレーター
+description: Expressアプリケーションジェネレータツールを使用して、Express.jsアプリケーション用のスケルトンを迅速に作成し、セットアップと構成を合理化する方法を学びます。
 menu: starter
-lang: ja
-description: Learn how to use the Express application generator tool to quickly create
-  a skeleton for your Express.js applications, streamlining setup and configuration.
+lang: en
+redirect_from: ""
 ---
 
-# Express のアプリケーション生成プログラム
+# Express アプリケーションジェネレーター
 
-アプリケーション生成プログラム・ツールの `express` を使用すると、アプリケーション・スケルトンを素早く作成できます。
+アプリケーションジェネレータツール`express-generator`を使用して、アプリケーションスケルトンを素早く作成します。
 
-次のコマンドを使用して、`express` をインストールします。
+アプリケーションジェネレータは `npx` コマンド (Node.js 8.2.0で利用可能) で実行できます。
 
 ```bash
-$ npm install express-generator -g
+$ npx express-generator
 ```
 
-`-h` オプションを指定してコマンド・オプションを表示します。
+以前のNodeバージョンの場合は、アプリケーションジェネレータをグローバルnpmパッケージとしてインストールしてから起動します。
+
+```bash
+$ npm install -g express-generator
+$ express
+```
+
+`-h` オプションでコマンドオプションを表示します。
 
 ```bash
 $ express -h
 
-  Usage: express [options][dir]
+  Usage: express [options] [dir]
 
   Options:
 
@@ -33,13 +40,13 @@ $ express -h
         --pug           add pug engine support
     -H, --hogan         add hogan.js engine support
         --no-view       generate without view engine
-    -v, --view &lt;engine&gt; add view &lt;engine&gt; support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
-    -c, --css &lt;engine&gt;  add stylesheet &lt;engine&gt; support (less|stylus|compass|sass) (defaults to plain css)
+    -v, --view <engine> add view <engine> support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
+    -c, --css <engine>  add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
         --git           add .gitignore
     -f, --force         force on non-empty directory
 ```
 
-例えば、以下のコマンドでは、現行作業ディレクトリーに _myapp_ という Express アプリケーションを作成します。
+例えば、次のように、_myapp_ という名前の Express アプリケーションを作成します。 アプリは現在の作業ディレクトリの _myapp_ というフォルダに作成され、ビューエンジンは <a href="https://pugjs.org/" target="_blank" title="Pug documentation">Pug</a> に設定されます。
 
 ```bash
 $ express --view=pug myapp
@@ -63,28 +70,34 @@ $ express --view=pug myapp
    create : myapp/bin/www
 ```
 
-次に、依存関係をインストールします。
+次に依存関係をインストール:
 
 ```bash
 $ cd myapp
 $ npm install
 ```
 
-MacOS または Linux では、次のコマンドによってアプリケーションを実行します。
+MacOS または Linux では、次のコマンドでアプリを実行します。
 
 ```bash
 $ DEBUG=myapp:* npm start
 ```
 
-Windows では、次のコマンドを使用します。
+Windows コマンドプロンプトでは、次のコマンドを使用します。
 
 ```bash
 > set DEBUG=myapp:* & npm start
 ```
 
-次に、ブラウザーに `http://localhost:3000/` をロードして、アプリケーションにアクセスします。
+Windows PowerShell では、次のコマンドを使用します。
 
-生成されたアプリケーションには、以下のディレクトリー構造があります。
+```bash
+PS> $env:DEBUG='myapp:*'; npm start
+```
+
+次に、ブラウザに`http://localhost:3000/`を読み込んでアプリにアクセスします。
+
+生成されたアプリには、次のディレクトリ構造があります。
 
 ```bash
 .
@@ -109,5 +122,7 @@ Windows では、次のコマンドを使用します。
 ```
 
 <div class="doc-box doc-info" markdown="1">
-ここで生成プログラムによって作成されたアプリケーション構造は、Express アプリケーションを作成するための数多くの方法の 1 つにすぎません。この構造を自由に使用したり、ニーズに合わせて変更したりしてください。
+ジェネレータによって作成されたアプリ構造は、Express アプリケーションを構成するための多くの方法の1つに過ぎません。 自由にこの構造を使用するか、あなたのニーズに最適に変更してください。
 </div>
+
+### [Previous: Hello World ](/{{ page.lang }}/starter/hello-world.html)&nbsp;&nbsp;&nbsp;&nbsp;[Next: Basic routing](/{{ page.lang }}/starter/basic-routing.html)

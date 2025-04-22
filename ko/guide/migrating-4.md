@@ -1,10 +1,10 @@
 ---
 layout: page
 title: Express 4로의 마이그레이션
+description: A guide to migrating your Express.js applications from version 3 to 4, covering changes in middleware, routing, and how to update your codebase effectively.
 menu: guide
 lang: ko
-description: A guide to migrating your Express.js applications from version 3 to 4,
-  covering changes in middleware, routing, and how to update your codebase effectively.
+redirect_from: ""
 ---
 
 # Express 4로의 이전
@@ -26,7 +26,7 @@ Express 4는 Express 3로부터 근본적으로 변경되었습니다. 따라서
 Express 4에서는 여러 중요한 부분이 변경되었습니다.
 
 <ul class="doclist">
-  <li><a href="#core-changes">Express 코어 및 미들웨어 시스템에 대한 변경.</a> Connect 및 기본 제공 미들웨어에 대한 종속 항목이 제거되었으며, 따라서 사용자가 직접 미들웨어를 추가해야 합니다.
+  <li><a href="#core-changes">Changes to Express core and middleware system.</a> The dependencies on Connect and built-in middleware were removed, so you must add middleware yourself.
   </li>
   <li><a href="#routing">라우팅 시스템에 대한 변경.</a></li>
   <li><a href="#other-changes">기타 다양한 변경사항.</a></li>
@@ -34,8 +34,8 @@ Express 4에서는 여러 중요한 부분이 변경되었습니다.
 
 또한 다음을 참조하십시오.
 
-* [New features in 4.x.](https://github.com/expressjs/express/wiki/New-features-in-4.x)
-* [Migrating from 3.x to 4.x.](https://github.com/expressjs/express/wiki/Migrating-from-3.x-to-4.x)
+- [New features in 4.x.](https://github.com/expressjs/express/wiki/New-features-in-4.x)
+- [Migrating from 3.x to 4.x.](https://github.com/expressjs/express/wiki/Migrating-from-3.x-to-4.x)
 
 <h3 id="core-changes">
 Express 코어 및 미들웨어 시스템에 대한 변경
@@ -56,7 +56,7 @@ Express 4는 더 이상 Connect에 종속되지 않으며, `express.static` 함�
 다음 표에는 Express 3의 미들웨어 및 그에 대응하는 Express 4의 미들웨어가 나열되어 있습니다.
 
 <table class="doctable" border="1">
-<tr><th>Express 3</th><th>Express 4</th></tr>
+<tbody><tr><th>Express 3</th><th>Express 4</th></tr>
 <tr><td><code>express.bodyParser</code></td>
 <td><a href="https://github.com/expressjs/body-parser">body-parser</a> +
 <a href="https://github.com/expressjs/multer">multer</a></td></tr>
@@ -88,7 +88,7 @@ Express 4는 더 이상 Connect에 종속되지 않으며, `express.static` 함�
 <td><a href="https://github.com/expressjs/serve-index">serve-index</a></td></tr>
 <tr><td><code>express.static</code></td>
 <td><a href="https://github.com/expressjs/serve-static">serve-static</a></td></tr>
-</table>
+</tbody></table>
 
 Express 4 미들웨어의 [전체 목록](https://github.com/senchalabs/connect#middleware)을 참조하십시오.
 
@@ -102,11 +102,12 @@ Express 4 미들웨어의 [전체 목록](https://github.com/senchalabs/connect#
 예를 들면 다음과 같습니다.
 
 ```js
-app.use('/book/:id', function (req, res, next) {
+app.use('/book/:id', (req, res, next) => {
   console.log('ID:', req.params.id)
   next()
 })
 ```
+
 <h3 id="routing">
 라우팅 시스템
 </h3>
@@ -119,8 +120,9 @@ app.use('/book/:id', function (req, res, next) {
 라우팅 시스템에는 다음과 같은 2개의 새로운 기능이 추가되었습니다.
 
 {: .doclist }
-* 라우트 경로에 대하여 체인 가능한 라우트 핸들러를 작성할 수 있는 새로운 메소드인 `app.route()`.
-* 모듈식 마운팅 가능한 라우트 핸들러를 작성할 수 있는 새로운 클래스인 `express.Router`.
+
+- 라우트 경로에 대하여 체인 가능한 라우트 핸들러를 작성할 수 있는 새로운 메소드인 `app.route()`.
+- 모듈식 마운팅 가능한 라우트 핸들러를 작성할 수 있는 새로운 클래스인 `express.Router`.
 
 <h4 id="app-route"><code>app.route()</code> 메소드</h4>
 
@@ -132,13 +134,13 @@ app.use('/book/:id', function (req, res, next) {
 
 ```js
 app.route('/book')
-  .get(function (req, res) {
+  .get((req, res) => {
     res.send('Get a random book')
   })
-  .post(function (req, res) {
+  .post((req, res) => {
     res.send('Add a book')
   })
-  .put(function (req, res) {
+  .put((req, res) => {
     res.send('Update the book')
   })
 ```
@@ -161,16 +163,16 @@ var express = require('express')
 var router = express.Router()
 
 // middleware specific to this router
-router.use(function timeLog (req, res, next) {
+router.use((req, res, next) => {
   console.log('Time: ', Date.now())
   next()
 })
 // define the home page route
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   res.send('Birds home page')
 })
 // define the about route
-router.get('/about', function (req, res) {
+router.get('/about', (req, res) => {
   res.send('About birds')
 })
 
@@ -182,7 +184,7 @@ module.exports = router
 ```js
 var birds = require('./birds')
 
-/// ...
+// ...
 
 app.use('/birds', birds)
 ```
@@ -198,7 +200,7 @@ app.use('/birds', birds)
 다음 표에는 Express 4의 작지만 중요한 다른 변경사항이 나열되어 있습니다.
 
 <table class="doctable" border="1">
-<tr>
+<tbody><tr>
 <th>오브젝트</th>
 <th>설명</th>
 </tr>
@@ -308,7 +310,7 @@ Express 4에서는 기본적으로 `json spaces` 애플리케이션 특성을 �
 기능을 위해서는 `res.cookie()`를 사용하십시오.
 </td>
 </tr>
-</table>
+</tbody></table>
 
 <h2 id="example-migration">앱 마이그레이션의 예</h2>
 
@@ -352,7 +354,7 @@ if (app.get('env') === 'development') {
 app.get('/', routes.index)
 app.get('/users', user.list)
 
-http.createServer(app).listen(app.get('port'), function () {
+http.createServer(app).listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'))
 })
 ```
@@ -360,7 +362,7 @@ http.createServer(app).listen(app.get('port'), function () {
 <h4 id=""><code>package.json</code></h4>
 
 동반되는 버전 3의 `package.json` 파일의 내용은
-  다음과 같을 수 있습니다.
+다음과 같을 수 있습니다.
 
 ```json
 {
@@ -392,15 +394,15 @@ $ npm install serve-favicon morgan method-override express-session body-parser m
 `app.js`를 다음과 같이 변경하십시오.
 
 1. 기본 제공 Express 미들웨어 함수인 `express.favicon`,
-    `express.logger`, `express.methodOverride`,
-    `express.session`, `express.bodyParser` 및
-    `express.errorHandler`는 더 이상 `express`
-    오브젝트에 사용할 수 없습니다.  이들 함수의 대체 함수를 수동으로
-    설치한 후 앱에서 로드해야 합니다.
+  `express.logger`, `express.methodOverride`,
+  `express.session`, `express.bodyParser` 및
+  `express.errorHandler`는 더 이상 `express`
+  오브젝트에 사용할 수 없습니다. 이들 함수의 대체 함수를 수동으로
+  설치한 후 앱에서 로드해야 합니다.
 
 2. `app.router` 함수는 이제 로드할 필요가 없습니다.
-    이 함수는 유효한 Express 4 앱 오브젝트가 아니므로
-    `app.use(app.router);` 코드를 제거하십시오.
+  이 함수는 유효한 Express 4 앱 오브젝트가 아니므로
+  `app.use(app.router);` 코드를 제거하십시오.
 
 3. 미들웨어 함수들이 올바른 순서로 로드되는지 확인하십시오(앱 라우트를 로드한 후 `errorHandler`를 로드).
 
@@ -423,7 +425,7 @@ $ npm install serve-favicon morgan method-override express-session body-parser m
     "errorhandler": "^1.1.1",
     "express": "^4.8.0",
     "express-session": "^1.7.2",
-    "pug": "^2.0.0-beta6",
+    "pug": "^2.0.0",
     "method-override": "^2.1.2",
     "morgan": "^1.2.2",
     "multer": "^0.1.3",
@@ -489,14 +491,14 @@ server.listen(app.get('port'), () => {
 `http` 모듈을 이용해 직접 작업해야 하는 경우(socket.io/SPDY/HTTPS)를 제외하면 `http` 모듈을 로드할 필요가 없으며, 다음과 같은 방법으로 간단히 앱을 시작할 수 있습니다.
 
 ```js
-app.listen(app.get('port'), function () {
+app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'))
 })
 ```
 
 </div>
 
-<h3 id="">앱 실행</h3>
+<h3 id="">Run the app</h3>
 
 마이그레이션 프로세스가 완료되었으며, 이제 앱은
 Express 4 앱이 되었습니다. 확인을 위하여, 다음의 명령을 이용해 앱을 시작하십시오.
@@ -506,14 +508,14 @@ $ node .
 ```
 
 [http://localhost:3000](http://localhost:3000)을
-  로드한 후 홈 페이지가 Express 4에 의해 렌더링되는 것을 확인하십시오.
+로드한 후 홈 페이지가 Express 4에 의해 렌더링되는 것을 확인하십시오.
 
 <h2 id="app-gen">Express 4 앱 생성기로의 업그레이드</h2>
 
 Express 앱을 생성하기 위한 명령행 도구는 여전히
-  `express`이지만, 새 버전으로 업그레이드하려면
-  Express 3 앱 생성기의 설치를 제거한 후 새로운
-  `express-generator`를 설치해야 합니다.
+`express`이지만, 새 버전으로 업그레이드하려면
+Express 3 앱 생성기의 설치를 제거한 후 새로운
+`express-generator`를 설치해야 합니다.
 
 <h3 id="">설치 </h3>
 
@@ -544,11 +546,12 @@ $ npm install -g express-generator
 다음을 제외하면, 명령의 옵션 및 용도는 대체로 동일하게 유지되었습니다.
 
 {: .doclist }
-* `--sessions` 옵션이 제거되었습니다.
-* `--jshtml` 옵션이 제거되었습니다.
-* [Hogan.js](http://twitter.github.io/hogan.js/)를 지원하기 위한 `--hogan` 옵션이 추가되었습니다.
 
-<h3 id="">예</h3>
+- `--sessions` 옵션이 제거되었습니다.
+- `--jshtml` 옵션이 제거되었습니다.
+- [Hogan.js](http://twitter.github.io/hogan.js/)를 지원하기 위한 `--hogan` 옵션이 추가되었습니다.
+
+<h3 id="">Example</h3>
 
 Express 4 앱을 작성하기 위하여 다음의 명령을 실행하십시오.
 
@@ -592,7 +595,7 @@ Node.js 파일을 통해 시작되어야 합니다. 이 경우에서 Node.js 파
 ```js
 app.set('port', process.env.PORT || 3000)
 
-var server = app.listen(app.get('port'), function () {
+var server = app.listen(app.get('port'), () => {
   debug('Express server listening on port ' + server.address().port)
 })
 ```
@@ -606,6 +609,6 @@ var debug = require('debug')('app4')
 다음으로, `package.json` 파일의 `"start": "node ./bin/www"`를 `"start": "node app.js"`로 변경하십시오.
 
 이제 `./bin/www`의 기능이 다시 `app.js`로
-이전되었습니다.  이러한 변경은 권장되지 않지만, 이러한 연습을 통해
+이전되었습니다. 이러한 변경은 권장되지 않지만, 이러한 연습을 통해
 `./bin/www` 파일의 작동 원리를 이해하고 `app.js` 파일이
 더 이상 자체적으로 시작되지 않는 이유를 이해할 수 있습니다.

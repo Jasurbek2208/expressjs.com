@@ -1,68 +1,58 @@
 ---
 layout: page
-title: Pergunta mais Frequentes do Express
+title: Expressar FAQ
+description: Encontre respostas para perguntas frequentes sobre Express.js, incluindo tópicos sobre a estrutura do aplicativo, modelos, autenticação, mecanismos de modelo, tratamento de erros e muito mais.
 menu: starter
 lang: pt-br
-description: Find answers to frequently asked questions about Express.js, including
-  topics on application structure, models, authentication, template engines, error
-  handling, and more.
+redirect_from: ""
 ---
 
-# Perguntas mais frequentes
+# Perguntas Frequentes
 
 ## Como eu devo estruturar meu aplicativo?
 
-Não existe uma resposta definitiva para esta questão. A
-resposta depende da escala do seu aplicativo e o time que está
-envolvido. Para ser o mais flexível possível, o Express não faz
-suposições em termos de estrutura.
+Não há uma resposta definitiva a esta questão. A resposta depende
+da escala do seu aplicativo e da equipe que está envolvida. Para ser o mais flexível possível,
+flexível, Express não faz suposições em termos de estrutura.
 
-Rotas e outras lógicas específicas do aplicativo podem ficar em
-quantos arquivos quiser, em qualquer estrutura de diretórios que
-preferir. Visualize os seguintes exemplos para obter inspiração:
+Rotas e outras lógicas específicas do aplicativo podem viver em quantos arquivos
+você quiser, em qualquer estrutura de diretório que preferir. Visualize os seguintes exemplos para obter inspiração:
 
-* [Listagens de rota](https://github.com/expressjs/express/blob/4.13.1/examples/route-separation/index.js#L32-47)
-* [Mapa de rota](https://github.com/expressjs/express/blob/4.13.1/examples/route-map/index.js#L52-L66)
-* [Controladores com estilo MVC](https://github.com/expressjs/express/tree/master/examples/mvc)
+- [Lista de rotas](https://github.com/expressjs/express/blob/4.13.1/examples/route-separation/index.js#L32-L47)
+- [Mapa de rotas](https://github.com/expressjs/express/blob/4.13.1/examples/route-map/index.js#L52-L66)
+- [MVC style controllers](https://github.com/expressjs/express/tree/master/examples/mvc)
 
-Além disso, existem extensões de terceiros para o Express, que
-simplificam alguns desses padrões:
+Além disso, existem extensões para o Express, que simplificam alguns desses padrões:
 
-* [Roteamento engenhoso](https://github.com/expressjs/express-resource)
+- [Roteamento de recursos](https://github.com/expressjs/express-resource)
 
-## Como eu defino modelos?
+## Como faço para definir modelos?
 
-O Express não tem noção de banco de dados. Este conceito é
+Expresso não tem noção de um banco de dados. Este conceito é
 deixado para módulos do Node de terceiros, permitindo que você faça
 a interface com praticamente qualquer banco de dados.
 
-Consulte [LoopBack](http://loopback.io) para
-uma estrutura baseada no Express que é centrada em modelos.
+Veja [LoopBack](http://loopback.io) para um framework baseado em Express que é centralizado em torno de modelos.
 
-## Como posso autenticar usuários?
+## Como posso autenticar os usuários?
 
 Autenticação é outra área muito opinada que o Express não
-se arrisca a entrar.  Você pode usar qualquer esquema que desejar.
-Para um esquema simples com nome de usuário / senha, consulte
-[este
-exemplo](https://github.com/expressjs/express/tree/master/examples/auth).
+se arrisca a entrar. Você pode usar qualquer esquema de autenticação desejado.
+Para um esquema simples de nome de usuário/senha, consulte [este exemplo](https://github.com/expressjs/express/tree/master/examples/auth).
 
+## Quais mecanismos de template suporta o Expresso?
 
-## Quais mecanismos de modelo o Express suporta?
-
-O Express suporta qualquer mecanismo de modelo que esteja em
-conformidade com a assinatura `(path, locals,
-callback)`.
-Para normalizar interfaces e o armazenamento em
-cache de mecanismo de modelo, consulte o projeto
+Expresso suporta qualquer mecanismo de modelos que esteja em conformidade com a assinatura `(caminho, moradores, callback)`.
+Para normalizar interfaces do motor de modelos e cache de cache, veja o projeto
 [consolidate.js](https://github.com/visionmedia/consolidate.js)
-para obter suporte. Mecanismos de modelo não listados podem ainda
-assim suportar a assinatura do Express.
+para suporte. Motores de modelos não listados ainda podem suportar a assinatura Express.
 
-## Como manipulo respostas 404?
+Para obter mais informações, consulte [Usando mecanismos de modelo com Express](/{{page.lang}}/guide/using-template-engines.html).
 
-No Express, respostas 404 não são o resultado de um erro,
-portanto o middleware manipulador de erros não irá capturá-las. Este comportamento é porque uma resposta 404 simplesmente indicam a
+## Como lidamos com 404 respostas?
+
+Em Express, respostas 404 não são resultado de um erro, então
+o middleware de erro não as capturará. Este comportamento é porque uma resposta 404 simplesmente indicam a
 ausência de trabalho adicional para fazer; em outras palavras, o
 Express executou todas as funções de middleware e rotas, e descobriu
 que nenhuma delas respondeu. Tudo que você precisa fazer é incluir
@@ -71,15 +61,17 @@ funções) para manipular uma resposta 404:
 
 ```js
 app.use((req, res, next) => {
-  res.status(404).send('Sorry cant find that!')
+  res.status(404).send("Sorry can't find that!")
 })
 ```
 
-## Como configuro um manipulador de erros?
+Adicione rotas dinamicamente em tempo de execução em uma instância de `express.Router()`
+para que as rotas não sejam substituídas por uma função middleware.
 
-Você define middlewares de manipulação de erros da mesma forma
-que outros middlewares, exceto que com quatro argumentos ao invés de
-três; especificamente com a assinatura `(err, req, res, next)`:
+## Como faço para configurar um manipulador de erro?
+
+Você define o middleware com erros de manipulação da mesma forma que outros middleware,
+exceto com quatro argumentos em vez de três; especificamente com a assinatura `(err, req, res, próxima)`:
 
 ```js
 app.use((err, req, res, next) => {
@@ -88,13 +80,18 @@ app.use((err, req, res, next) => {
 })
 ```
 
-Para obter mais informações, consulte [Manipulação de erros](/{{ page.lang }}/guide/error-handling.html).
+Para obter mais informações, consulte [Tratamento de erros](/{{ page.lang }}/guide/error-handling.html).
 
-## Como renderizar um HTML simples?
+## Como faço para tornar HTML simples?
 
-Você não faz! Não há necessidade de se "renderizar" HTML com a
-função `res.render()`.
-se você tiver um arquivo
-específico, use a função `res.sendFile()`.
-Se estiver entregando muitos ativos a partir de um diretório, use a
-função de middleware `express.static()`.
+Você não! Não há necessidade de "render" HTML com a função `res.render()`.
+Se você tiver um arquivo específico, use a função `res.sendFile()`.
+Se você estiver servindo muitos assets de um diretório, use a função `express.static()`
+middleware.
+
+## Qual versão do Node.js requer o Expresso?
+
+- [Expresso 4.x](/{{ page.lang }}/4x/api.html) requer Node.js 0.10 ou superior.
+- [Express 5.x](/{{ page.lang }}/5x/api.html) requer Node.js 18 ou superior.
+
+### [Anterior: Mais exemplos ](/{{ page.lang }}/starter/examples.html)

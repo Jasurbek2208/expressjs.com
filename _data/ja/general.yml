@@ -1,0 +1,6 @@
+title_announcement: "Express@5.1.0: 現在のデフォルトのnpm とLTS のタイムライン"
+body_announcement: "エクスプレス5.1.0がnpmのデフォルトとなり、v4およびv5のリリースラインの公式LTSスケジュールが導入されました。 <a href='https://expressjs.com/2025/03/31/v5-1-latest-release.html'>最新のブログをご覧ください。</a>"
+community-caveat-alert: "この情報は、Expressjsチームがメンテナンスしていないサードパーティのサイト、製品、またはモジュールを指します。 ここに記載することは、Expressjsプロジェクトチームからの推奨または推奨を構成するものではありません。"
+warning: '警告'
+note: 'メモ'
+caution: '注意'

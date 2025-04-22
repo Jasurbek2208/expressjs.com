@@ -1,0 +1,6 @@
+title_announcement: "Express@5.1.0: Jetzt der Standard bei npm mit LTS Timeline"
+body_announcement: "Express 5.1.0 ist jetzt der Standard für npm, und wir führen einen offiziellen LTS-Zeitplan für die v4- und v5-Release-Zeilen ein. <a href='https://expressjs.com/2025/03/31/v5-1-latest-release.html'>Schau dir unseren neuesten Blog für weitere Informationen an.</a>"
+community-caveat-alert: "Diese Informationen beziehen sich auf Websites, Produkte oder Module, die nicht vom Expressjs Team betreut werden. Eine Auflistung hier stellt keine Billigung oder Empfehlung des Projektteams von Expressjs dar."
+warning: 'Warnung'
+note: 'Notiz'
+caution: 'Vorsicht'

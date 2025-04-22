@@ -1,23 +1,32 @@
 ---
 layout: page
-title: 在 Express 中提供静态文件
+title: 在快递中服务静态文件
+description: 了解如何在 Express.js 中使用内置的 'static' 中间件来为静态文件服务，例如图像、 CSS 和 JavaScript 服务。
 menu: starter
-lang: zh-cn
-description: Understand how to serve static files like images, CSS, and JavaScript
-  in Express.js applications using the built-in 'static' middleware.
+lang: 中
+redirect_from: ""
 ---
 
-# 在 Express 中提供静态文件
+# 在快递中服务静态文件
 
-为了提供诸如图像、CSS 文件和 JavaScript 文件之类的静态文件，请使用 Express 中的 `express.static` 内置中间件函数。
+若要用于静态文件，如图像，CSS 文件和 JavaScript 文件，请使用 `express.static` 内置的中间件函数。
 
-将包含静态资源的目录的名称传递给 `express.static` 中间件函数，以便开始直接提供这些文件。例如，使用以下代码在名为 `public` 的目录中提供图像、CSS 文件和 JavaScript 文件：
+函数签名是：
+
+```js
+express.static(root, [options])
+```
+
+`root`参数指定了用于静态资产的根目录。
+更多关于 "options" 参数的信息，见 [express.static](/{{page.lang}}/4x/api.html#express.static)。
+
+例如，在一个名为“公开”的目录中使用以下代码来为图像、CSS 文件和 JavaScript 文件服务：
 
 ```js
 app.use(express.static('public'))
 ```
 
-现在，可以访问位于 `public` 目录中的文件：
+现在，你可以加载在 `public` 目录中的文件：
 
 ```text
 http://localhost:3000/images/kitten.jpg
@@ -31,14 +40,19 @@ http://localhost:3000/hello.html
 Express 相对于静态目录查找文件，因此静态目录的名称不是此 URL 的一部分。
 </div>
 
-要使用多个静态资源目录，请多次调用 `express.static` 中间件函数：
+要使用多个静态资源目录，多次调用 `expres.static` 中间件函数：
 
 ```js
 app.use(express.static('public'))
 app.use(express.static('files'))
 ```
 
-Express 以您使用 `express.static` 中间件函数设置静态目录的顺序来查找文件。
+快速以`express.static`中间件函数设置静态目录的顺序查找文件。
+
+{% capture alert_content %}
+为了取得最佳结果，[使用反向代理](/{{page.lang}}/advanced/best-practice-performance.html#use-a-reverse-proxy) 缓存来提高静态资产的性能。
+{% endcapture %}
+{% include admonitions/note.html content=alert_content %}
 
 要为 `express.static` 函数提供的文件创建虚拟路径前缀（路径并不实际存在于文件系统中），请为静态目录[指定安装路径](/{{ page.lang }}/4x/api.html#app.use)，如下所示：
 
@@ -46,7 +60,7 @@ Express 以您使用 `express.static` 中间件函数设置静态目录的顺序
 app.use('/static', express.static('public'))
 ```
 
-现在，可以访问具有 `/static` 路径前缀的 `public` 目录中的文件。
+现在，你可以从`/static`前缀加载`public`目录中的文件。
 
 ```text
 http://localhost:3000/static/images/kitten.jpg
@@ -56,9 +70,13 @@ http://localhost:3000/static/images/bg.png
 http://localhost:3000/static/hello.html
 ```
 
-然而，向 `express.static` 函数提供的路径相对于您在其中启动 `node` 进程的目录。如果从另一个目录运行 Express 应用程序，那么对于提供资源的目录使用绝对路径会更安全：
+然而，你提供的 `express.static` 函数的路径是相对于你启动你的 `node` 进程的目录。 如果您从另一个目录运行表达式应用程序，使用您想要服务的目录的绝对路径将更安全：
 
 ```js
 const path = require('path')
 app.use('/static', express.static(path.join(__dirname, 'public')))
 ```
+
+关于 `serve-static` 函数及其选项的更多详情，请见  [serve-static](/resources/middleware/serve-static.html)。
+
+### [Previous: Basic Routing ](/{{ page.lang }}/starter/basic-routing.html)&nbsp;&nbsp;&nbsp;&nbsp;[Next: More examples ](/{{ page.lang }}/starter/examples.html)

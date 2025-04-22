@@ -1,59 +1,78 @@
 ---
 layout: page
-title: Express に関する FAQ
+title: Express FAQ
+description: Express.jsについてよく寄せられる質問の答えを見つけましょう。その中には、アプリケーション構造、モデル、認証、テンプレートエンジン、エラー処理などのトピックが含まれます。
 menu: starter
-lang: ja
-description: Find answers to frequently asked questions about Express.js, including
-  topics on application structure, models, authentication, template engines, error
-  handling, and more.
+lang: en
+redirect_from: ""
 ---
 
 # FAQ
 
-## どのようにしてアプリケーションを構成するのですか?
+## アプリケーションを構成するにはどうすればいいですか?
 
-この質問に対する決定的な答えはありません。ご使用のアプリケーションや関与するチームの規模によって答えは異なります。可能な限り柔軟であるために、Express には、構造に関する前提がありません。
+この質問には決定的な答えはありません。 The answer depends
+on the scale of your application and the team that is involved. 可能な限り
+柔軟性を持たせるために、Expressは構造的な仮定をしません。
 
-ルートやその他のアプリケーション固有のロジックは、必要な数だけのファイルや、任意のディレクトリー構造に存在できます。参考のために、以下の例を参照してください。
+ルートやその他のアプリケーション固有のロジックは、任意のディレクトリ構造において、
+好きな数のファイルに保存することができます。 View the following
+examples for inspiration:
 
-* [ルートのリスト](https://github.com/expressjs/express/blob/4.13.1/examples/route-separation/index.js#L32-47)
-* [ルートのマップ](https://github.com/expressjs/express/blob/4.13.1/examples/route-map/index.js#L52-L66)
-* [MVC スタイルのコントローラー](https://github.com/expressjs/express/tree/master/examples/mvc)
+- [ルートのリスト](https://github.com/expressjs/express/blob/4.13.1/examples/route-separation/index.js#L32-47)
+- [ルートのマップ](https://github.com/expressjs/express/blob/4.13.1/examples/route-map/index.js#L52-L66)
+- [MVC style controllers](https://github.com/expressjs/express/tree/master/examples/mvc)
 
-また、これらのパターンを簡素化する、サード・パーティー製の Express 拡張版があります。
+また、Express 用のサードパーティの拡張機能もあり、これらのパターンのいくつかを簡素化します。
 
-* [Resourceful ルーティング](https://github.com/expressjs/express-resource)
+- [Resourceful ルーティング](https://github.com/expressjs/express-resource)
 
-## どのようにしてモデルを定義するのですか?
+## モデルを定義するにはどうすればいいですか?
 
-Express には、データベースの概念がありません。この概念はサード・パーティーの Node モジュールに任せられているため、ほとんどのデータベースとやりとりできます。
+Express にはデータベースという概念はありません。 このコンセプトは
+サードパーティ製の Node モジュールに残されており、ほぼすべてのデータベースと
+インターフェイスを使用できます。
 
-モデルに関する Express ベースのフレームワークについては、[LoopBack](http://loopback.io) を参照してください。
+モデルを中心とした Express ベースのフレームワークについては [LoopBack](http://loopback.io) を参照してください。
 
-## どのようにしてユーザーを認証するのですか?
+## どのようにユーザーを認証できますか?
 
-認証は、Express が足を踏み入れていないもう 1 つの分野です。任意の認証スキームを使用できます。
-単純なユーザー名/パスワードのスキームについては、[この例](https://github.com/expressjs/express/tree/master/examples/auth)を参照してください。
+Authentication is another opinionated area that Express does not
+venture into. 任意の認証スキームを使用できます。
+単純なユーザー名/パスワードスキームについては、[この例](https://github.com/expressjs/express/tree/master/examples/auth)を参照してください。
 
+## Expressはどのテンプレートエンジンをサポートしていますか?
 
-## Express はどのテンプレート・エンジンをサポートしているのですか?
+Express は、\`(path, local, callback) 署名に適合するテンプレートエンジンをサポートしています。
+テンプレートエンジンインターフェイスとキャッシュを正規化するには、
+[consolidate.js](https://github.com/visionmedia/consolidate.js)
+プロジェクトをサポートしてください。 リストされていないテンプレートエンジンは引き続きExpress 署名をサポートする可能性があります。
 
-Express は、`(パス、ロケール、コールバック)` シグニチャーに準拠するすべてのテンプレート・エンジンをサポートします。
-テンプレート・エンジンのインターフェースとキャッシングを正規化するには、[consolidate.js](https://github.com/visionmedia/consolidate.js) プロジェクトでサポートを参照してください。リストされていないテンプレート・エンジンでも Express シグニチャーをサポートしている可能性があります。
+詳しくは、[Expressでテンプレートエンジンを使用する](/{{page.lang}}/guide/using-template-engines.html)を参照してください。
 
-## どのようにして 404 応答に対応するのですか?
+## 404応答はどのように処理すればいいですか?
 
-Express では、404 応答はエラーの結果ではありません。そのため、エラー・ハンドラー・ミドルウェアはそれらをキャプチャーしません。このように動作するのは、404 応答は単に追加の処理が存在しないことを示しているためです。つまり、Express は、すべてのミドルウェア関数とルートを実行して、そのいずれも応答しなかったことを検出したということです。404 応答に対応するには、スタックの最下部 (他のすべての関数の下) にミドルウェア関数を追加するだけですみます。
+Expressでは404応答はエラーの結果ではないため、
+エラーハンドラミドルウェアはそれらを捕捉しません。 This behavior is
+because a 404 response simply indicates the absence of additional work to do;
+in other words, Express has executed all middleware functions and routes,
+and found that none of them responded. All you need to
+do is add a middleware function at the very bottom of the stack (below all other functions)
+to handle a 404 response:
 
 ```js
 app.use((req, res, next) => {
-  res.status(404).send('Sorry cant find that!')
+  res.status(404).send("Sorry can't find that!")
 })
 ```
 
-## どのようにしてエラー・ハンドラーをセットアップするのですか?
+`express.Router()`
+のインスタンスで実行時にルートを動的に追加することで、ルートはミドルウェア関数に取って代わられません。
 
-エラー処理ミドルウェアの定義方法は、他のミドルウェアと同じですが、引数の数が 3 つではなく 4 つである点が異なります。具体的には、シグニチャー `(err、req、res、next)` です。
+## エラーハンドラの設定方法は?
+
+他のミドルウェアと同じ方法でエラー処理ミドルウェア
+を定義します。ただし、3つではなく4つの引数を使用します。 具体的にはシグネチャ`(err, req, res, next)`を指定します。
 
 ```js
 app.use((err, req, res, next) => {
@@ -62,10 +81,18 @@ app.use((err, req, res, next) => {
 })
 ```
 
-詳細については、[エラー処理](/{{ page.lang }}/guide/error-handling.html)を参照してください。
+詳細については、[Error handling](/{{ page.lang }}/guide/error-handling.html) を参照してください。
 
-## どのようにしてプレーン HTML をレンダリングするのですか?
+## プレーンHTMLをレンダリングするにはどうすればいいですか?
 
-レンダリングしません。`res.render()` 関数で HTML を「レンダリング」する必要はありません。
-特定のファイルがある場合は、`res.sendFile()` 関数を使用します。
-ディレクトリーから多数の資産を提供する場合は、`express.static()` ミドルウェア関数を使用します。
+違います！ `res.render()`関数でHTMLを「レンダリング」する必要はありません。
+特定のファイルがある場合は、 `res.sendFile()` 関数を使用します。
+ディレクトリから多くのアセットを提供している場合は、`express.static()`
+ミドルウェア関数を使用してください。
+
+## Express にはどのバージョンの Node.js が必要ですか?
+
+- [Express 4.x](/{{ page.lang }}/4x/api.html) には Node.js 0.10 以上が必要です。
+- [Express 5.x](/{{ page.lang }}/5x/api.html) には Node.js 18 以上が必要です。
+
+### [Previous: More examples ](/{{ page.lang }}/starter/examples.html)

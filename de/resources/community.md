@@ -1,23 +1,92 @@
 ---
 layout: page
-title: Express-Community
-description: Connect with the Express.js community, learn about the technical committee, find resources, explore community-contributed modules, and get involved in discussions.
+title: Express-Gemeinschaft
+description: Verbinden Sie sich mit der Express.js Community, erfahren Sie mehr über den technischen Ausschuss, finden Sie Ressourcen, erkunden Sie die von der Gemeinschaft beigetragenen Module und beteiligen Sie sich an Diskussionen.
 menu: resources
 lang: de
+redirect_from: ""
 ---
 
 # Community
 
-## Beispiele
+## Technischer Ausschuss
 
-Zeigen Sie Dutzende von [Beispielen](https://github.com/expressjs/express/tree/master/examples) zu Express-Anwendungen im Repository an, das alles abdeckt – von API-Design und Authentifizierung bis zur Einbindung von Template-Engines.
+Das Technische Komitee Express trifft sich alle zwei Wochen online (erforderlich), um die Entwicklung und Wartung von Express,
+und andere Fragen, die für das Express Projekt relevant sind. Jedes Meeting wird typischerweise in einem
+[express js/discussions issue](https://github.com/expressjs/discussions/issues) angekündigt mit einem Link um dem Meeting beizutreten oder zu sehen das ist
+für alle Beobachter offen.
+
+Die Besprechungen werden aufgezeichnet; für eine Liste der Aufzeichnungen siehe den Kanal [Express.js YouTube](https://www.youtube.com/channel/UCYjxjAeH6TRik9Iwy5nXw7g).
+
+Mitglieder des Technischen Ausschusses Express sind:
+
+**Aktiv:**
+
+- [@blakeembrey](https://github.com/blakeembrey) - Blake Embrey
+- [@crandmck](https://github.com/crandmck) - Rand McKinney
+- [@LinusU](https://github.com/LinusU) - Linus Unnebäck
+- [@ulisesgascon](https://github.com/ulisesGascon) - Ulises Gascón
+- [@sheplu](https://github.com/sheplu) - Jean Burellier
+- [@wesleytodd](https://github.com/wesleytodd) - Wes Todd
+- [@jonchurch](https://github.com/jonchurch) - Jon Kirche
+- [@ctcpip](https://github.com/ctcpip/) - Chris de Almeida
+
+**Inaktiv:**
+
+- [@dougwilson](https://github.com/dougwilson) - Douglas Wilson
+- [@hacksparrow](https://github.com/hacksparrow) - Hage Yaapa
+- [@jonathanong](https://github.com/jonathanong) - Jonglebeere
+- [@niftylettuce](https://github.com/niftylettuce) - niftylettuce
+- [@troygoode](https://github.com/troygoode) - Troy Goode
+
+## Express besteht aus vielen Modulen
+
+Unsere lebendige Community hat eine Vielzahl von Erweiterungen erstellt,
+[Middleware-Module](/{{ page.lang }}/resources/middleware.html) und höherrangige Frameworks.
+
+Zusätzlich unterhält die Express-Community Module in diesen zwei GitHub Orgs:
+
+- [jshttp](https://jshttp.github.io/) Module, die nützliche Utility Funktionen bereitstellen; siehe [Utility Modules](/{{ page.lang }}/resources/utils.html).
+- [pillarjs](https://pillarjs.github.io/): Low-Level-Module, die Express intern verwendet.
+
+Um mit den Geschehnissen in der gesamten Community Schritt zu halten, schauen Sie sich das [ExpressJS StatusBoard](https://expressjs.github.io/statusboard/).
 
 ## Probleme
 
-Wenn Sie Ihrer Meinung nach einen Fehler festgestellt haben oder lediglich ein Feature/eine Funktion anfordern wollen, können Sie in der [Issue Queue](https://github.com/expressjs/express/issues) ein Ticket öffnen.
+Wenn du auf einen Fehler gestoßen bist, oder einfach nur
+zu einem Feature-Request machen wollen, öffnen Sie ein Ticket in der [Issue-Warteschlange](https://github.com/expressjs/express/issues).
 
-## Andere Anbieter
+## Beispiele
 
-Unsere lebhafte Community hat zu einer Vielzahl von Erweiterungen, [Middlewaremodulen](/{{ page.lang }}/resources/middleware.html) und Frameworks der höheren Ebene geführt. Diese können Sie im
-[Wiki](https://github.com/expressjs/express/wiki) genauer begutachten.
+Sehen Sie sich Dutzende von Express-Anwendungen [examples](https://github.com/expressjs/express/tree/master/examples)
+im Repository an, die alles vom API-Design über die Authentifizierung bis hin zur Integration der Template-Engine abdecken.
 
+## Github Discussions
+
+Der Abschnitt [GitHub Diskussionen](https://github.com/expressjs/discussions) ist ein ausgezeichneter Raum für Gespräche über die Entwicklung und Wartung von Express, sowie Ideen auszutauschen und Themen im Zusammenhang mit seiner Nutzung zu diskutieren.
+
+# Branding von Express.js
+
+## Express.js Logo
+
+Express ist ein Projekt der OpenJS Foundation. Bitte lesen Sie die [Markenrichtlinie](https://trademark-policy.openjsf.org/) für Informationen über die zulässige Verwendung von Express.js Logos und Marken.
+
+<div class="logo-table">
+    <div>
+        <h3>Logotyp</h3><a href="/images/brand/logotype-light.svg" class="hidden-dark">
+            <img src="/images/brand/logotype-light.svg" alt="Express.js logo" width="250" height="56"/>
+        </a>
+        <a href="/images/brand/logotype-dark.svg" class="hidden-light">
+            <img src="/images/brand/logotype-dark.svg" alt="Express.js logo" width="250" height="56"/>
+        </a>
+    </div>
+    <div>
+        <h3>Logomark</h3><a href="/images/brand/logo-light.svg" class="hidden-dark">
+            <img src="/images/brand/logo-light.svg" alt="Express.js mark" width="96.5" height="56"/>
+        </a>
+        <a href="/images/brand/logo-dark.svg" class="hidden-light">
+            <img src="/images/brand/logo-dark.svg"  alt="Express.js mark" width="96.5" height="56"/>
+        </a>
+    </div>
+<div>
+</div>

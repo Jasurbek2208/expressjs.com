@@ -1,57 +1,60 @@
 ---
 layout: page
 title: Express-Glossar
-description: A comprehensive glossary of terms related to Express.js, Node.js, middleware, routing, and other key concepts to help you understand and use Express effectively.
+description: Ein umfassendes Glossar mit Begriffen, die sich auf Express.js, Node.js, Middleware, Routing und andere Schlüsselkonzepte beziehen, damit Sie Express verstehen und effektiv nutzen können.
 menu: resources
 lang: de
+redirect_from: ""
 ---
 
-# Glossar
+# Glossary
 
-### Anforderung
+### anwendung
 
-Eine HTTP-Anforderung. Ein Client übergibt eine HTTP-Anforderungsnachricht an einen Server, der wiederum eine Antwort zurückgibt. Bei der Anforderung muss eine der [Anforderungsmethoden](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) wie GET, POST usw. verwendet werden.
-
-### Antwort
-
-Eine HTTP-Antwort. Ein Server gibt eine HTTP-Antwortnachricht an den Client zurück. Die Antwort enthält Informationen zum Beendigungsstatus in Bezug auf die Anforderung und kann im Nachrichtenhauptteil auch angeforderten Inhalt enthalten.
-
-### Anwendung
-
-Im Allgemeinen besteht eine Anwendung aus einem oder mehreren Programmen, über die Operationen für bestimmte Zwecke ausgeführt werden. Im Zusammenhang mit Express ist eine Anwendung ein Programm, das die auf der Node.js-Plattform laufende Express-API nutzt. Wird auch als [Anwendungsobjekt](/{{ page.lang }}/api.html#express) bezeichnet.
+Im Allgemeinen ein oder mehrere Programme, die darauf ausgelegt sind, Operationen für einen bestimmten Zweck durchzuführen.  Im Kontext von Express, ein Programm, das die Express-API verwendet, die auf der Node.js-Plattform läuft.  Könnte auch auf ein [App-Objekt](/{{ page.lang }}/api.html#express) verweisen.
 
 ### API
 
-Anwendungsprogrammierschnittstelle (Application Programming Interface). Abkürzung bei der ersten Verwendung ausschreiben.
+Programmierschnittstelle für Anwendungen. Sprich die Abkürzung aus, wenn sie zum ersten Mal verwendet wird.
 
 ### Express
 
-Schnelles, offenes, unkompliziertes Web-Framework für Node.js-Anwendungen. Im Allgemeinen wird der Name "Express" eher verwendet als "Express.js", auch wenn "Express.js" ebenfalls verwendet werden kann.
+Ein schnelles, unübersichtliches, minimalistisches Webframework für Node.js Anwendungen. Im Allgemeinen wird "Express" von "Express.js" bevorzugt, obwohl letztere akzeptabel ist.
 
 ### libuv
 
-Eine plattformübergreifende Unterstützungsbibliothek, bei der die asynchrone Ein-/Ausgabe im Mittelpunkt steht. Sie wurde in erster Linie für die Verwendung in Node.js entwickelt.
+Eine mehrplattformunabhängige Unterstützungsbibliothek, die sich auf asynchrone I/O konzentriert, die hauptsächlich für den Einsatz durch Node.js entwickelt wurde.
 
 ### Middleware
 
-Eine Funktion, die über die Weiterleitungsebene in Express vor dem letzten Anforderungshandler aufgerufen wird. Deshalb befindet sich diese Funktion in der Mitte zwischen einer unformatierten Anforderung und der endgültigen beabsichtigten Weiterleitung. Nachfolgend finden Sie einige Details zur Middlewareterminologie:
+Eine Funktion, die von der Express-Routing Layer vor dem letzten Request-Handler aufgerufen wird und sitzt somit in der Mitte zwischen einer Rohanforderung und der endgültigen geplanten Route. Ein paar schöne Terminologiepunkte rund um die Middleware:
 
-  * `var foo = require('middleware')` bedeutet, dass ein Node.js-Modul *benötigt* oder *verwendet* wird. Dann gibt die Anweisung `var mw = foo()` in der Regel die Middleware zurück.
-  * `app.use(mw)` bedeutet, dass die *Middleware dem globalen Verarbeitungsstack hinzugefügt wird*.
-  * `app.get('/foo', mw, function (req, res) { ... })` bedeutet, dass die *Middleware dem "GET /foo"-Verarbeitungsstack hinzugefügt wird*.
+- `var foo = require('middleware')` heißt _requiring_ oder _using_ ein Node.js Modul. Dann gibt die Anweisung `var mw = foo()` typischerweise die Middleware zurück.
+- `app.use(mw)` heißt _adding the middleware to the global processing stack_.
+- `app.get('/foo', mw, function (req, res) { ... })` heißt _adding the middleware to the "GET /foo" processing stack_.
 
 ### Node.js
 
-Eine Softwareplattform, die für die Erstellung skalierbarer Netzanwendungen verwendet wird. Node.js verwendet JavaScript als Scripting-Sprache und erzielt den hohen Durchsatz durch nicht blockierende Ein-/Ausgabe und eine Ereignisschleife mit einem Thread. Siehe auch [nodejs.org](http://nodejs.org/). **Hinweis**: Der ursprüngliche Name lautet "Node.js". Mittlerweile ist die Bezeichnung "Node" geläufig.
+Eine Softwareplattform, die zur Erstellung skalierbarer Netzwerkanwendungen verwendet wird. Node.js verwendet JavaScript als Skriptsprache und erzielt einen hohen Durchsatz über nicht-blockierende I/O und eine einzige Threading-Ereignisschleife. Siehe [nodejs.org](https://nodejs.org/en/). **Verwende Notiz**: Anfangs "Node.js", danach "Knoten".
 
-### Open-Source
+### Open-Source, Open-Source
 
-Bei Verwendung als Adjektiv muss dieser Begriff mit Bindestrichen gekoppelt werden: Beispiel: "Dies ist eine Open-Source-Software." Siehe auch [Open-Source-Software in Wikipedia](http://en.wikipedia.org/wiki/Open-source_software).
+Wenn als Adjektiv verwendet wird, Bindestrich; zum Beispiel: "Dies ist Open-Source-Software." Siehe [Open-Source-Software auf Wikipedia](http://en.wikipedia.org/wiki/Open-source_software).
 
-### Router
+{% include admonitions/note.html content="Obwohl es üblich ist, diesen Begriff nicht zu überschreiben, verwenden wir die üblichen englischen Regeln für das Binden eines zusammengesetzten Adjektivs." %}
 
-Siehe [Router](/{{ page.lang }}/4x/api.html#router) in der API-Referenz.
+### anfragen
 
-### Weiterleitung (Route)
+Eine HTTP-Anfrage. Ein Client sendet eine HTTP-Anfrage an einen Server, der eine Antwort zurückgibt.  Die Anfrage muss eine von mehreren [Anfragemethoden](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) wie GET, POST usw. verwenden.
 
-Teil einer URL, die eine Ressource angibt. Beispiel: In `http://foo.com/products/id` ist "/products/id" die Weiterleitung.
+### antwort
+
+Eine HTTP-Antwort. Ein Server gibt dem Client eine HTTP-Antwortmeldung zurück. Die Antwort enthält Vollständigkeitsinformationen über die Anfrage und kann auch angeforderte Inhalte in ihrem Nachrichtentext enthalten.
+
+### routen
+
+Teil einer URL, die eine Ressource identifiziert. In `http://foo.com/products/id`, zum Beispiel, ist "/products/id" die Route.
+
+### router
+
+Siehe [router](/{{ page.lang }}/api.html#router) in der API-Referenz.

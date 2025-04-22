@@ -1,27 +1,28 @@
 ---
 layout: page
-title: Version Support
+title: バージョンサポート
+description: 現在メンテナンスされているバージョンや終了ポリシーを含む、さまざまなExpress.jsバージョンのサポートスケジュールに関する情報をご覧ください。
 menu: support
-lang: ja
+lang: en
 ---
 
-# Version Support
+# バージョンサポート
 
-Only the latest version of any given major release line is supported.
+任意のメジャーリリースラインの最新バージョンのみがサポートされています。
 
-Versions that are EOL (end-of-life) _may_ receive updates for critical security vulnerabilities, but the Express team offers no guarantee and does not plan to address or release fixes for any issues found.
+EOL (終了) _may_ のバージョンは、重大なセキュリティ脆弱性の更新を受け取ります。 しかし、Expressチームは保証を提供しておらず、見つかった問題の修正やリリースを計画していません。
 
-| Major Version | Minimum Node.js Version | Support Start Date | Support End Date |
-| -- | -- | -- | -- |
-| [**v5.x**{: .supported }](/{{page.lang}}/5x/api.html){: .ignore-underline} | 18 | September 2024 | **ongoing**{: .supported } |
-| [**v4.x**{: .supported }](/{{page.lang}}/4x/api.html){: .ignore-underline} | 0.10.0 | April 2014 | **ongoing**{: .supported } |
-| [**v3.x**{: .eol }](/{{page.lang}}/3x/api.html){: .ignore-underline} | 0.8.0 | October 2012 | July 2015 |
-| [**v2.x**{: .eol }](/2x/){: .ignore-underline} | 0.4.1 | March 2011 | July 2012 |
-| **v1.x**{: .eol } | 0.2.0 | December 2010 | March 2011 |
-| **v0.14.x**{: .eol } | 0.1.98 | December 2010 | December 2010 |
+| メジャーバージョン                                                                                                                                                  | 最小Node.js バージョン        | サポート開始日    | サポート終了日                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ---------- | ------------------------------------------------------ |
+| [**v5.x**{: .supported }](/{{page.lang}}/5x/api.html){: .ignore-underline} | 18                                     | 2024年9月    | **進行中**{: .supported } |
+| [**v4.x**{: .supported }](/{{page.lang}}/4x/api.html){: .ignore-underline} | 0.10.0 | 2014 年 4 月 | **進行中**{: .supported } |
+| [**v3.x**{: .eol }](/{{page.lang}}/3x/api.html){: .ignore-underline}       | 0.8.0  | 2012年10月   | 2015 年 7 月                                             |
+| [**v2.x**{: .eol }](/2x/){: .ignore-underline}                             | 0.4.1  | 2011 年 3 月 | 2012 年 7 月                                             |
+| **v1.x**{: .eol }                                                                                          | 0.2.0  | 2010年12月   | 2011 年 3 月                                             |
+| **v0.14.x**{: .eol }                                                                       | 0.1.98 | 2010年12月   | 2010年12月                                               |
 
-## Commercial Support Options
+## 商用サポートオプション
 
-If you are unable to update to a supported version of Express, please contact one of our partners to receive security updates:
+サポートされているバージョンの Express にアップデートできない場合は、以下のいずれかのパートナーにお問い合わせください:
 
- - [HeroDevs Never-Ending Support](http://www.herodevs.com/support/express-nes?utm_source=expressjs&utm_medium=link&utm_campaign=express_eol_page)
+- [HeroDevs Never-Ending Support](http://www.herodevs.com/support/express-nes?utm_source=expressjs&utm_medium=link&utm_campaign=express_eol_page)

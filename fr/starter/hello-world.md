@@ -1,23 +1,17 @@
 ---
 layout: page
-title: Exemple "Hello world" Express
+title: Exemple Express "Hello World"
+description: Commencez avec Express.js en construisant une simple application 'Hello World', en démontrant la configuration de base et la création de serveurs pour les débutants.
 menu: starter
 lang: fr
-description: Get started with Express.js by building a simple 'Hello World' application,
-  demonstrating the basic setup and server creation for beginners.
+redirect_from: ""
 ---
 
-# Exemple Hello world
+# Bonjour l'exemple du monde
 
 <div class="doc-box doc-info" markdown="1">
-Il s'agit de l'application Express la plus simple que vous puissiez créer. Cette application ne contient qu'un seul fichier, c'est-à-dire *tout l'inverse* de ce que vous obtiendriez avec le
-[générateur Express](/{{ page.lang }}/starter/generator.html), qui crée l'échafaudage d'une application entière, avec des fichiers JavaScript, des modèles <a href="pugjs.org" target="_blank" title="Documentation Pug">Pug</a> et des sous-répertoires pour divers motifs.
+Intégré ci-dessous est essentiellement l'application Express la plus simple que vous puissiez créer. C'est une application de fichier unique &mdash; _pas_ ce que vous obtiendrez si vous utilisez le [générateur Express](/{{ page.lang }}/starter/generator. tml), qui crée l'échafaudage pour une application complète avec de nombreux fichiers JavaScript, des modèles Jade et des sous-répertoires pour divers usages.
 </div>
-
-Premièrement, créez un répertoire appelé `myapp`, rendez-vous dedans et exécutez la commande `npm init`.
-Ensuite, installez `express` en tant que dépendance en suivant les instructions du [guide d'installation](/{{ page.lang }}/starter/installing.html).
-
-Dans le répertoire `myapp`, créez un fichier appelé `app.js` et ajoutez le code suivant :
 
 ```js
 const express = require('express')
@@ -33,12 +27,18 @@ app.listen(port, () => {
 })
 ```
 
-L'application démarre un serveur et écoute le port 3000 à la recherche de connexions. L'application répond "Hello World!" aux demandes adressées
-à l'URL racine (`/`) ou à la *route* racine. Pour tous les autres chemins d'accès, elle répondra par **404 Not Found**.
+Cette application démarre un serveur et écoute le port 3000 pour les connexions. L'application répond avec "Hello World!" pour les demandes
+à l'URL racine (`/`) ou _route_. Pour tous les autres chemins, il répondra avec un **404 Not Found**.
+
+### Exécution locale
+
+Créez d'abord un répertoire nommé `myapp`, changez et exécutez `npm init`. Ensuite, installez `express` en tant que dépendance, conformément au [guide d'installation](/{{ page.lang }}/starter/installing.html).
+
+Dans le dossier `myapp`, créez un fichier nommé `app.js` et copiez le code à partir de l'exemple ci-dessus.
 
 <div class="doc-box doc-notice" markdown="1">
-Les objets `req` (demande) et `res` (réponse) sont exactement les mêmes que ceux que Node fournit, vous pouvez donc appeler
-`req.pipe()`, `req.on('data', callback)` et tout autre objet sans recourir à Express.
+Les `req` (request) et `res` (response) sont les mêmes objets que Node fournit, donc vous pouvez appeler
+`req. ipe()`, `req.on('data', callback)`, et tout autre chose que vous feriez sans Express impliqué.
 </div>
 
 Exécutez l'application avec la commande suivante :
@@ -47,5 +47,6 @@ Exécutez l'application avec la commande suivante :
 $ node app.js
 ```
 
-Puis chargez [http://localhost:3000/](http://localhost:3000/) dans un navigateur pour consulter le résultat.
+Ensuite, chargez `http://localhost:3000/` dans un navigateur pour voir la sortie.
 
+### [Précédent : Installation](/{{ page.lang }}/starter/installing.html)&nbsp;&nbsp;&nbsp;&nbsp;[Next: Express Generator ](/{{ page.lang }}/starter/generator.html)

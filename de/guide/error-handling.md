@@ -1,118 +1,178 @@
 ---
 layout: page
-title: Fehlerbehandlung in Express
-description: Understand how Express.js handles errors in synchronous and asynchronous code, and learn to implement custom error handling middleware for your applications.
+title: Express-Fehlerbehandlung
+description: Verstehen Sie, wie Express.js Fehler im synchronen und asynchronen Code behandelt, und lernen Sie, benutzerdefinierte Fehlerbehandlung Middleware für Ihre Anwendungen zu implementieren.
 menu: guide
 lang: de
+redirect_from: ""
 ---
 
-# Fehlerbehandlung
+# Fehler beim Umgang
+
+_Error Handling_ bezieht sich darauf, wie Express Fehler fängt und verarbeitet, die
+sowohl synchron als auch asynchron auftritt. Express kommt mit einem Standardfehler
+-Handler, damit Sie nicht Ihren eigenen schreiben müssen, um loszulegen.
+
+## Fehler beim Fangen
+
+Es ist wichtig sicherzustellen, dass Express alle Fehler, die auftreten, während
+Routen-Handler und Middleware ausführt.
+
+Fehler, die im synchronen Code innerhalb von Routenhandlern und Middleware
+auftreten, erfordern keine zusätzliche Arbeit. If synchronous code throws an error, then Express will
+catch and process it. Zum Beispiel:
+
+```js
+app.get('/', (req, res) => {
+  throw new Error('BROKEN') // Express will catch this on its own.
+})
+```
 
 Middlewarefunktionen für die Fehlerbehandlung werden in derselben Weise definiert wie andere Middlewarefunktionen, nur, dass Fehlerbehandlungsfunktionen vier anstatt drei Argumente aufweisen:
-`(err, req, res, next)`. Beispiel:
+`(err, req, res, next)`.  Zum Beispiel:
 
 ```js
-app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})
-```
-
-Middleware für die Fehlerbehandlung wird ganz zuletzt nach allen anderen `app.use()`- und Weiterleitungsaufrufen definiert. Beispiel:
-
-```js
-const bodyParser = require('body-parser')
-const methodOverride = require('method-override')
-
-app.use(bodyParser())
-app.use(methodOverride())
-app.use((err, req, res, next) => {
-  // logic
-})
-```
-
-Antworten von der Middlewarefunktion können das von Ihnen gewünschte Format aufweisen wie beispielsweise eine Fehlerseite im HTML-Format, eine einfache Nachricht oder eine JSON-Zeichenfolge.
-
-Für organisatorische Zwecke (und Frameworks der höheren Ebene) können Sie mehrere Middlewarefunktionen für die Fehlerbehandlung definieren, wie Sie dies bei regulären Middlewarefunktionen auch tun würden. Wenn Sie beispielsweise eine Fehlerbehandlungsroutine (Error-Handler) für Anforderungen über `XHR` und andere Anforderungen definieren wollen, können Sie die folgenden Befehle verwenden:
-
-```js
-const bodyParser = require('body-parser')
-const methodOverride = require('method-override')
-
-app.use(bodyParser())
-app.use(methodOverride())
-app.use(logErrors)
-app.use(clientErrorHandler)
-app.use(errorHandler)
-```
-
-In diesem Beispiel kann die generische `logErrors`-Funktion Anforderungs- und Fehlerinformationen in `stderr` schreiben:
-
-```js
-function logErrors (err, req, res, next) {
-  console.error(err.stack)
-  next(err)
-}
-```
-
-In diesem Beispiel wird `clientErrorHandler` wie folgt definiert. In diesem Fall wird der Fehler explizit an den nächsten Error-Handler übergeben:
-
-```js
-function clientErrorHandler (err, req, res, next) {
-  if (req.xhr) {
-    res.status(500).send({ error: 'Something failed!' })
-  } else {
-    next(err)
-  }
-}
-```
-Die `errorHandler`-Funktion "catch-all" kann wie folgt implementiert werden:
-
-```js
-function errorHandler (err, req, res, next) {
-  res.status(500)
-  res.render('error', { error: err })
-}
-```
-
-Wenn Sie Übergaben an die Funktion `next()` vornehmen (außer die Zeichenfolge `'route'`), sieht Express die aktuelle Anforderung als Fehler an und überspringt alle verbleibenden fehlerfreien Behandlungsroutinen und Middlewarefunktionen. Wenn Sie den Fehler bearbeiten wollen, müssen Sie (wie im nächsten Abschnitt beschrieben) eine Fehlerbehandlungsweiterleitung erstellen.
-
-Bei einem Routenhandler mit mehreren Callback-Funktionen können Sie den Parameter `route` verwenden, um den nächsten Routenhandler zu überspringen. Beispiel:
-
-```js
-app.get('/a_route_behind_paywall',
-  (req, res, next) => {
-    if (!req.user.hasPaid) {
-
-      // continue handling this request
-      next('route')
+app.get('/', (req, res, next) => {
+  fs.readFile('/file-does-not-exist', (err, data) => {
+    if (err) {
+      next(err) // Pass errors to Express.
+    } else {
+      res.send(data)
     }
-  }, (req, res, next) => {
-    PaidContent.find((err, doc) => {
-      if (err) return next(err)
-      res.json(doc)
-    })
   })
+})
 ```
-In diesem Beispiel wird der Handler `getPaidContent` übersprungen. Alle verbleibenden Handler in `app` für `/a_route_behind_paywall` werden jedoch weiter ausgeführt.
+
+Middleware für die Fehlerbehandlung wird ganz zuletzt nach allen anderen `app.use()`- und Weiterleitungsaufrufen definiert.
+Zum Beispiel:
+
+```js
+app.get('/user/:id', async (req, res, next) => {
+  const user = await getUserById(req.params.id)
+  res.send(user)
+})
+```
+
+Wenn `getUserById` einen Fehler oder eine Ablehnung, wird `next` entweder mit
+dem Wurffehler oder dem abgelehnten Wert aufgerufen. Wenn kein abgelehnter Wert angegeben wird, wird `next`
+mit einem Standard-Fehlerobjekt aufgerufen, das vom Express-Router bereitgestellt wird.
+
+Wenn du etwas an die `next()` Funktion übergibt (außer den String `'route'`),
+Express betrachtet die aktuelle Anfrage als Fehler und überspringt alle
+verbleibenden Funktionen zur Fehlerbehandlung und Middleware.
+
+Wenn der Rückruf in einer Sequenz keine Daten enthält, nur Fehler, kannst du den Code
+wie folgt vereinfachen:
+
+```js
+app.get('/', [
+  function (req, res, next) {
+    fs.writeFile('/inaccessible-path', 'data', next)
+  },
+  function (req, res) {
+    res.send('OK')
+  }
+])
+```
+
+Im obigen Beispiel wird `next` als Callback für `fs.writeFile` bereitgestellt,
+, das mit oder ohne Fehler aufgerufen wird. Wenn kein Fehler vorliegt, wird der zweite
+-Handler ausgeführt, sonst fängt und verarbeitet Express den Fehler.
+
+Sie müssen Fehler, die im asynchronen Code auftreten, der von Routenhandlern oder
+Middleware aufgerufen wird, auffangen und an Express zur Verarbeitung weiterleiten. Zum Beispiel:
+
+```js
+app.get('/', (req, res, next) => {
+  setTimeout(() => {
+    try {
+      throw new Error('BROKEN')
+    } catch (err) {
+      next(err)
+    }
+  }, 100)
+})
+```
+
+Das obige Beispiel benutzt einen "try...catch"-Baustein, um Fehler im
+asynchronen Code zu fangen und sie an den Express zu übergeben. Wenn der Block `try...catch`
+weggelassen wurde, würde Express den Fehler nicht auffinden, da er nicht Teil des synchronen
+Handlercodes ist.
+
+Verwende Versprechungen, um den Overhead des `try...catch`-Bausteins zu vermeiden oder wenn du Funktionen
+benutzt, die Versprechen zurückgeben.  Zum Beispiel:
+
+```js
+app.get('/', (req, res, next) => {
+  Promise.resolve().then(() => {
+    throw new Error('BROKEN')
+  }).catch(next) // Errors will be passed to Express.
+})
+```
+
+Da Versprechungen automatisch sowohl synchrone Fehler als auch abgelehnte Versprechungen fangen,
+du kannst einfach `next` angeben, da der letzte Catch Handler und Express Fehler fängt an
+weil der Catch-Handler den Fehler als erstes Argument angibt.
+
+Sie können auch eine Kette von Handlern verwenden, um sich auf synchrone Fehler
+zu stützen, indem Sie den asynchronen Code auf etwas Triviales reduzieren. Zum Beispiel:
+
+```js
+app.get('/', [
+  function (req, res, next) {
+    fs.readFile('/maybe-valid-file', 'utf-8', (err, data) => {
+      res.locals.data = data
+      next(err)
+    })
+  },
+  function (req, res) {
+    res.locals.data = res.locals.data.split(',')[1]
+    res.send(res.locals.data)
+  }
+])
+```
+
+Das obige Beispiel hat ein paar triviale Anweisungen aus dem Aufruf `readFile`
+. If `readFile` causes an error, then it passes the error to Express, otherwise you
+quickly return to the world of synchronous error handling in the next handler
+in the chain. Dann versucht das obige Beispiel die Daten zu verarbeiten. Wenn dies fehlschlägt, fängt der Synchron-Fehlerhandler
+ihn ab. Hätten Sie diese Verarbeitung innerhalb von
+mit dem `readFile` Callback durchgeführt, dann könnte sich die Anwendung beenden und die Express-Fehler
+Handler würden nicht laufen.
+
+Welche Methode Sie auch immer verwenden, wenn Sie wollen, dass Express-Fehlerbehandler aufgerufen werden und die
+-Anwendung überleben soll, Sie müssen sicherstellen, dass Express den Fehler empfängt.
+
+## Der Standard-Fehlerhandler
+
+Express kommt mit einem integrierten Fehlerbehandler, der sich um Fehler kümmert, die in der App auftreten könnten. Diese Standard-Middleware-Funktion wird am Ende des Middleware-Funktionstacks hinzugefügt.
+
+Wenn du einen Fehler an `next()` übergibt und ihn nicht in einem benutzerdefinierten
+Handler behandelst, es wird vom eingebauten Fehlerhandler behandelt; wird der Fehler
+mit der Stack-Spur an den Client geschrieben. Der Stack-Trace ist in der Produktionsumgebung nicht verfügbar.
 
 <div class="doc-box doc-info" markdown="1">
-Aufrufe zu `next()` und `next(err)` geben an, dass der aktuelle Handler abgeschlossen ist und welchen Status er aufweist. Durch `next(err)` werden alle verbleibenden Handler in der Kette übersprungen. Ausgenommen hiervor sind die Handler, die konfiguriert sind, um Fehler wie oben beschrieben zu behandeln.
+Setze die Umgebungsvariable `NODE_ENV` auf `production`, um die App im Produktionsmodus auszuführen.
 </div>
 
-## Die Standardfehlerbehandlungsroutine (Default Error Handler)
+Wenn ein Fehler geschrieben wird, werden folgende Informationen zur Antwort
+hinzugefügt:
 
-Express ist bereits mit einer integrierten Fehlerbehandlungsroutine ausgestattet, mit der alle in der Anwendung festgestellten Fehler gehandhabt werden können. Diese Middleware für die Fehlerbehandlung wird am Ende des Middleware-Funktionsstack hinzugefügt.
+- Der `res.statusCode` wurde von `err.status` (oder `err.statusCode`) gesetzt. Wenn
+  sich dieser Wert außerhalb des 4xx oder 5xx Bereichs befindet, wird er auf 500 gesetzt.
+- Die `res.statusMessage` wurde gemäß dem Statuscode gesetzt.
+- Der Körper wird der HTML-Code der Statuscode-Nachricht sein, wenn in der Produktion
+  -Umgebung, andernfalls 'err.stack' ist.
+- Alle in einem `err.headers` Objekt angegebenen Header.
 
-Wenn Sie einen Fehler an `next()` übergeben und diesen nicht mit einem Error-Handler bearbeiten, wird dieser über den integrierten Error-Handler bearbeitet. Der Fehler wird mit dem Stack-Trace zum Client geschrieben. Der Stack-Trace ist in der Produktionsumgebung nicht verfügbar.
+Wenn du `next()` mit einem Fehler aufruft, nachdem du die
+Antwort geschrieben hast (z. B. wenn beim Streamen der
+Antwort auf den Client ein Fehler aufgetreten ist), der Express-Standardfehlerhandler schließt die
+Verbindung und schlägt die Anfrage fehl.
 
-<div class="doc-box doc-info" markdown="1">
-Legen Sie die Umgebungsvariable `NODE_ENV` auf `production` fest, um die Anwendung im Produktionsmodus auszuführen.
-</div>
-
-Wenn `next()` mit einem Fehler aufgerufen wird, nachdem Sie mit dem Schreiben der Antwort begonnen haben (z. B., wenn Sie beim Streamen der Antwort zum Client einen Fehler feststellen), schließt die Standardfehlerbehandlungsroutine in Express die Verbindung, und die Anforderung schlägt fehl.
-
-Wenn Sie also einen angepassten Error-Handler hinzufügen, empfiehlt es sich, eine Delegierung zur Standardfehlerbehandlungsroutine in Express vorzunehmen, wenn die Header bereits an den Client gesendet wurden:
+Wenn Sie also eine benutzerdefinierte Fehlerbehandlung hinzufügen, müssen Sie den Standard-Express-Fehlerbehandler an
+delegieren wenn die Kopfzeilen
+bereits an den Client gesendet wurden:
 
 ```js
 function errorHandler (err, req, res, next) {
@@ -123,3 +183,116 @@ function errorHandler (err, req, res, next) {
   res.render('error', { error: err })
 }
 ```
+
+Beachte, dass der Standard-Fehlerhandler ausgelöst werden kann, wenn du `next()` mit einem Fehler
+in deinem Code mehrmals aufrufst, auch wenn benutzerdefinierte Fehler beim Umgang mit Middleware vorhanden sind.
+
+Andere Fehler beim Umgang mit Middleware finden Sie unter [Express middleware](/{{ page.lang }}/resources/middleware.html).
+
+## Schreibfehler
+
+Definieren Sie die Middleware-Funktionen wie andere Middleware-Funktionen
+außer Funktionen zur Fehlerbehandlung haben vier Argumente anstelle von drei:
+`(err, req, res, next)`. Zum Beispiel:
+
+```js
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+```
+
+Du definierst die Middleware zuletzt nach anderen `app.use()` und Routet Anrufe; zum Beispiel:
+
+```js
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
+app.use(bodyParser.json())
+app.use(methodOverride())
+app.use((err, req, res, next) => {
+  // logic
+})
+```
+
+Antworten innerhalb einer Middleware-Funktion können in jedem Format sein, wie z.B. in einer HTML-Fehlerseite, einer einfachen Nachricht oder einem JSON-String.
+
+Für organisatorische (und höherstufige Framework) Zwecke können Sie
+verschiedene Middleware-Funktionen definieren, so wie Sie es mit den regulären Middleware-Funktionen
+würden. Zum Beispiel, um einen Fehlerhandler
+für Anfragen mit `XHR` und denen ohne folgende zu definieren:
+
+```js
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
+app.use(bodyParser.json())
+app.use(methodOverride())
+app.use(logErrors)
+app.use(clientErrorHandler)
+app.use(errorHandler)
+```
+
+In diesem Beispiel könnten die generischen `logErrors` Anfrage und
+Fehlerinformationen in `stderr` schreiben, zum Beispiel:
+
+```js
+function logErrors (err, req, res, next) {
+  console.error(err.stack)
+  next(err)
+}
+```
+
+Auch in diesem Beispiel wird `clientErrorHandler` wie folgt definiert; in diesem Fall wird der Fehler explizit an den nächsten weitergegeben.
+
+Beachten Sie, dass, wenn _not_ in einer Fehlerbehandlungsfunktion "Weiter" aufruft, Sie dafür verantwortlich sind, die Antwort zu schreiben (und zu beenden). Andernfalls werden diese Anträge "hängen" und sind nicht für die Müllsammlung berechtigt.
+
+```js
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' })
+  } else {
+    next(err)
+  }
+}
+```
+
+Implementierung der "catch-all" `errorHandler` Funktion wie folgt (zum Beispiel):
+
+```js
+function errorHandler (err, req, res, next) {
+  res.status(500)
+  res.render('error', { error: err })
+}
+```
+
+Wenn du einen Route-Handler mit mehreren Callback-Funktionen hast, kannst du den Parameter `route` verwenden, um zum nächsten Route-Handler zu springen. Zum Beispiel:
+
+```js
+app.get('/a_route_behind_paywall',
+  (req, res, next) => {
+    if (!req.user.hasPaid) {
+      // continue handling this request
+      next('route')
+    } else {
+      next()
+    }
+  }, (req, res, next) => {
+    PaidContent.find((err, doc) => {
+      if (err) return next(err)
+      res.json(doc)
+    })
+  })
+```
+
+In diesem Beispiel wird der `getPaidContent` Handler übersprungen, aber alle verbleibenden Handler in `app` für `/a_route_behind_paywall` würden weiterhin ausgeführt werden.
+
+<div class="doc-box doc-info" markdown="1">
+Aufrufe in `next()` und `next(err)` zeigen an, dass der aktuelle Handler abgeschlossen ist und in welchem Zustand ist.  `next(err)` überspringt alle verbleibenden Handler in der Kette mit Ausnahme derer, die so eingestellt sind, dass sie Fehler wie oben beschrieben bearbeiten.
+</div>

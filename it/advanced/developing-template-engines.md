@@ -1,25 +1,26 @@
 ---
 layout: page
-title: Sviluppo dei motori di template per Express
+title: Sviluppo di modelli di motori per Express
+description: Impara a sviluppare motori di template personalizzati per Express.js utilizzando app.engine(), con esempi sulla creazione e l'integrazione della tua logica di rendering dei modelli.
 menu: advanced
 lang: it
-description: Learn how to develop custom template engines for Express.js using app.engine(),
-  with examples on creating and integrating your own template rendering logic.
+redirect_from: ""
 ---
 
-# Sviluppo dei motori di template per Express
+# Sviluppo di modelli di motori per Express
 
-Utilizzare il metodo `app.engine(ext, callback)` per creare il proprio motore di template. `ext` è l'estensione file e `callback` è la funzione del motore di template, la quale accetta le seguenti voci come parametri: l'ubicazione del file, l'oggetto delle opzioni e la funzione callback.
+Usa il metodo `app.engine(ext, callback)` per creare il tuo modello di motore. `ext` si riferisce all'estensione del file, e `callback` è la funzione del motore del modello, che accetta i seguenti elementi come parametri: la posizione del file, l'oggetto opzioni, e la funzione di callback.
 
-Il seguente codice è un esempio di implementazione di un motore di template molto semplice per il rendering del file `.ntl`.
+Il seguente codice è un esempio di implementazione di un semplice modello di motore per il rendering dei file `.ntl`.
 
 ```js
 const fs = require('fs') // this engine requires the fs module
 app.engine('ntl', (filePath, options, callback) => { // define the template engine
   fs.readFile(filePath, (err, content) => {
-    if (err) return callback(new Error(err))
+    if (err) return callback(err)
     // this is an extremely simple template engine
-    const rendered = content.toString().replace('#title#', `<title>${options.title}</title>`)
+    const rendered = content.toString()
+      .replace('#title#', `<title>${options.title}</title>`)
       .replace('#message#', `<h1>${options.message}</h1>`)
     return callback(null, rendered)
   })
@@ -28,17 +29,19 @@ app.set('views', './views') // specify the views directory
 app.set('view engine', 'ntl') // register the template engine
 ```
 
-L'applicazione sarà ora in grado di effettuare il rendering dei file `.ntl`. Creare un file denominato `index.ntl` nella directory `views` con il seguente contenuto.
+La tua app sarà ora in grado di visualizzare i file `.ntl`. Crea un file chiamato `index.ntl` nella directory `views` con il seguente contenuto.
 
 ```pug
 #title#
 #message#
 ```
-Successivamente, creare il seguente percorso nell'applicazione.
+
+Quindi, crea il seguente percorso nella tua app.
 
 ```js
 app.get('/', (req, res) => {
   res.render('index', { title: 'Hey', message: 'Hello there!' })
 })
 ```
-Quando si effettua una richiesta per la home page, `index.ntl` verrà visualizzato come HTML.
+
+Quando fai una richiesta alla home page, `index.ntl` sarà renderizzato come HTML.

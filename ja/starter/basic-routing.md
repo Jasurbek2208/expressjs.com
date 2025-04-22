@@ -1,38 +1,40 @@
 ---
 layout: page
-title: Express の基本的なルーティング
+title: 基本的なルーティング
+description: Express.jsアプリケーションでルーティングの基礎を学びます。ルートの定義、HTTPメソッドの処理、Webサーバーのルートハンドラの作成などです。
 menu: starter
-lang: ja
-description: Learn the fundamentals of routing in Express.js applications, including
-  how to define routes, handle HTTP methods, and create route handlers for your web
-  server.
+lang: en
+redirect_from: ""
 ---
 
-# 基本的なルーティング
+# 基本ルーティング
 
-*ルーティング* とは、アプリケーションが特定のエンドポイントに対するクライアント要求に応答する方法として、URI (またはパス) と特定の HTTP 要求メソッド (GET、POST など) を決定することです。
+_Routing_ は、アプリケーションが特定のエンドポイントに対してどのように応答するかを決定することを指します。 これはURI(またはパス)と特定のHTTPリクエストメソッド(GET、POSTなど)です。
 
-各ルートには、1 つ以上のハンドラー関数があり、それらはルートが一致したときに実行されます。
+各ルートは、ルートが一致したときに実行される、1つまたは複数のハンドラ関数を持つことができます。
 
-ルート定義では、次の構造を使用します。
+ルート定義は以下の構造をとります:
+
 ```js
 app.METHOD(PATH, HANDLER)
 ```
 
-各部分の意味は次のとおりです。
+場所:
 
-- `app` は、`express` のインスタンスです。
-- `METHOD` は、[HTTP 要求メソッド](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) です。
-- `PATH` は、サーバー上のパスです。
-- `HANDLER` は、ルートが一致したときに実行される関数です。
+- `app` は `express` のインスタンスです。
+- `METHOD` は [HTTP リクエストメソッド](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) の小文字です。
+- `PATH` はサーバー上のパスです。
+- `HANDLER` はルートが一致したときに実行される関数です。
 
 <div class="doc-box doc-notice" markdown="1">
+このチュートリアルでは、`app` という名前の `express` インスタンスが作成され、サーバーが動作していることを前提としています。 
 このチュートリアルでは、`app` という名前の `express` のインスタンスが作成されていて、サーバーが稼働中であることを想定しています。アプリケーションの作成と開始に慣れていない場合は、[Hello World の例](/{{ page.lang }}/starter/hello-world.html) を参照してください。
+
 </div>
 
 以下の例は、単純なルートの定義を示しています。
 
-ホーム・ページで `Hello World!` と応答します。
+ホームページの「Hello World!」に返信:
 
 ```js
 app.get('/', (req, res) => {
@@ -40,7 +42,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-アプリケーションのホーム・ページであるルートのルート (`/`) で POST 要求に応答します。
+ルートルート (`/`) の POST リクエストに応答します。アプリケーションのホームページ:
 
 ```js
 app.post('/', (req, res) => {
@@ -48,7 +50,7 @@ app.post('/', (req, res) => {
 })
 ```
 
-`/user` ルートに対する PUT 要求に応答します。
+`/user`ルートにPUTリクエストに応答します：
 
 ```js
 app.put('/user', (req, res) => {
@@ -56,7 +58,7 @@ app.put('/user', (req, res) => {
 })
 ```
 
-`/user` ルートに対する DELETE 要求に応答します。
+`/user`ルートへのDELETEリクエストに対応:
 
 ```js
 app.delete('/user', (req, res) => {
@@ -65,3 +67,5 @@ app.delete('/user', (req, res) => {
 ```
 
 ルーティングについて詳しくは、[ルーティング・ガイド](/{{ page.lang }}/guide/routing.html)を参照してください。
+
+### [Previous: Express application generator](/{{ page.lang }}/starter/generator.html)&nbsp;&nbsp;&nbsp;&nbsp;[次へ: Express で静的ファイルを提供する](/{{ page.lang }}/starter/static-files.html)

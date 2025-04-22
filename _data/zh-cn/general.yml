@@ -1,0 +1,6 @@
+title_announcement: "Express@5.1.0：现在是 npm 上的 LTS 时间表的默认值"
+body_announcement: "Express 5.1.0 is now the default on npm, and we're introducing an official LTS schedule for the v4 and v5 release lines. <a href='https://expressjs.com/2025/03/31/v5-1-latest-release.html'>Check out our latest blog for more information.</a>"
+community-caveat-alert: "此信息是指第三方站点、产品或由Expressjs团队维护的模块。 在此处列出并不构成Expressjs项目团队的认可或建议。"
+warning: '警告'
+note: '说明'
+caution: '注意事项'

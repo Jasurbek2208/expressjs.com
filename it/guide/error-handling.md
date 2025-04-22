@@ -1,131 +1,181 @@
 ---
 layout: page
-title: Gestione degli errori di Express
+title: Gestione degli errori espressi
+description: Capire come Express.js gestisce gli errori nel codice sincrono e asincrono e imparare ad implementare middleware gestione degli errori personalizzati per le vostre applicazioni.
 menu: guide
 lang: it
-description: Understand how Express.js handles errors in synchronous and asynchronous
-  code, and learn to implement custom error handling middleware for your applications.
+redirect_from: ""
 ---
 
-# Gestione degli errori
+# Gestione Degli Errori
 
-Definire le funzioni middleware di gestione degli errori nello stesso modo in cui si definiscono altre funzioni middleware,
-ad eccezione delle funzioni di gestione degli errori che hanno quattro argomenti invece di tre:
-`(err, req, res, next)`. Ad esempio:
+_Error Handling_ si riferisce a come Express cattura ed elabora gli errori
+che si verificano in modo sincrono e asincrono. Express viene fornito con un gestore di errore
+predefinito quindi non è necessario scrivere il proprio per iniziare.
+
+## Errori Di Cattura
+
+È importante garantire che Express colmi tutti gli errori che si verificano mentre
+gestisce le rotte e middleware.
+
+Gli errori che si verificano nel codice sincrono all'interno dei gestori del percorso e del middleware
+non richiedono lavoro aggiuntivo. Se il codice sincrono lancia un errore, allora Express catturerà
+ed elaborerà esso. Per esempio:
 
 ```js
-app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
+app.get('/', (req, res) => {
+  throw new Error('BROKEN') // Express will catch this on its own.
 })
 ```
 
-Si definisce il middleware di gestione degli errori per ultimo, successivamente `app.use()` e altre chiamate route; ad esempio:
+Per gli errori restituiti da funzioni asincrone invocate dai gestori degli itinerari
+e middleware, devi passarli alla funzione `next()`, dove Express sarà
+catturarli ed elaborarli.  Per esempio:
 
 ```js
-const bodyParser = require('body-parser')
-const methodOverride = require('method-override')
-
-app.use(bodyParser())
-app.use(methodOverride())
-app.use((err, req, res, next) => {
-  // logic
-})
-```
-
-Le risposte dall'interno delle funzione middleware possono essere in qualsiasi formato desiderato, ad esempio una pagina di errore HTML, un messaggio semplice o una stringa JSON.
-
-Per motivi organizzativi (e framework di livello più alto), è possibile definire
-diverse funzioni middleware di gestione degli errori, come solitamente si fa con
-le funzioni middleware normali. Ad esempio, se si desidera definire un programma di gestione errori per le richieste
-effettuate utilizzando `XHR` e quelle senza, è necessario utilizzare i seguenti comandi:
-
-```js
-const bodyParser = require('body-parser')
-const methodOverride = require('method-override')
-
-app.use(bodyParser())
-app.use(methodOverride())
-app.use(logErrors)
-app.use(clientErrorHandler)
-app.use(errorHandler)
-```
-
-In questo esempio, il `logErrors` generico potrebbe scrivere le richieste e le informazioni sull'errore
-su `stderr`, ad esempio:
-
-```js
-function logErrors (err, req, res, next) {
-  console.error(err.stack)
-  next(err)
-}
-```
-
-Inoltre, in questo esempio, `clientErrorHandler` viene definito come segue; in questo caso, l'errore viene chiaramente tramandato al successivo:
-
-```js
-function clientErrorHandler (err, req, res, next) {
-  if (req.xhr) {
-    res.status(500).send({ error: 'Something failed!' })
-  } else {
-    next(err)
-  }
-}
-```
-La funzione "catch-all" `errorHandler` potrebbe essere implementata come segue:
-
-```js
-function errorHandler (err, req, res, next) {
-  res.status(500)
-  res.render('error', { error: err })
-}
-```
-
-Se si trasmette qualsiasi cosa alla funzione `next()` (ad eccezione della stringa `'route'`), Express considera la richiesta corrente come se contenesse errori e ignorerà qualsiasi altra funzione middleware e routing di non gestione degli errori restante. Se si desidera gestire quell'errore in qualche modo, sarà necessario creare una route di gestione degli errori come descritto nella sezione successiva.
-
-Se si dispone di un gestore route con più funzioni di callback, è possibile utilizzare il parametro `route` per passare al successivo gestore route.  Ad esempio:
-
-```js
-app.get('/a_route_behind_paywall',
-  (req, res, next) => {
-    if (!req.user.hasPaid) {
-
-      // continue handling this request
-      next('route')
+app.get('/', (req, res, next) => {
+  fs.readFile('/file-does-not-exist', (err, data) => {
+    if (err) {
+      next(err) // Pass errors to Express.
+    } else {
+      res.send(data)
     }
-  }, (req, res, next) => {
-    PaidContent.find((err, doc) => {
-      if (err) return next(err)
-      res.json(doc)
-    })
   })
+})
 ```
-In questo esempio, il gestore `getPaidContent` verrà ignorato ma qualsiasi altro gestore rimanente in `app` per `/a_route_behind_paywall` verrà eseguito senza interruzione.
+
+A partire da Express 5, i gestori del percorso e il middleware che restituiscono una Promise
+chiameranno automaticamente `next(value)` quando rifiutano o generano un errore.
+Per esempio:
+
+```js
+app.get('/user/:id', async (req, res, next) => {
+  const user = await getUserById(req.params.id)
+  res.send(user)
+})
+```
+
+Se `getUserById` genera un errore o rifiuta, `next` verrà chiamato con
+l'errore generato o il valore rifiutato. Se non viene fornito alcun valore rifiutato, `next`
+verrà chiamato con un oggetto di errore predefinito fornito dal router Express.
+
+Se passi qualcosa alla funzione `next()` (tranne la stringa `'route'`),
+Express considera la richiesta corrente come un errore e salterà qualsiasi
+rimanenti funzioni di routing e middleware senza errori.
+
+Se il callback in una sequenza non fornisce dati, solo errori, è possibile semplificare
+questo codice come segue:
+
+```js
+app.get('/', [
+  function (req, res, next) {
+    fs.writeFile('/inaccessible-path', 'data', next)
+  },
+  function (req, res) {
+    res.send('OK')
+  }
+])
+```
+
+Nell'esempio precedente, `next` è fornito come callback per `fs.writeFile`,
+che viene chiamato con o senza errori. Se non c'è errore, viene eseguito il secondo gestore
+, altrimenti Express cattura ed elabora l'errore.
+
+È necessario catturare gli errori che si verificano in codice asincrono invocato dai router o
+middleware e passarli a Express per l'elaborazione. Per esempio:
+
+```js
+app.get('/', (req, res, next) => {
+  setTimeout(() => {
+    try {
+      throw new Error('BROKEN')
+    } catch (err) {
+      next(err)
+    }
+  }, 100)
+})
+```
+
+L'esempio precedente utilizza un blocco `try...catch` per catturare errori nel codice asincrono
+e passarli a Express. Se il blocco `prova...catch`
+fosse omesso, Express non coglierebbe l'errore dal momento che non fa parte del codice di gestione
+sincrono.
+
+Usa le promesse per evitare l'overhead del blocco `prova...catch` o quando usi le funzioni
+che restituiscono le promesse.  Per esempio:
+
+```js
+app.get('/', (req, res, next) => {
+  Promise.resolve().then(() => {
+    throw new Error('BROKEN')
+  }).catch(next) // Errors will be passed to Express.
+})
+```
+
+Dal momento che le promesse catturano automaticamente entrambi gli errori sincroni e le promesse rifiutate,
+puoi semplicemente fornire `next` come il gestore finale di cattura e Express catturerà errori,
+perché al gestore della cattura viene dato l'errore come primo argomento.
+
+Si potrebbe anche utilizzare una catena di gestori per fare affidamento su errore sincrono
+catching, riducendo il codice asincrono a qualcosa di banale. Per esempio:
+
+```js
+app.get('/', [
+  function (req, res, next) {
+    fs.readFile('/maybe-valid-file', 'utf-8', (err, data) => {
+      res.locals.data = data
+      next(err)
+    })
+  },
+  function (req, res) {
+    res.locals.data = res.locals.data.split(',')[1]
+    res.send(res.locals.data)
+  }
+])
+```
+
+L'esempio precedente ha un paio di istruzioni banali dalla chiamata `readFile`
+. Se `readFile` causa un errore, allora passa l'errore a Express, altrimenti
+torna rapidamente al mondo della gestione sincrona degli errori nel prossimo gestore
+nella catena. Poi, l'esempio di cui sopra cerca di elaborare i dati. Se questo fallisce, il gestore di errori sincroni
+lo catturerà. Se avessi fatto questa elaborazione all'interno di
+il callback `readFile`, l'applicazione potrebbe uscire e i gestori dell'errore Express
+non sarebbero stati eseguiti.
+
+Qualunque metodo si utilizzi, se si desidera che i gestori di errori Express siano chiamati dentro e l'applicazione
+per sopravvivere, è necessario assicurarsi che Express riceva l'errore.
+
+## Il gestore degli errori predefinito
+
+Express è dotato di un gestore di errori integrato che si occupa di eventuali errori che potrebbero essere riscontrati nell'app. Questa funzione middleware di gestione degli errori predefinita viene aggiunta alla fine dello stack della funzione middleware.
+
+Se passi un errore a `next()` e non lo gestisci in un gestore di errore
+personalizzato, sarà gestito dal gestore di errori integrato; l'errore sarà
+scritto al client con la traccia dello stack. La traccia dello stack non è inclusa
+nell'ambiente di produzione.
 
 <div class="doc-box doc-info" markdown="1">
-Le chiamate a `next()` e `next(err)` indicano che il gestore corrente è completo e in che stato si trova.  `next(err)` ignorerà tutti gli handler rimanenti nella catena ad eccezione degli handler configurati per gestire gli errori come descritto sopra.
+Imposta la variabile d'ambiente `NODE_ENV` su `production`, per eseguire l'app in modalità di produzione.
 </div>
 
-## Il gestore errori predefinito
+Quando viene scritto un errore, alla risposta
+vengono aggiunte le seguenti informazioni:
 
-Express viene fornito insieme a un gestore degli errori integrato, il quale gestisce gli errori che potrebbero verificarsi nell'applicazione. Questa funzione middleware di gestione degli errori viene aggiunta alla fine dello stack della funzione middleware.
+- Il `res.statusCode` è impostato da `err.status` (o `err.statusCode`). Se
+  questo valore è al di fuori dell'intervallo 4xx o 5xx, sarà impostato a 500.
+- Il `res.statusMessage` è impostato in base al codice di stato.
+- Il corpo sarà l'HTML del messaggio del codice di stato quando in ambiente di produzione
+  , altrimenti sarà `err.stack`.
+- Qualsiasi intestazione specificata in un oggetto `err.headers`.
 
-Se un errore viene ignorato e passato a `next()` e non viene gestito in un gestore
-degli errori, verrà gestito dal gestore errori integrato; l'errore verrà scritto sul client con la traccia
-stack. La traccia stack non viene inclusa nell'ambiente di produzione.
+Se chiami `next()` con un errore dopo aver iniziato a scrivere la risposta
+(ad esempio, se riscontri un errore durante lo streaming della risposta
+al client), il gestore di errore predefinito Express chiude la connessione
+e non riesce la richiesta.
 
-<div class="doc-box doc-info" markdown="1">
-Impostare la variabile di ambiente `NODE_ENV` su `production`, per eseguire l'applicazione nella modalità di produzione.
-</div>
-
-Se si chiama `next()` con un errore dopo che si è iniziato a scrivere la risposta
-(ad esempio, se si riscontra un errore mentre si esegue lo streaming della
-risposta al client) il gestore degli errori predefinito di Express chiude la connessione
-e rifiuta la richiesta.
-
-Pertanto, quando si aggiunge un gestore degli errori personalizzato, si consiglia di associarlo al meccanismo
-di gestione degli errori predefinito in Express, quando le intestazioni
-sono state già inviate al client:
+Quindi, quando si aggiunge un gestore di errori personalizzato, è necessario delegare a
+il gestore di errori Express predefinito, quando le intestazioni
+sono già state inviate al client:
 
 ```js
 function errorHandler (err, req, res, next) {
@@ -136,3 +186,116 @@ function errorHandler (err, req, res, next) {
   res.render('error', { error: err })
 }
 ```
+
+Nota che il gestore di errori predefinito può essere attivato se chiami `next()` con un errore
+nel tuo codice più di una volta, anche se la gestione degli errori personalizzati è in funzione.
+
+Altri errori di gestione middleware possono essere trovati su [Express middleware](/{{ page.lang }}/resources/middleware.html).
+
+## Gestione errori di scrittura
+
+Definire le funzioni middleware per la gestione degli errori allo stesso modo di altre funzioni middleware,
+eccetto le funzioni di gestione degli errori hanno quattro argomenti invece di tre:
+`(err, req, res, next)`. Per esempio:
+
+```js
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+```
+
+Definisci l'ultima gestione degli errori del middleware, dopo altre chiamate `app.use()` e percorsi; per esempio:
+
+```js
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
+app.use(bodyParser.json())
+app.use(methodOverride())
+app.use((err, req, res, next) => {
+  // logic
+})
+```
+
+Le risposte da all'interno di una funzione middleware possono essere in qualsiasi formato, come una pagina di errore HTML, un semplice messaggio, o una stringa JSON.
+
+Per scopi organizzativi (e di framework di livello superiore) è possibile definire diverse funzioni middleware di gestione degli errori
+come si farebbe con funzioni di middleware regolari
+. Ad esempio, per definire un gestore di errori
+per le richieste fatte utilizzando `XHR` e quelle senza:
+
+```js
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
+app.use(bodyParser.json())
+app.use(methodOverride())
+app.use(logErrors)
+app.use(clientErrorHandler)
+app.use(errorHandler)
+```
+
+In questo esempio, i `logErrors` generici potrebbero scrivere la richiesta e le informazioni di errore
+in `stderr`, per esempio:
+
+```js
+function logErrors (err, req, res, next) {
+  console.error(err.stack)
+  next(err)
+}
+```
+
+Anche in questo esempio, `clientErrorHandler` è definito come segue; in questo caso, l'errore viene esplicitamente passato a quello successivo.
+
+Nota che quando _non_ chiama "next" in una funzione di gestione degli errori, sei responsabile della scrittura (e della fine) della risposta. In caso contrario, tali richieste saranno "appese" e non saranno ammissibili per la raccolta rifiuti.
+
+```js
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' })
+  } else {
+    next(err)
+  }
+}
+```
+
+Implementa la funzione `errorHandler` "catch-all" come segue (per esempio):
+
+```js
+function errorHandler (err, req, res, next) {
+  res.status(500)
+  res.render('error', { error: err })
+}
+```
+
+Se si dispone di un gestore del percorso con molteplici funzioni di callback, è possibile utilizzare il parametro `route` per passare al prossimo gestore del percorso. Per esempio:
+
+```js
+app.get('/a_route_behind_paywall',
+  (req, res, next) => {
+    if (!req.user.hasPaid) {
+      // continue handling this request
+      next('route')
+    } else {
+      next()
+    }
+  }, (req, res, next) => {
+    PaidContent.find((err, doc) => {
+      if (err) return next(err)
+      res.json(doc)
+    })
+  })
+```
+
+In questo esempio, il gestore `getPaidContent` sarà saltato, ma qualsiasi gestore rimanente in `app` per `/a_route_behind_paywall` continuerà ad essere eseguito.
+
+<div class="doc-box doc-info" markdown="1">
+Le chiamate a `next()` e `next(err)` indicano che il gestore corrente è completo e in quale stato.  `next(err)` salterà tutti i gestori rimanenti nella catena ad eccezione di quelli che sono impostati per gestire gli errori come descritto sopra.
+</div>

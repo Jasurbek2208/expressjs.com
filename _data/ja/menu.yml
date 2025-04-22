@@ -1,60 +1,52 @@
 # Home
 home: ホーム
-
 # Getting started
-getting_started: 概説
-installing: インストール
+getting_started: はじめに
+installing: インストール中
 hello_world: Hello world
-generator: Express ジェネレーター
-basic_routing: 基本的なルーティング
+generator: Express generator
+basic_routing: 基本ルーティング
 static_files: 静的ファイル
-examples: More examples
+examples: その他の例
 faq: FAQ
-
 # Guide
 guide: ガイド
 routing: ルーティング
-writing_middleware: ミドルウェアの作成
+writing_middleware: ミドルウェアの書き込み
 using_middleware: ミドルウェアの使用
-overriding_express_api: Overriding the Express API
-using_template_engines: テンプレート・エンジンの使用
+overriding_express_api: Express API のオーバーライド
+using_template_engines: テンプレートエンジンの使用
 error_handling: エラー処理
 debugging: デバッグ
-behind_proxies: プロキシーの背後の Express
-migrating_4: Express 4 への移行
-migrating_5: Express 5 への移行
+behind_proxies: プロキシの背後にあるエクスプレス
+migrating_4: Express 4に移動中
+migrating_5: Express 5に移動中
 database_integration: データベースの統合
-
 # API reference
-
 api: API リファレンス
 5x: 5.x
 4x: 4.x
 3x: 3.x (非推奨)
 2x: 2.x (非推奨)
-
 # Advanced topics
 advanced: 高度なトピック
-developing_template_engines: テンプレート・エンジン
-security_updates: セキュリティー更新
-best_practice_security: セキュリティーに関するベスト・プラクティス
-best_practice_performance: パフォーマンスに関するベスト・プラクティス
-healthcheck_graceful_shutdown: Health checks & shutdown
-
+developing_template_engines: ビルディングテンプレートエンジン
+security_updates: セキュリティの更新
+best_practice_security: セキュリティのベストプラクティス
+best_practice_performance: パフォーマンスのベストプラクティス
+healthcheck_graceful_shutdown: ヘルスチェック＆シャット
 # Resources
 resources: リソース
-glossary: 用語集
+glossary: Glossary
 middleware: ミドルウェア
-community: コミュニティー
-utils: Utility modules
-contributing: Contributing to Express
-changelog: Release Change Log
-
+community: コミュニティ
+utils: ユーティリティモジュール
+contributing: Expressに貢献する
+changelog: リリース変更ログ
 # Support
-support: Support
-
+support: サポート
 # Blog
-blog: Blog
-latest_post: Latest post
-all_posts: All posts
-write_post: Write a Post
+blog: ブログ
+latest_post: 最新の投稿
+all_posts: すべての投稿
+write_post: 投稿を書く

@@ -1,59 +1,74 @@
 ---
 layout: page
-title: Preguntas más frecuentes sobre Express
+title: FAQ Express
+description: Encuentre respuestas a preguntas frecuentes sobre Express.js, incluyendo temas sobre estructura de aplicaciones, modelos, autenticación, motores de plantillas, manejo de errores, y más.
 menu: starter
 lang: es
-description: Find answers to frequently asked questions about Express.js, including
-  topics on application structure, models, authentication, template engines, error
-  handling, and more.
+redirect_from: ""
 ---
 
-# Preguntas más frecuentes
+# FAQ
 
 ## ¿Cómo debo estructurar mi aplicación?
 
-No hay una respuesta definitiva a esta pregunta. La respuesta depende de la escala de la aplicación y del equipo implicado. Para ser lo más flexible posible, Express no realiza suposiciones en cuanto a la estructura.
+No hay una respuesta definitiva a esta pregunta. La respuesta depende
+de la escala de tu aplicación y del equipo implicado. Para ser lo más flexible posible, Express no realiza suposiciones en cuanto a la estructura.
 
-Las rutas y otra lógica específica de la aplicación puede residir en tantos archivos como desee, con la estructura de directorios que prefiera. Vea los siguientes ejemplos como inspiración:
+Las rutas y otra lógica específica de la aplicación pueden vivir tantos archivos
+como desee, en cualquier estructura de directorio que prefiera. Vea los siguientes ejemplos como inspiración:
 
-* [Listas de rutas](https://github.com/expressjs/express/blob/4.13.1/examples/route-separation/index.js#L32-47)
-* [Correlación de rutas](https://github.com/expressjs/express/blob/4.13.1/examples/route-map/index.js#L52-L66)
-* [Controladores de estilo MVC](https://github.com/expressjs/express/tree/master/examples/mvc)
+- [Rutas listadas](https://github.com/expressjs/express/blob/4.13.1/examples/route-separation/index.js#L32-L47)
+- [Mapa de ruta](https://github.com/expressjs/express/blob/4.13.1/examples/route-map/index.js#L52-L66)
+- [MVC style controllers](https://github.com/expressjs/express/tree/master/examples/mvc)
 
-Asimismo, hay extensiones de terceros para Express, que simplifican algunos de estos patrones:
+Además, existen extensiones de terceros para Express, que simplifican algunos de estos patrones:
 
-* [express-resource](https://github.com/expressjs/express-resource)
+- [Rutas de recursos](https://github.com/expressjs/express-resource)
 
-## ¿Cómo debo definir los modelos?
+## ¿Cómo defino los modelos?
 
-Express no tiene ninguna noción de base de datos. Este concepto se deja para los módulos de Node de terceros, lo que permite interactuar con prácticamente cualquier base de datos.
+Express no tiene noción de una base de datos. Este concepto es
+dejado a los módulos de Nodo de terceros, permitiéndote una interfaz
+con casi cualquier base de datos.
 
-Consulte [LoopBack](http://loopback.io) para ver una infraestructura basada en Express centrada en modelos.
+Vea [LoopBack](http://loopback.io) para un framework basado en Expresiones centrado en modelos.
 
-## ¿Cómo puedo autenticar los usuarios?
+## ¿Cómo puedo autenticar usuarios?
 
-La autenticación es otra área rígida en la que no entra Express.  Puede utilizar el esquema de autenticación que desee.
-Para ver un esquema simple de nombre de usuario/contraseña, consulte [este ejemplo](https://github.com/expressjs/express/tree/master/examples/auth).
+La autenticación es otra área rígida en la que no entra Express. Puede utilizar cualquier esquema de autenticación que desee.
+Para un esquema simple de nombre de usuario / contraseña, vea [este ejemplo](https://github.com/expressjs/express/tree/master/examples/auth).
 
+## ¿Qué motores de plantillas soporta Express?
 
-## ¿A qué motor de plantilla da soporte Express?
+Express soporta cualquier motor de plantillas que cumpla con la firma `(ruta, locales, callback)`.
+Para normalizar las interfaces del motor de plantillas y la caché, consulte el proyecto
+[consolidate.js](https://github.com/visionmedia/consolidate.js)
+para obtener soporte. Los motores de plantillas no listados pueden seguir soportando la firma Express.
 
-Express da soporte a cualquier motor de plantilla que cumpla la firma `(path, locals, callback)`.
-Para normalizar las interfaces de motor de plantilla y el almacenamiento en memoria caché, consulte el proyecto [consolidate.js](https://github.com/visionmedia/consolidate.js) para ver el soporte. Otros motores de plantilla que no aparezcan en la lista también pueden dar soporte a la firma de Express.
+Para obtener más información, consulte [Usar motores de plantilla con Express](/{{page.lang}}/guide/using-template-engines.html).
 
 ## ¿Cómo puedo manejar las respuestas 404?
 
-En Express, las respuestas 404 no son el resultado de un error, por lo que el middleware de manejador de errores no las capturará. Este comportamiento se debe a que una respuesta 404 simplemente indica la ausencia de trabajo adicional pendiente; es decir, Express ha ejecutado todas las rutas y funciones de middleware, y ha comprobado que ninguna de ellas responde. Lo único que debe hacer es añadir una función de middleware al final de la pila (debajo de las demás funciones) para manejar una respuesta 404:
+En Express, las respuestas 404 no son el resultado de un error, por lo que el middleware de manejador de errores no las capturará. Este comportamiento es
+porque una respuesta 404 simplemente indica la ausencia de trabajo adicional por hacer;
+en otras palabras, Express ha ejecutado todas las funciones y rutas de middleware,
+y ha encontrado que ninguno de ellos respondió. Todo lo que necesitas hacer
+es añadir una función de middleware en la parte inferior de la pila (debajo de todas las demás funciones)
+para manejar una respuesta 404:
 
 ```js
 app.use((req, res, next) => {
-  res.status(404).send('Sorry cant find that!')
+  res.status(404).send("Sorry can't find that!")
 })
 ```
 
-## ¿Cómo configuro un manejador de errores?
+Añadir rutas dinámicamente en tiempo de ejecución en una instancia de `express.Router()`
+para que las rutas no sean reemplazadas por una función de middleware.
 
-El middleware de manejo de errores se define de la misma forma que otro middleware, excepto con cuatro argumentos en lugar de tres; específicamente con la firma `(err, req, res, next)`:
+## ¿Cómo configuro un gestor de errores?
+
+Usted define middleware que maneja errores de la misma manera que otros middleware,
+excepto con cuatro argumentos en lugar de tres; específicamente con la firma `(err, req, res, next)`:
 
 ```js
 app.use((err, req, res, next) => {
@@ -62,10 +77,18 @@ app.use((err, req, res, next) => {
 })
 ```
 
-Para obtener más información, consulte [Manejo de errores](/{{ page.lang }}/guide/error-handling.html).
+Para más información, vea [Manejo de errores](/{{ page.lang }}/guide/error-handling.html).
 
-## ¿Cómo represento el HTML sin formato?
+## ¿Cómo renderizo HTML plano?
 
-De ninguna manera. No es necesario "representar" HTML con la función `res.render()`.
-Si tiene un archivo específico, utilice la función `res.sendFile()`.
-Para el servicio de muchos activos desde un directorio, utilice la función de middleware `express.static()`.
+¡No lo tienes! No hay necesidad de "render" HTML con la función `res.render()`.
+Si tienes un archivo específico, usa la función `res.sendFile()`.
+Si está sirviendo muchos activos de un directorio, utilice la función de middleware `express.static()`
+.
+
+## ¿Qué versión de Node.js requiere Express?
+
+- [Express 4.x](/{{ page.lang }}/4x/api.html) requiere 0.10 o superior de Node.js.
+- [Express 5.x](/{{ page.lang }}/5x/api.html) requiere Node.js 18 o superior.
+
+### [Anterior: Más ejemplos ](/{{ page.lang }}/starter/examples.html)

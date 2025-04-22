@@ -1,8 +1,6 @@
-title_announcement: "Express 5.0 documentation is now available."
-body_announcement: "The <a href='/en/5x/api.html'>API documentation</a> is a work in progress.  For information on what's in the release, see the Express <a href='https://github.com/expressjs/express/blob/5.0/History.md'>release history</a>"
-
-community-caveat-alert: "This information refers to third-party sites, products, or modules that are not maintained by the Expressjs team. Listing here does not constitute an endorsement or recommendation from the Expressjs project team."
-
-warning: 'Warning'
-note: 'Note'
-caution: 'Caution'
+title_announcement: "Express@5.1.0: Agora o Padrão no npm com LTS Timeline"
+body_announcement: "Expresse 5.1.0 agora é o padrão do npm, e estamos introduzindo um cronograma oficial de LTS para as linhas de lançamento v4 e v5. <a href='https://expressjs.com/2025/03/31/v5-1-latest-release.html'>Confira nosso último blog para obter mais informações.</a>"
+community-caveat-alert: "Esta informação refere-se a sites de terceiros, produtos ou módulos que não são mantidos pela equipe do Expressjs. A listagem aqui não constitui um endosso ou recomendação da equipe de projeto Expressjs."
+warning: 'ATENÇÃO'
+note: 'Observação'
+caution: 'Cuidado'

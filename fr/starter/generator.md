@@ -1,28 +1,35 @@
 ---
 layout: page
-title: Générateur d'applications Express
+title: Générateur d'application Express
+description: Apprenez à utiliser l'outil de générateur d'applications Express pour créer rapidement un squelette pour vos applications Express.js, en rationalisant la configuration et la configuration.
 menu: starter
 lang: fr
-description: Learn how to use the Express application generator tool to quickly create
-  a skeleton for your Express.js applications, streamlining setup and configuration.
+redirect_from: ""
 ---
 
-# Générateur d'applications Express
+# Générateur d'application Express
 
-Utilisez l'outil de générateur d'applications, `express`, pour créer rapidement un squelette d'application.
+Utilisez l'outil de générateur d'applications, `express-generator`, pour créer rapidement un squelette d'application.
 
-Installez `express` à l'aide de la commande suivante :
+Vous pouvez exécuter le générateur d'application avec la commande `npx` (disponible dans Node.js 8.2.0).
 
 ```bash
-$ npm install express-generator -g
+$ npx express-generator
 ```
 
-Affichez les options de commande à l'aide de l'option `-h` :
+Pour les versions antérieures de Node, installez le générateur d'application en tant que paquet npm global puis lancez le :
+
+```bash
+$ npm install -g express-generator
+$ express
+```
+
+Affiche les options de la commande avec l'option `-h`:
 
 ```bash
 $ express -h
 
-  Usage: express [options][dir]
+  Usage: express [options] [dir]
 
   Options:
 
@@ -33,13 +40,13 @@ $ express -h
         --pug           add pug engine support
     -H, --hogan         add hogan.js engine support
         --no-view       generate without view engine
-    -v, --view &lt;engine&gt; add view &lt;engine&gt; support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
-    -c, --css &lt;engine&gt;  add stylesheet &lt;engine&gt; support (less|stylus|compass|sass) (defaults to plain css)
+    -v, --view <engine> add view <engine> support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
+    -c, --css <engine>  add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
         --git           add .gitignore
     -f, --force         force on non-empty directory
 ```
 
-Par exemple, ce code crée une application Express nomée _myapp_. L'application sera crée dans le dossier _myapp_, lui meme placé dans le repertoir de travail courant. Le moteur de vue sera configuré avec <a href="pugjs.org" target="_blank" title="Documentation Pug">Pug</a>:
+Par exemple, ce qui suit crée une application Express nommée _myapp_. L'application sera créée dans un dossier nommé _myapp_ dans le répertoire de travail actuel et le moteur de vue sera réglé sur <a href="https://pugjs.org/" target="_blank" title="Pug documentation">Pug</a>:
 
 ```bash
 $ express --view=pug myapp
@@ -63,28 +70,34 @@ $ express --view=pug myapp
    create : myapp/bin/www
 ```
 
-Ensuite, installez les dépendances :
+Installez ensuite les dépendances :
 
 ```bash
 $ cd myapp
 $ npm install
 ```
 
-Sous MacOS ou Linux, exécutez l'application à l'aide de la commande suivante :
+Sous MacOS ou Linux, exécutez l'application avec cette commande :
 
 ```bash
 $ DEBUG=myapp:* npm start
 ```
 
-Sous Windows, utilisez la commande suivante :
+Sous l'invite de commande Windows, utilisez cette commande :
 
 ```bash
 > set DEBUG=myapp:* & npm start
 ```
 
-Ensuite, chargez 'http://hôte_local:3000/' dans votre navigateur pour accéder à l'application.
+Sous Windows PowerShell, utilisez cette commande :
 
-L'application générée possède la structure de répertoire suivante :
+```bash
+PS> $env:DEBUG='myapp:*'; npm start
+```
+
+Ensuite, chargez `http://localhost:3000/` dans votre navigateur pour accéder à l'application.
+
+L'application générée a la structure de répertoire suivante :
 
 ```bash
 .
@@ -109,5 +122,7 @@ L'application générée possède la structure de répertoire suivante :
 ```
 
 <div class="doc-box doc-info" markdown="1">
-La structure d'application créée par le générateur est l'une des nombreuses manières possibles de structurer les applications Express. Vous avez toute latitude pour l'utiliser ou la modifier en fonction de vos besoins.
+La structure d'application créée par le générateur n'est qu'un des nombreux moyens de structurer les applications Express. N'hésitez pas à utiliser cette structure ou à la modifier pour mieux répondre à vos besoins.
 </div>
+
+### [Précédent : Bonjour Monde](/{{ page.lang }}/starter/hello-world.html)&nbsp;&nbsp;&nbsp;&nbsp;[Suivant : Routage de base](/{{ page.lang }}/starter/basic-routing.html)

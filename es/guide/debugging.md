@@ -1,27 +1,28 @@
 ---
 layout: page
-title: Depuración de Express
+title: Depuración Express
+description: Aprenda cómo habilitar y utilizar los registros de depuración en aplicaciones Express.js configurando la variable de entorno DEBUG para solucionar problemas mejorados.
 menu: guide
 lang: es
-description: Learn how to enable and use debugging logs in Express.js applications
-  by setting the DEBUG environment variable for enhanced troubleshooting.
+redirect_from: ""
 ---
 
-# Depuración de Express
+# Depuración Express
 
-Para ver todos los registros internos utilizados en Express, establezca la variable de entorno `DEBUG` en `express:*` cuando inicie la aplicación.
+Para ver todos los registros internos usados en Express, establece la variable de entorno `DEBUG` a
+`express:*` al ejecutar tu aplicación.
 
 ```bash
 $ DEBUG=express:* node index.js
 ```
 
-En Windows, utilice el mandato correspondiente.
+En Windows, utilice el comando correspondiente.
 
 ```bash
-> set DEBUG=express:* & node index.js
+> $env:DEBUG = "express:*"; node index.js
 ```
 
-La ejecución de este mandato en la aplicación predeterminada generada por el [generador de Express](/{{ page.lang }}/starter/generator.html) imprime la siguiente salida:
+Ejecutando este comando en la aplicación predeterminada generada por el [generador expreso](/{{ page.lang }}/starter/generator.html) imprime la siguiente salida:
 
 ```bash
 $ DEBUG=express:* node ./bin/www
@@ -59,15 +60,15 @@ $ DEBUG=express:* node ./bin/www
   express:router:layer new / +1ms
   express:router use /users router +0ms
   express:router:layer new /users +0ms
-  express:router use / &lt;anonymous&gt; +0ms
+  express:router use / &amp;lt;anonymous&amp;gt; +0ms
   express:router:layer new / +0ms
-  express:router use / &lt;anonymous&gt; +0ms
+  express:router use / &amp;lt;anonymous&amp;gt; +0ms
   express:router:layer new / +0ms
-  express:router use / &lt;anonymous&gt; +0ms
+  express:router use / &amp;lt;anonymous&amp;gt; +0ms
   express:router:layer new / +0ms
 ```
 
-Cuando se realiza una solicitud a la aplicación, verá los registros especificados en el código de Express:
+Cuando se hace una solicitud a la aplicación, verá los registros especificados en el código Express:
 
 ```bash
   express:router dispatching GET / +4h
@@ -87,20 +88,37 @@ Cuando se realiza una solicitud a la aplicación, verá los registros especifica
   express:view render "/projects/example/views/index.pug" +1ms
 ```
 
-Para ver sólo los registros de la implementación de direccionador, establezca el valor de `DEBUG` en `express:router`. De la misma forma, para ver sólo los registros de la implementación de aplicación, establezca el valor de `DEBUG` en `express:application`, etc.
+Para ver los registros sólo desde la implementación del router, establece el valor de `DEBUG` a `express:router`. De la misma manera, para ver los registros sólo desde la implementación de la aplicación, establece el valor de `DEBUG` a `express:application`, y así sucesivamente.
 
 ## Aplicaciones generadas por `express`
 
-Una aplicación generada por el mandato `express` utiliza el módulo `debug`, y el ámbito de su espacio de nombres de depuración se establece en el nombre de la aplicación.
+Una aplicación generada por el comando `express` utiliza el módulo `debug` y su espacio de nombres de depuración está cubierto por el nombre de la aplicación.
 
-Por ejemplo, si ha generado la aplicación con `$ express sample-app`, puede habilitar las sentencias de depuración con el siguiente mandato:
+Por ejemplo, si generaste la aplicación con \`$ muestra expresa, puedes habilitar las declaraciones de depuración con el siguiente comando:
 
 ```bash
 $ DEBUG=sample-app:* node ./bin/www
 ```
 
-Puede especificar más de un espacio de nombres de depuración asignando una lista separada por comas de nombres:
+Puede especificar más de un espacio de nombres de depuración asignando una lista de nombres separados por comas:
 
 ```bash
 $ DEBUG=http,mail,express:* node index.js
 ```
+
+## Opciones avanzadas
+
+Cuando se ejecuta a través de Node.js, puede establecer algunas variables de entorno que cambiarán el comportamiento del registro de depuración:
+
+| Nombre              | Propósito                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------- |
+| `DEBUG`             | Habilita o deshabilita espacios de nombres específicos de depuración. |
+| `DEBUG_COLORS`      | Usar o no colores en la salida de depuración.                         |
+| `DEBUG_DEPTH`       | Profundidad de inspección de objetos.                                 |
+| `DEBUG_FD`          | Descriptor de archivo en el que escribir salida de depuración.        |
+| `DEBUG_SHOW_HIDDEN` | Muestra propiedades ocultas en los objetos esperados.                 |
+
+{% include admonitions/note. tml content="Las variables de entorno que empiezan con `DEBUG_` terminan siendo
+convertidas en un objeto de opciones que se usa con formateadores%o`/`%O`.
+Vea la documentación de Node.js para [`util.inspect()\`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
+para la lista completa." %}

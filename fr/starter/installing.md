@@ -1,51 +1,54 @@
 ---
 layout: page
-title: Installation d'Express
+title: Installation Express
+description: Apprenez à installer Express.js dans votre environnement Node.js, y compris la configuration de votre répertoire de projet et la gestion des dépendances avec npm.
 menu: starter
 lang: fr
-description: Learn how to install Express.js in your Node.js environment, including
-  setting up your project directory and managing dependencies with npm.
+redirect_from: ""
 ---
 
-# Installation
+# Installation en cours
 
-En supposant que [Node.js](https://nodejs.org/) est déjà installé, créez un répertoire pour héberger votre application et faites-en votre répertoire de travail.
+En supposant que vous ayez déjà installé [Node.js](https://nodejs.org/), créez un répertoire pour conserver votre application et faites de celui-ci votre répertoire de travail.
+
+- [Express 4.x](/{{ page.lang }}/4x/api.html) nécessite Node.js 0.10 ou supérieur.
+- [Express 5.x](/{{ page.lang }}/5x/api.html) nécessite Node.js 18 ou plus.
 
 ```bash
 $ mkdir myapp
 $ cd myapp
 ```
 
-Utilisez la commande `npm init` afin de créer un fichier `package.json` pour votre application.
-Pour plus d'informations sur le fonctionnement du fichier `package.json`, voir [Specifics of npm's package.json handling](https://docs.npmjs.com/files/package.json).
+Utilisez la commande `npm init` pour créer un fichier `package.json` pour votre application.
+Pour plus d'informations sur le fonctionnement de `package.json`, voir [Specifics of npm's package.json handling](https://docs.npmjs.com/files/package.json).
 
 ```bash
 $ npm init
 ```
 
-Cette commande vous invite à fournir un certain nombre d'informations, telles que le nom et la version de votre application.
-Pour le moment, vous pouvez simplement appuyer sur la touche RETURN pour accepter les valeurs par défaut, à l'exception de ce qui suit :
+Cette commande vous invite à trouver un certain nombre de choses, telles que le nom et la version de votre application.
+Pour l'instant, vous pouvez simplement appuyer sur RETURN pour accepter les valeurs par défaut pour la plupart d'entre eux, à l'exception de la règle suivante :
 
-```bash
+```
 entry point: (index.js)
 ```
 
-Entrez `app.js` ou un nom de votre choix pour le fichier principal. Si vous souhaitez que le nom soit `index.js`, appuyez sur la touche RETURN pour accepter le nom de fichier par défaut suggéré.
+Entrez `app.js`, ou quel que soit le nom du fichier principal. Si vous voulez qu'il soit `index.js`, appuyez sur RETURN pour accepter le nom de fichier par défaut suggéré.
 
-Installez ensuite Express dans le répertoire `myapp`, puis sauvegardez-le dans la liste des dépendances. Par exemple :
-
-```bash
-$ npm install express --save
-```
-
-Pour installer Express de façon temporaire et ne pas l'ajouter à la liste des dépendances, omettez l'option `--save` :
+Maintenant, installez Express dans le répertoire `myapp` et sauvegardez-le dans la liste des dépendances. Par exemple :
 
 ```bash
 $ npm install express
 ```
 
+Pour installer Express temporairement et ne pas l'ajouter à la liste des dépendances :
+
+```bash
+$ npm install express --no-save
+```
+
 <div class="doc-box doc-info" markdown="1">
-Les modules Node.js installés à l'aide de l'option `--save` sont ajoutés à la liste des dépendances `dependencies`, dans le fichier `package.json`.
-Par défaut, depuis la version 5.0, `npm install <package-name>` ajoute automatiquement le module Node.js à la liste des dépendances.
-Par la suite, l'exécution de `npm install` dans le répertoire de l'application installera automatiquement les modules présents dans la liste des dépendances.
+Par défaut avec la version npm 5.0+, `npm install` ajoute le module à la liste `dependencies` du paquet. son`; avec les versions antérieures de npm, vous devez spécifier explicitement l'option `--save` . Puis, par la suite, exécuter `npm install` dans le répertoire de l'application installera automatiquement les modules dans la liste des dépendances.
 </div>
+
+### [Suivant : Bonjour Monde](/{{ page.lang }}/starter/hello-world.html)

@@ -1,27 +1,35 @@
 ---
 layout: page
-title: Express-Anwendungsgenerator
-description: Learn how to use the Express application generator tool to quickly create a skeleton for your Express.js applications, streamlining setup and configuration.
+title: Express-Applikationsgenerator
+description: Lernen Sie, wie Sie mit dem Express-Anwendungsgenerator-Tool schnell ein Skelett für Ihre Express.js-Anwendungen erstellen, die Einrichtung optimieren und die Konfiguration optimieren.
 menu: starter
 lang: de
+redirect_from: ""
 ---
 
-# Express-Anwendungsgenerator
+# Express-Applikationsgenerator
 
-Mit dem Application Generator Tool `express` können Sie innerhalb kürzester Zeit ein Anwendungsgerüst erstellen.
+Verwenden Sie das Applikationsgenerator-Tool, "express-generator", um schnell ein Anwendungsskelett zu erstellen.
 
-Installieren Sie `express` mit dem folgenden Befehl:
+Du kannst den Anwendungsgenerator mit dem Befehl `npx` ausführen (verfügbar in Node.js 8.2.0).
 
 ```bash
-$ npm install express-generator -g
+$ npx express-generator
 ```
 
-Zeigen Sie die Befehlsoptionen mit der Option `-h` an:
+Für frühere Node-Versionen installieren Sie den Anwendungsgenerator als globales npm-Paket und starten es dann:
+
+```bash
+$ npm install -g express-generator
+$ express
+```
+
+Zeige die Befehlsoptionen mit der `-h` Option:
 
 ```bash
 $ express -h
 
-  Usage: express [options][dir]
+  Usage: express [options] [dir]
 
   Options:
 
@@ -32,13 +40,13 @@ $ express -h
         --pug           add pug engine support
     -H, --hogan         add hogan.js engine support
         --no-view       generate without view engine
-    -v, --view &lt;engine&gt; add view &lt;engine&gt; support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
-    -c, --css &lt;engine&gt;  add stylesheet &lt;engine&gt; support (less|stylus|compass|sass) (defaults to plain css)
+    -v, --view <engine> add view <engine> support (ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
+    -c, --css <engine>  add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
         --git           add .gitignore
     -f, --force         force on non-empty directory
 ```
 
-Im folgenden Beispiel wird eine Express-Anwendung mit dem Namen _myapp_ im aktuellen Arbeitsverzeichnis erstellt:
+Zum Beispiel erstellt das Folgende eine Express-App namens _myapp_. Die App wird in einem Ordner namens _myapp_ im aktuellen Arbeitsverzeichnis erstellt und die View Engine wird auf <a href="https://pugjs.org/" target="_blank" title="Pug documentation">Mops</a> gesetzt:
 
 ```bash
 $ express --view=pug myapp
@@ -69,21 +77,27 @@ $ cd myapp
 $ npm install
 ```
 
-Führen Sie unter MacOS oder Linux die Anwendung mit diesem Befehl aus:
+Führen Sie auf MacOS oder Linux die App mit diesem Befehl aus:
 
 ```bash
 $ DEBUG=myapp:* npm start
 ```
 
-Verwenden Sie unter Windows diesen Befehl:
+Benutzen Sie auf Windows Befehlsaufforderung folgenden Befehl:
 
 ```bash
 > set DEBUG=myapp:* & npm start
 ```
 
-Laden Sie dann `http://localhost:3000/` in Ihren Browser, um auf die Anwendung zuzugreifen.
+Verwenden Sie unter Windows PowerShell, diesen Befehl:
 
-Die erstellte Anwendung hat die folgende Verzeichnisstruktur:
+```bash
+PS> $env:DEBUG='myapp:*'; npm start
+```
+
+Lade dann `http://localhost:3000/` in deinem Browser, um auf die App zuzugreifen.
+
+Die generierte App hat folgende Verzeichnisstruktur:
 
 ```bash
 .
@@ -108,5 +122,7 @@ Die erstellte Anwendung hat die folgende Verzeichnisstruktur:
 ```
 
 <div class="doc-box doc-info" markdown="1">
-Die vom Generator erstellte Anwendungsstruktur ist nur eine der vielen Möglichkeiten, Express-Anwendungen zu strukturieren. Sie können diese Struktur verwenden oder sie an Ihre Anforderungen anpassen.
+Die vom Generator erstellte App-Struktur ist nur eine von vielen Möglichkeiten, Express-Apps zu strukturieren. Fühlen Sie sich frei, diese Struktur zu verwenden oder sie so zu modifizieren, dass sie Ihren Bedürfnissen am besten entspricht.
 </div>
+
+### [Vorherig: Hallo Welt ](/{{ page.lang }}/starter/hello-world.html)&nbsp;&nbsp;&nbsp;&nbsp;[Weiter: Basic routing](/{{ page.lang }}/starter/basic-routing.html)

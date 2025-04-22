@@ -1,36 +1,38 @@
 ---
 layout: page
-title: Basisrouting in Express
-description: Learn the fundamentals of routing in Express.js applications, including how to define routes, handle HTTP methods, and create route handlers for your web server.
+title: Express-Basis-Routing
+description: Lernen Sie die Grundlagen des Routings in Express.js Anwendungen kennen, wie Sie Routen definieren, HTTP-Methoden handhaben und Routenhandler für Ihren Webserver erstellen.
 menu: starter
 lang: de
+redirect_from: ""
 ---
 
 # Basisrouting
 
-Per *Routing* wird bestimmt, wie eine Antwort auf eine Clientanforderung an einem bestimmten Endpunkt antwortet. Dies ist eine URI (oder ein Pfad) und eine bestimmte HTTP-Anforderungsmethode (GET, POST usw.).
+_Routing_ bezieht sich darauf, wie eine Anwendung auf einen bestimmten Endpunkt antwortet , die eine URI (oder Pfad) und eine bestimmte HTTP-Request-Methode (GET, POST usw.) ist.
 
-Jede Weiterleitung (Route) kann eine oder mehrere Handlerfunktionen haben, die ausgeführt werden, wenn die Weiterleitung abgeglichen wird.
+Jede Route kann eine oder mehrere Handler-Funktionen haben, die ausgeführt werden, wenn die Route übereinstimmt.
 
-Weiterleitungsdefinitionen haben die folgende Struktur:
+Die Routendefinition nimmt folgende Struktur ein:
+
 ```js
 app.METHOD(PATH, HANDLER)
 ```
 
-Bedeutung:
+Wo:
 
-- `app` ist eine Instanz von `express`.
-- `METHOD` ist eine [HTTP-Anforderungsmethode](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol).
+- `app` ist eine Instanz von `express `.
+- `METHOD` ist eine [HTTP-Anfrage-Methode](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods), in Kleinbuchstaben.
 - `PATH` ist ein Pfad auf dem Server.
-- `HANDLER` ist die Funktion, die ausgeführt wird, wenn die Weiterleitung abgeglichen wird.
+- `HANDLER` ist die Funktion, die ausgeführt wird, wenn die Route übereinstimmt.
 
 <div class="doc-box doc-notice" markdown="1">
-In diesem Lernprogramm wird vorausgesetzt, dass eine Instanz von `express` namens `app` erstellt und der Server ausgeführt wird. Wenn Sie mit dem Erstellen und Starten von Anwendungen nicht vertraut sind, spielen Sie das [Beispiel "Hello World"](/{{ page.lang }}/starter/hello-world.html) durch.
+Dieses Tutorial setzt voraus, dass eine Instanz von `express ` namens `app` erstellt wird und der Server läuft. Wenn du nicht mit dem Erstellen einer App vertraut bist und sie startest, schau dir das [Hallo Welt Beispiel](/{{ page.lang }}/starter/hello-world.html).
 </div>
 
-Die folgenden Beispiele veranschaulichen das Definieren einfacher Weiterleitungen.
+Die folgenden Beispiele veranschaulichen die Definition einfacher Routen.
 
-Antworten Sie mit `Hello World!` auf der Homepage:
+Antworte mit `Hallo World!` auf der Homepage:
 
 ```js
 app.get('/', (req, res) => {
@@ -38,7 +40,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-Antworten Sie auf POST-Anforderungen auf die Weiterleitung zum Stammverzeichnis (`/`), der Homepage der Anwendung:
+Antwort auf POST-Anfrage auf der Root-Route (`/`), der Startseite der Anwendung:
 
 ```js
 app.post('/', (req, res) => {
@@ -46,7 +48,7 @@ app.post('/', (req, res) => {
 })
 ```
 
-Antworten Sie auf eine PUT-Anforderung zur Weiterleitung `/user`:
+Antworte auf eine PUT-Anfrage auf die `/user`-Route:
 
 ```js
 app.put('/user', (req, res) => {
@@ -54,7 +56,7 @@ app.put('/user', (req, res) => {
 })
 ```
 
-Antworten Sie auf eine DELETE-Anforderung zur Weiterleitung `/user`:
+Antworte auf eine LÖSCHE Anfrage auf die `/user`-Route:
 
 ```js
 app.delete('/user', (req, res) => {
@@ -62,4 +64,6 @@ app.delete('/user', (req, res) => {
 })
 ```
 
-Details zum Thema Routing finden Sie in der entsprechenden [Routinganleitung](/{{ page.lang }}/guide/routing.html).
+Weitere Details zum Routen finden Sie im [Routing Guide](/{{ page.lang }}/guide/routing.html).
+
+### [Vorherig: Express-Anwendungsgenerator ](/{{ page.lang }}/starter/generator.html)&nbsp;&nbsp;&nbsp;&nbsp;[Weiter: Servieren statischer Dateien in Express ](/{{ page.lang }}/starter/static-files.html)

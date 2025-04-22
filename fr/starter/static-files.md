@@ -1,31 +1,32 @@
 ---
 layout: page
-title: Servir des fichiers statiques dans Express
-menu: démarrage
+title: Servir les fichiers statiques dans Express
+description: Comprendre comment servir les fichiers statiques comme les images, CSS, et JavaScript dans les applications Express.js en utilisant le middleware 'statique' intégré.
+menu: starter
 lang: fr
-description: Understand how to serve static files like images, CSS, and JavaScript
-  in Express.js applications using the built-in 'static' middleware.
+redirect_from: ""
 ---
 
-# Servir des fichiers statiques dans Express
+# Servir les fichiers statiques dans Express
 
-Pour servir des fichiers statiques tels que les images, les
-fichiers CSS et les fichiers JavaScript, utilisez la fonction de
-logiciel intermédiaire intégré `express.static` dans Express.
+Pour servir des fichiers statiques tels que des images, des fichiers CSS et des fichiers JavaScript, utilisez la fonction middleware intégrée `express.static` dans Express.
 
-Passez le nom du répertoire qui contient les actifs
-statiques dans la fonction de logiciel intermédiaire
-`express.static` afin de commencer à servir
-les fichiers directement. Par exemple, utilisez le code suivant pour
-servir des images, des fichiers CSS et des fichiers JavaScript dans
-un répertoire nommé `public` :
+La signature de la fonction est :
+
+```js
+express.static(root, [options])
+```
+
+L'argument `root` spécifie le répertoire racine à partir duquel servir les actifs statiques.
+Pour plus d'informations sur l'argument `options`, voir [express.static](/{{page.lang}}/4x/api.html#express.static).
+
+Par exemple, utilisez le code suivant pour servir les images, les fichiers CSS et JavaScript dans un répertoire nommé `public`:
 
 ```js
 app.use(express.static('public'))
 ```
 
-Maintenant, vous pouvez charger les fichiers qui sont dans le
-répertoire `public` :
+Maintenant, vous pouvez charger les fichiers qui se trouvent dans le répertoire `public`:
 
 ```text
 http://localhost:3000/images/kitten.jpg
@@ -36,36 +37,30 @@ http://localhost:3000/hello.html
 ```
 
 <div class="doc-box doc-info">
-Express recherche les fichiers relatifs au répertoire statique, donc
-le nom du répertoire statique ne fait pas partie de l'URL.
+Express regarde vers le haut les fichiers relatifs au répertoire statique, donc le nom du répertoire statique ne fait pas partie de l'URL.
 </div>
 
-Pour utiliser plusieurs répertoires statiques actifs,
-utilisez la fonction middleware
-`express.static` plusieurs fois :
+Pour utiliser plusieurs répertoires statiques, appelez la fonction middleware `express.static` plusieurs fois :
 
 ```js
 app.use(express.static('public'))
 app.use(express.static('files'))
 ```
 
-Express recherche les fichiers dans l'ordre dans lequel vous
-avez établi les répertoires statiques avec la fonction middleware `express.static`.
+Express recherche les fichiers dans l'ordre dans lequel vous définissez les répertoires statiques avec la fonction `express.static`.
 
-Pour créer un préfixe de chemin d'accès virtuel (dans lequel le
-chemin d'accès n'existe pas vraiment dans le système de fichiers)
-pour les fichiers qui sont servis par la fonction
-`express.static`, [indiquez un
-chemin de montage](/{{ page.lang }}/4x/api.html#app.use) pour le répertoire statique, comme démontré
-ci-dessous :
+{% capture alert_content %}
+Pour de meilleurs résultats, [utilisez un proxy inverse](/{{page.lang}}/advanced/best-practice-performance.html#use-a-reverse-proxy) cache pour améliorer les performances des actifs statiques.
+{% endcapture %}
+{% include admonitions/note.html content=alert_content %}
+
+Pour créer un préfixe de chemin virtuel (où le chemin n'existe pas dans le système de fichiers) pour les fichiers qui sont servis par le fichier `express. fonction tatic`, [spécifiez un chemin de montage](/{{ page.lang }}/4x/api.html#app.use) pour le répertoire statique, comme montré ci-dessous:
 
 ```js
 app.use('/static', express.static('public'))
 ```
 
-Maintenant, vous pouvez charger les fichiers qui sont dans le
-répertoire `public` à partir du préfixe de chemin
-d'accès `/static`.
+Maintenant, vous pouvez charger les fichiers qui se trouvent dans le dossier `public` à partir du préfixe de chemin `/static`.
 
 ```text
 http://localhost:3000/static/images/kitten.jpg
@@ -75,14 +70,13 @@ http://localhost:3000/static/images/bg.png
 http://localhost:3000/static/hello.html
 ```
 
-Cependant, le chemin d'accès que vous fournissez à la
-fonction `express.static` est en rapport avec
-le répertoire à partir duquel vous lancez votre processus `node`. Si
-vous exécutez l'application express à partir d'un autre répertoire, il
-est plus sûr d'utiliser le chemin d'accès absolu que vous voulez
-servir :
+Cependant, le chemin que vous fournissez à la fonction `express.static` est relatif au répertoire depuis lequel vous lancez votre processus `node`. Si vous exécutez l'application express à partir d'un autre répertoire, il est plus sûr d'utiliser le chemin absolu du répertoire que vous voulez servir:
 
 ```js
 const path = require('path')
 app.use('/static', express.static(path.join(__dirname, 'public')))
 ```
+
+Pour plus de détails sur la fonction `serve-static` et ses options, voir  [serve-static](/resources/middleware/serve-static.html).
+
+### [Précédent : Routage de base](/{{ page.lang }}/starter/basic-routing.html)&nbsp;&nbsp;&nbsp;&nbsp;[Suivant : Plus d'exemples ](/{{ page.lang }}/starter/examples.html)

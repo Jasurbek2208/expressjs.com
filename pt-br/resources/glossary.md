@@ -1,91 +1,60 @@
 ---
 layout: page
-title: Glossário do Express
+title: Expressar glossário
+description: Um glossário abrangente de termos relacionados ao Express.js, Node.js, middleware, routing e outros conceitos-chave para ajudá-lo a entender e usar o Express eficazmente.
 menu: resources
 lang: pt-br
-description: A comprehensive glossary of terms related to Express.js, Node.js, middleware,
-  routing, and other key concepts to help you understand and use Express effectively.
+redirect_from: ""
 ---
 
-# Glossário
-
-<div class="doc-box doc-warn">Este é atualmente um rascunho de trabalho</div>
+# Glossary
 
 ### aplicativo
 
-Em geral, um ou mais programas que são designados a executar
-operações com um propósito específico.  No contexto do Express, um
-programa que usa a API do Express executando na plataforma.  Pode
-também se referir a um [objeto app](/{{ page.lang }}/api.html#express).
+Em geral, um ou mais programas que são projetados para realizar operações para uma finalidade específica.  No contexto da Express, um programa que usa o API Express executando na plataforma Node.js.  Pode também se referir a um [objeto do app](/{{ page.lang }}/api.html#express).
 
 ### API
 
-Interface de programação de aplicativos.  Especifique o significado da abreviação no seu primeiro uso.
+Interface de programação de aplicativos. Feitiço a abreviação quando ela for usada pela primeira vez.
 
-### Express
+### Expresso
 
-Uma estrutura web rápida, flexível e minimalista para aplicativos Node.js.  Em
-geral, "Express" é preferido a "Express.js," apesar de que o último ser aceitável.
+Uma rápida, não-opinionada e minimalista estrutura web para aplicativos Node.js. Em geral, "Expresso" é preferida a "Express.js", embora este último seja aceitável.
 
 ### libuv
 
-Uma biblioteca de suporte multiplataforma que foca em E/S
-assíncrona, primeiramente desenvolvida para uso pelo Node.js.
+Uma biblioteca de suporte multiplataforma focada em E/O assíncrono, desenvolvida principalmente para uso pelo Node.js.
 
 ### middleware
 
-Uma função que é chamada pela camada de roteamento do Express
-antes do manipulador final da solicitação, e assim ficando no meio,
-entre uma solicitação bruta a rota final desejada.  Alguns poucos
-pontos de refinamento da terminologia envolvendo middleware:
+Uma função que é invocada pela camada de roteamento Express antes do manipulador de requisições final, e assim situa-se no meio entre um pedido em bruto e a rota final pretendida. Alguns belos pontos de terminologia em torno do middleware:
 
-  * `var foo = require('middleware')` é
-chamado *requerendo* ou *usando* um módulo
-do Node.js. Então a instrução `var mw = foo()`
-tipicamente retorna o middleware.
-  * `app.use(mw)` é chamado *incluindo
-o middleware na pilha global de processamento*.
-  * `app.get('/foo', mw, function (req, res) { ... })`
-é chamado *incluindo o  middleware para a pilha de
-processamento do "GET /foo" *.
+- `var foo = require('middleware')` é chamado de _requiring_ ou _usando_ um módulo Node.js. Então, a instrução `var mw = foo()` normalmente retorna o middleware.
+- `app.use(mw)` é chamado de _adicionando o middleware à pilha de processamento global_.
+- `app.get('/foo', mw, função (req, res) { ... })` é chamado de _adicionando o middleware para a pilha de processamento "GET /foo"_.
 
 ### Node.js
 
-Uma plataforma de software que é usada para construir aplicativos de rede escaláveis. O Node.js usa o JavaScript como
-linguagem de script, e alcança rendimentos altos através de E/S não
-bloqueante e um loop de eventos de thread única.  Consulte [nodejs.org](http://nodejs.org/). **Nota
-de uso**: Inicialmente, "Node.js," posteriormente "Node".
+Uma plataforma de software usada para construir aplicações de rede escaláveis. Node.js usa JavaScript como sua linguagem de script e alcança alta taxa de transferência através de I/O não bloqueando e de um loop de eventos uni-la-thread. Ver [nodejs.org](https://nodejs.org/en/). **Nota de uso**: Inicialmente, "Node.js", em seguida, "Node".
 
-### open-source, open source
+### código aberto, código aberto
 
-Quando usado como adjetivo, colocar o hífen; por exemplo "Este
-é um software open-source". Consulte
-[Software
-Open-source na Wikipedia](http://en.wikipedia.org/wiki/Open-source_software). Nota: Apesar de ser comum não
-colocar o hífen neste termo, estamos usando as regras padrões do
-Inglês para colocar o hífen em adjetivos compostos.
+Quando usado como adjetivo, hífene; por exemplo: "Este é um software de código aberto". Veja [Software de código aberto na Wikipedia](http://en.wikipedia.org/wiki/Open-source_software).
 
-### resposta
-
-Uma resposta HTTP. Um servidor retorna uma mensagem de resposta
-HTTP para o cliente. A resposta contém informações do status de
-conclusão sobre a solicitação e pode também conter conteúdo da
-solicitação no corpo da mensagem.
-
-### rota
-
-Parte de uma URL que identifica um recurso.  Por exemplo, em
-`http://foo.com/products/id`, "/products/id" é a
-rota.
-
-### roteador
-
-Consulte [roteador](/{{ page.lang }}/4x/api.html#router) na referência da API.
+{% include admonitions/note.html content="Embora seja comum não hifenizar este termo, estamos usando as regras padrão em inglês para hifenização de adjetivo composto por um adjetivo." %}
 
 ### solicitação
 
-Uma solicitação HTTP.  Um cliente envia uma mensagem HTTP para
-um servidor, que retorna uma resposta.  A solicitação deve usar um dos
-vários
-[métodos
-de solicitação](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) como GET, POST, e assim por diante.
+Um pedido HTTP. Um cliente envia uma mensagem de solicitação HTTP para um servidor, que retorna uma resposta.  A solicitação deve usar um dos vários [métodos de requisição](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) como GET, POST, e assim por diante.
+
+### Resposta
+
+Uma resposta HTTP. Um servidor retorna uma mensagem de resposta HTTP para o cliente. A resposta contém informações de estado de conclusão sobre o pedido e também pode conter conteúdo solicitado em seu corpo da mensagem.
+
+### rota
+
+Parte de uma URL que identifica um recurso. Por exemplo, em `http://foo.com/products/id`, "/products/id" é a rota.
+
+### roteador
+
+Veja [router](/{{ page.lang }}/api.html#router) na referência da API.
